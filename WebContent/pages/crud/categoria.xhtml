@@ -1,0 +1,69 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${categoriaFaces}" />
+	<ui:param name="mbeanModel" value="${categoriaFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${categoriaFaces.crudPesquisaModel}" />
+
+	<ui:define name="cadastro">
+	
+		<h:panelGrid columns="1" width="100%">
+
+			<p:outputLabel for="itNome" value="Descri��o" />
+			<p:inputText id="itNome" value="#{mbeanModel.descricao}" style="width: 95%" required="true" requiredMessage="Descrição: Obrigatório" />
+
+			<p:outputLabel id="olOrigem" for="itOrigem" value="Origem" rendered="#{!mbean.usuarioPossuiOrigem}"/>
+			<p:selectOneMenu id="itOrigem" value="#{mbeanModel.origem.id}" style="width: 50%" required="true" requiredMessage="Grupo: Obrigatório" rendered="#{!mbean.usuarioPossuiOrigem}">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.origens}" />
+			</p:selectOneMenu>		
+
+			<p:outputLabel for="cbFlagAtivo" value="Ativo?" />
+			<p:selectBooleanCheckbox id="cbFlagAtivo" value="#{mbeanModel.flagAtivo}" />
+
+		</h:panelGrid>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+		<h:panelGrid width="70%" columns="#{mbean.usuarioPossuiOrigem?2:3}" columnClasses="coluna35, coluna30, coluna35">
+
+			<p:outputLabel for="itNomePesquisa" value="Descrição" />			
+			<p:outputLabel for="somOrigemPesquisa" value="Origem" rendered="#{!mbean.usuarioPossuiOrigem}"/>
+			<p:outputLabel for="cbFlagAtivoPesquisa" value="Ativo?" />
+
+
+			<p:inputText id="itNomePesquisa" value="#{mbeanPesquisaModel.descricao}" style="width: 95%" />			
+
+			<p:selectOneMenu id="somOrigemPesquisa" value="#{mbeanPesquisaModel.origem.id}" style="width: 95%" rendered="#{!mbean.usuarioPossuiOrigem}">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.origens}" />
+			</p:selectOneMenu>
+
+			<p:selectBooleanCheckbox id="cbFlagAtivoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
+
+		</h:panelGrid>
+		<br />
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="ID">
+			<h:outputText value="#{linha.id}" />
+		</p:column>
+
+		<p:column headerText="Descrição">
+			<h:outputText value="#{linha.descricao}" />
+		</p:column>
+
+		<p:column headerText="Origem">
+			<h:outputText value="#{linha.origem.descricao}" />
+		</p:column>
+
+		<p:column headerText="Situação">
+			<h:outputText value="#{linha.situacao}" />
+		</p:column>
+
+	</ui:define>
+
+
+</ui:composition>

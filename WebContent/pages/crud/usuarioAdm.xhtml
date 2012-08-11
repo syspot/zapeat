@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="../../resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${fornecedorFaces}" />
+  	<ui:param name="mbeanModel" value="${fornecedorFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${fornecedorFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  			
+  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+  			
+  			<p:outputLabel for="login" value="Razão Social" />
+  			<p:inputText style="width: 149.5%;" id="razaSocial" value="#{mbeanModel.razaoSocial}" required="true" requiredMessage="Razão Social: Campo obrigatório" maxlength="100"/>
+  			
+  			</h:panelGrid>
+		  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+  			
+  			<p:outputLabel for="loginPesquisa" value="Login" />
+  			<p:inputText style="width: 149.5%;" id="loginPesquisa" value="#{mbeanPesquisaModel.razaoSocial}" maxlength="100"/>
+  			
+  			</h:panelGrid>
+		  	
+	</p:dialog>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Login">
+  			<h:outputText value="#{linha.login}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

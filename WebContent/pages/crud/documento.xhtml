@@ -1,0 +1,99 @@
+<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:param name="mbean" value="${documentoFaces}" />
+	<ui:param name="mbeanModel" value="${documentoFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${documentoFaces.crudPesquisaModel}" />
+
+	<ui:define name="cadastro">
+
+		<h:panelGrid columns="1" width="100%">
+
+			<h:panelGrid columns="#{mbean.usuarioPossuiOrigem?3:4}" columnClasses="coluna15, coluna25, coluna25, coluna35" width="99%">
+				<p:outputLabel for="calDataDocumento" value="Data do Documento" />
+				<p:outputLabel for="itOrigem" value="Origem" rendered="#{!mbean.usuarioPossuiOrigem}" />
+				<p:outputLabel for="itCategoria" value="Categoria" />
+				<p:outputLabel for="itLocalizacao" value="Localização Física" />
+
+				<p:calendar id="calDataDocumento" value="#{mbeanModel.dataDocumento}" pattern="dd/MM/yyyy" navigator="true" locale="pt_BR" timeZone="America/Sao_Paulo" required="true" requiredMessage="Data do Documento: Obrigatório" />
+
+				<p:selectOneMenu id="itOrigem" value="#{mbeanModel.origem.id}" style="width: 95%" required="true" requiredMessage="Grupo: Obrigatório" rendered="#{!mbean.usuarioPossuiOrigem}">
+					<p:ajax event="change" listener="#{mbean.atualizarCategoria}" update="itCategoria" />
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbean.origens}" />
+				</p:selectOneMenu>
+
+				<p:selectOneMenu id="itCategoria" value="#{mbeanModel.categoria.id}" style="width: 95%" required="true" requiredMessage="Categoria: Obrigatório" disabled="#{!mbean.usuarioPossuiOrigem and empty mbeanModel.origem.id}">
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbean.categorias}" />
+				</p:selectOneMenu>
+
+				<p:inputText id="itLocalizacao" value="#{mbeanModel.localizacaoFisica}" style="width: 90%" />
+
+			</h:panelGrid>
+
+			<p:outputLabel for="itNome" value="Título" />
+			<p:inputText id="itNome" value="#{mbeanModel.titulo}" style="width: 95%" required="true" requiredMessage="Título: Obrigatório" />
+
+			<p:outputLabel for="itTexto" value="Texto" />
+			<p:inputTextarea id="itTexto" rows="15" autoResize="false" value="#{mbeanModel.texto}" style="width: 95%" />
+
+			<p:outputLabel for="cbFlagAtivo" value="Ativo?" />
+			<p:selectBooleanCheckbox id="cbFlagAtivo" value="#{mbeanModel.flagAtivo}" />
+
+		</h:panelGrid>
+
+	</ui:define>
+
+	<ui:define name="pesquisaCampos">
+		<h:panelGrid width="90%" columns="#{mbean.usuarioPossuiOrigem?3:4}" columnClasses="coluna35, coluna25, coluna25, coluna15">
+
+			<p:outputLabel for="itNomePesquisa" value="Título" />
+			<p:outputLabel for="somOrigemPesquisa" value="Origem" rendered="#{!mbean.usuarioPossuiOrigem}" />
+			<p:outputLabel for="itCategoriaPesquisa" value="Categoria" />
+			<p:outputLabel for="cbFlagAtivoPesquisa" value="Ativo?" />
+
+			<p:inputText id="itNomePesquisa" value="#{mbeanPesquisaModel.titulo}" style="width: 95%" />
+
+			<p:selectOneMenu id="somOrigemPesquisa" value="#{mbeanPesquisaModel.origem.id}" style="width: 95%" rendered="#{!mbean.usuarioPossuiOrigem}">
+				<p:ajax event="change" listener="#{mbean.atualizarCategoriaPesquisa}" update="itCategoriaPesquisa" />				
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.origens}" />
+			</p:selectOneMenu>
+
+			<p:selectOneMenu id="itCategoriaPesquisa" value="#{mbeanPesquisaModel.categoria.id}" style="width: 95%" disabled="#{!mbean.usuarioPossuiOrigem and empty mbeanPesquisaModel.origem.id}">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.categoriasPesquisa}" />
+			</p:selectOneMenu>
+
+			<p:selectBooleanCheckbox id="cbFlagAtivoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
+
+		</h:panelGrid>
+		<br />
+	</ui:define>
+
+	<ui:define name="colunasTabela">
+
+		<p:column headerText="ID" styleClass="coluna7">
+			<h:outputText value="#{linha.id}" />
+		</p:column>
+
+		<p:column headerText="Título" styleClass="coluna35" sortBy="#{linha.titulo}">
+			<h:outputText value="#{linha.titulo}" />
+		</p:column>
+
+		<p:column headerText="Origem" styleClass="coluna20" sortBy="#{linha.origem.descricao}">
+			<h:outputText value="#{linha.origem.descricao}" />
+		</p:column>
+		
+		<p:column headerText="Categoria" styleClass="coluna20" sortBy="#{linha.categoria.descricao}">
+			<h:outputText value="#{linha.categoria.descricao}" />
+		</p:column>
+
+		<p:column headerText="Situação" styleClass="coluna10" sortBy="#{linha.situacao}">
+			<h:outputText value="#{linha.situacao}" />
+		</p:column>
+
+	</ui:define>
+
+
+</ui:composition>

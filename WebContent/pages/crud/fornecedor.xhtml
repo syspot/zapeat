@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="../../resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${fornecedorFaces}" />
+  	<ui:param name="mbeanModel" value="${fornecedorFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${fornecedorFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  			
+  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+  			
+  			<p:outputLabel for="razaSocial" value="Razão Social" />
+  			<p:inputText style="width: 149.5%;" id="razaSocial" value="#{mbeanModel.razaoSocial}" required="true" requiredMessage="Razão Social: Campo obrigatório" maxlength="100"/>
+  			
+  			</h:panelGrid>
+		  	
+		  	<br/>
+		  	
+		  	<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
+		  	
+		  	<p:outputLabel for="cnpj" value="CNPJ" />
+		  	<p:outputLabel for="nomeFantasia" value="Nome Fantasia" />
+		  	
+		  	<p:inputText id="cnpj" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.cnpj}" required="true" requiredMessage="CNPJ: Campo obrigatório" maxlength="14"/>
+		  	<p:inputText id="nomeFantasia" style="width: 303%;" value="#{mbeanModel.nomeFantasia}" maxlength="100"/>
+		  	
+		  	</h:panelGrid>
+		  	
+		  	<br/>
+		  	
+	  		<h:panelGrid width="47%" columns="3" style="margin-left: -4px">
+	  		
+	  		<p:outputLabel for="cidade" value="Cidade" />
+	  		<p:outputLabel for="bairro" value="Bairro" />
+			<p:outputLabel for="logradouro" value="Logradouro" />
+			
+			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.cidades}" />
+			</p:selectOneMenu>
+			<p:inputText id="bairro" style="width: 94%;" value="#{mbeanModel.bairro}" required="true" requiredMessage="Bairro: Campo obrigatório" maxlength="50"/>
+			<p:inputText id="logradouro" style="width: 180%;" value="#{mbeanModel.logradouro}" required="true" requiredMessage="Logradouro: Campo obrigatório" maxlength="200" />
+	  			
+	  		</h:panelGrid>
+	  		
+			<br/>
+	  		
+	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
+	  			
+	  			<p:outputLabel for="numero" value="Número" />
+	  			<p:outputLabel for="cep" value="Cep" />
+	  			
+	  			<p:inputText id="numero" value="#{mbeanModel.numero}" maxlength="10"/>
+	  			<p:inputText id="cep" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.cep}" maxlength="8"/>
+	  		</h:panelGrid>
+	  		
+	  		<br/>
+	  		
+	  		<p:outputLabel for="descricao" value="Descrição" />
+	  		<br/>
+	  		<p:inputTextarea id="descricao" rows="5" cols="30" value="#{mbeanModel.descricao}"/>
+	  		
+	  		<br/><br/>
+	  			
+	  		<p:outputLabel for="horarioFuncionamento" value="Horários de Funcionamento" />
+	  		<br/>
+	  		<p:inputText styleClass="coluna50" id="horarioFuncionamento" value="#{mbeanModel.horariosFuncionamento}" maxlength="500"/>
+	  		<br/><br/>
+	  		
+	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
+	  		
+	  		<p:outputLabel for="latitude" value="Latitude" />
+	  		<p:outputLabel for="longitude" value="Longitude" />
+	  		
+			<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.latitude}"/>
+	  		<p:inputText required="true" requiredMessage="Longitude: Campo obrigatório" id="longitude" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.longitude}"/>
+	  		
+	  		</h:panelGrid>
+	  		
+	  		<br/>
+	  		
+	  		<p:fileUpload label="Selecionar Logomarca" 
+	  						auto="true" id="uploadArquivoImagem"
+	  						 fileUploadListener="#{mbean.listenerLogoMarca}" 
+	  						 allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/"/>
+	  		
+	  		<h:panelGrid columns="2">
+	  		
+	  		<br/>
+				
+			<h:outputLabel value="Ativo " for="ativo"/>
+			<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
+				
+			</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+  			
+  			<p:outputLabel for="razaSocialPesquisa" value="Razão Social" />
+  			<p:inputText style="width: 149.5%;" id="razaSocialPesquisa" value="#{mbeanPesquisaModel.razaoSocial}" maxlength="100"/>
+  			
+  			</h:panelGrid>
+		  	
+		  	<br/>
+		  	
+		  	<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
+		  	
+		  	<p:outputLabel for="cnpjPesquisa" value="CNPJ" />
+		  	<p:outputLabel for="nomeFantasiaPesquisa" value="Nome Fantasia" />
+		  	
+		  	<p:inputText id="cnpjPesquisa" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanPesquisaModel.cnpj}" maxlength="14"/>
+		  	<p:inputText id="nomeFantasiaPesquisa" style="width: 303%;" value="#{mbeanPesquisaModel.nomeFantasia}" maxlength="100"/>
+		  	
+		  	</h:panelGrid>
+		  	
+		  	<br/>
+		  	
+	  		<h:panelGrid width="47%" columns="3" style="margin-left: -4px">
+	  		
+	  		<p:outputLabel for="cidadePesquisa" value="Cidade" />
+	  		<p:outputLabel for="bairroPesquisa" value="Bairro" />
+			<p:outputLabel for="logradouroPesquisa" value="Logradouro" />
+			
+			<p:selectOneMenu id="cidadePesquisa" value="#{mbeanPesquisaModel.cidade.id}">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.cidades}" />
+			</p:selectOneMenu>
+			<p:inputText id="bairroPesquisa" style="width: 94%;" value="#{mbeanPesquisaModel.bairro}" maxlength="50"/>
+			<p:inputText id="logradouroPesquisa" style="width: 180%;" value="#{mbeanPesquisaModel.logradouro}" maxlength="200" />
+	  			
+	  		</h:panelGrid>
+	  		
+			<br/>
+	  		
+	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
+	  			
+	  			<p:outputLabel for="numeroPesquisa" value="Número" />
+	  			<p:outputLabel for="cepPesquisa" value="Cep" />
+	  			
+	  			<p:inputText id="numeroPesquisa" value="#{mbeanPesquisaModel.numero}" maxlength="10"/>
+	  			<p:inputText id="cepPesquisa" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanPesquisaModel.cep}" maxlength="8"/>
+	  		</h:panelGrid>
+	  		
+	  		<br/>
+		  	
+	  		<h:panelGrid columns="2">
+				
+			<h:outputLabel value="Ativo " for="ativoPesquisa"/>
+			<p:selectBooleanCheckbox id="ativoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}"/>
+				
+			</h:panelGrid>
+			
+			<p:dialog width="600" height="500" appendToBody="true" modal="true" closable="true" dynamic="true" id="dlgLogo" widgetVar="dlgView">
+		
+			<p:outputPanel id="otpLogo" autoUpdate="true">
+	
+				<img src="#{fornecedorFaces.crudModel.caminhoLogoMarca}"  />
+	
+			</p:outputPanel>
+			
+	</p:dialog>
+	  	
+  	</ui:define>
+  	
+  	
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Razão Social">
+  			<h:outputText value="#{linha.razaoSocial}" />
+  		</p:column>
+  	
+  		<p:column headerText="CNPJ">
+  			<h:outputText value="#{linha.cnpj}" />
+  		</p:column>
+  	
+  		<p:column headerText="Nome Fantasia">
+  			<h:outputText value="#{linha.nomeFantasia}" />
+  		</p:column>
+  		
+  		<p:column headerText="Cidade">
+  			<h:outputText value="#{linha.cidade.nome}" />
+  		</p:column>
+  		
+  		<p:column headerText="Visualizar Logo" styleClass="coluna5">
+				
+			<div align="center">
+			  
+				<p:commandLink oncomplete="dlgView.show()" rendered="#{!empty linha.logoMarca}">
+					<p:graphicImage style="border:0px;" value="/resources/images/lupa.png" height="16" width="16" />
+					<f:setPropertyActionListener target="#{fornecedorFaces.crudModel}" value="#{linha}" />
+				</p:commandLink>
+			  	               
+			</div>
+		      
+		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>
