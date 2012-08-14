@@ -16,7 +16,6 @@ import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Cidade;
 import br.com.zapeat.model.Fornecedor;
-import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
 @ManagedBean(name = "fornecedorFaces")
@@ -102,7 +101,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
 
-			ZapeatUtil.criaArquivo(this.getCrudModel().getArquivo(), Constantes.PASTA_UPLOAD_TEMP + this.getCrudModel().getLogoMarca());
+			ZapeatUtil.criarImagemTemp(this.getCrudModel().getArquivo());
 		}
 
 	}

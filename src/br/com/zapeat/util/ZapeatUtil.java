@@ -64,15 +64,15 @@ public class ZapeatUtil {
 	}
 
 	public static void criaArquivo(InputStream file, String arquivo) {
-		
+
 		try {
 			FileUtils.copyInputStreamToFile(file, new File(arquivo));
 		} catch (Exception ex) {
 			throw new TSSystemException(ex);
 		}
-		
+
 	}
-	
+
 	public static void criaArquivo(UploadedFile file, String arquivo) {
 		try {
 			criaArquivo(file.getInputstream(), arquivo);
@@ -80,34 +80,45 @@ public class ZapeatUtil {
 			throw new TSSystemException(e);
 		}
 	}
-	
+
 	public static long gerarNumeroAleatorio() {
 		return (long) ((10000 * Math.random()) * (100 * Math.random()));
 	}
-	
+
 	public static String obterNomeArquivo(UploadedFile file) {
 
-		if(!TSUtil.isEmpty(file)){
-			if(file.getFileName().contains("\\")){
+		if (!TSUtil.isEmpty(file)) {
+			if (file.getFileName().contains("\\")) {
 				String[] fileName = file.getFileName().split("\\\\");
-				return fileName[fileName.length-1];
-			} else{
+				return fileName[fileName.length - 1];
+			} else {
 				return file.getFileName();
 			}
-		} else{
+		} else {
 			return null;
 		}
 	}
-	
+
 	public static String criarImagemTemp(FileUploadEvent event) {
-		
+
 		String nomeArquivo = gerarNumeroAleatorio() + TSFile.obterExtensaoArquivo(event.getFile().getFileName());
-		String arquivo =  Constantes.PASTA_UPLOAD_TEMP + nomeArquivo;
-		
+		String arquivo = Constantes.PASTA_UPLOAD_TEMP + nomeArquivo;
+
 		criaArquivo(event.getFile(), arquivo);
-		
+
 		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
-		
+
 	}
 	
+	public static String criarImagemTemp(UploadedFile file) {
+
+		String nomeArquivo = gerarNumeroAleatorio() + TSFile.obterExtensaoArquivo(file.getFileName());
+		String arquivo = Constantes.PASTA_UPLOAD_TEMP + nomeArquivo;
+
+		criaArquivo(file, arquivo);
+
+		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
+
+	}
+
 }

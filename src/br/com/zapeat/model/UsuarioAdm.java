@@ -37,16 +37,24 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 
 		StringBuilder query = new StringBuilder();
 
-		query.append(" from UsuarioAdm f where 1 = 1 ");
+		query.append(" from UsuarioAdm u where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(login)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.login")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append("and ").append(ZapeatUtil.semAcento("u.login")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
+			query.append("and u.fornecedor = ?").append(" ");
 		}
 
 		List<Object> params = new ArrayList<Object>();
 
 		if (!TSUtil.isEmpty(login)) {
-			params.add(ZapeatUtil.tratarString(login));
+			params.add(login);
+		}
+
+		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
+			params.add(fornecedor);
 		}
 
 		return super.find(query.toString(), params.toArray());

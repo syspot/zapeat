@@ -32,6 +32,7 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 
 	private boolean flagAlterar;
 
+	@SuppressWarnings("unchecked")
 	private Class<T> modelClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
 	@Override
@@ -78,7 +79,7 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 	protected void posDetail() {
 	}
 
-	protected void posPersist() throws TSApplicationException {
+	protected void posPersist() throws TSSystemException, TSApplicationException {
 	}
 
 	@Override
