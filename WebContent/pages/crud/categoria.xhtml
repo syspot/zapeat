@@ -1,69 +1,72 @@
-<ui:composition template="/resources/templates/templateCRUD.xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
-
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	
 	<ui:param name="mbean" value="${categoriaFaces}" />
 	<ui:param name="mbeanModel" value="${categoriaFaces.crudModel}" />
 	<ui:param name="mbeanPesquisaModel" value="${categoriaFaces.crudPesquisaModel}" />
-
-	<ui:define name="cadastro">
-	
-		<h:panelGrid columns="1" width="100%">
-
-			<p:outputLabel for="itNome" value="Descrição" />
-			<p:inputText id="itNome" value="#{mbeanModel.descricao}" style="width: 95%" required="true" requiredMessage="DescriÃ§Ã£o: ObrigatÃ³rio" />
-
-			<p:outputLabel id="olOrigem" for="itOrigem" value="Origem" rendered="#{!mbean.usuarioPossuiOrigem}"/>
-			<p:selectOneMenu id="itOrigem" value="#{mbeanModel.origem.id}" style="width: 50%" required="true" requiredMessage="Grupo: ObrigatÃ³rio" rendered="#{!mbean.usuarioPossuiOrigem}">
-				<f:selectItem itemLabel="NÃ£o Selecionado" itemValue="" />
-				<f:selectItems value="#{mbean.origens}" />
-			</p:selectOneMenu>		
-
-			<p:outputLabel for="cbFlagAtivo" value="Ativo?" />
-			<p:selectBooleanCheckbox id="cbFlagAtivo" value="#{mbeanModel.flagAtivo}" />
-
-		</h:panelGrid>
-
-	</ui:define>
-
-	<ui:define name="pesquisaCampos">
-		<h:panelGrid width="70%" columns="#{mbean.usuarioPossuiOrigem?2:3}" columnClasses="coluna35, coluna30, coluna35">
-
-			<p:outputLabel for="itNomePesquisa" value="DescriÃ§Ã£o" />			
-			<p:outputLabel for="somOrigemPesquisa" value="Origem" rendered="#{!mbean.usuarioPossuiOrigem}"/>
-			<p:outputLabel for="cbFlagAtivoPesquisa" value="Ativo?" />
-
-
-			<p:inputText id="itNomePesquisa" value="#{mbeanPesquisaModel.descricao}" style="width: 95%" />			
-
-			<p:selectOneMenu id="somOrigemPesquisa" value="#{mbeanPesquisaModel.origem.id}" style="width: 95%" rendered="#{!mbean.usuarioPossuiOrigem}">
-				<f:selectItem itemLabel="NÃ£o Selecionado" itemValue="" />
-				<f:selectItems value="#{mbean.origens}" />
-			</p:selectOneMenu>
-
+  	
+  	<ui:define name="cadastro">
+  	
+  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:90%">
+	  	
+	  		<h:panelGrid columns="1" style="width: 90%">
+	  		
+		  		<p:outputLabel for="descricao" value="Descrição" />
+			  	<p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Existem campos obrigatórios" maxlength="50" styleClass="coluna90"/>
+			  	
+			  	<p:outputLabel for="imagem" value="Imagem" />
+			  	<p:fileUpload id="imagem" label="Selecionar Imagem" auto="true" fileUploadListener="#{mbean.enviarImagem}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="opVisualizacaoImagem" />
+			  	
+			  	<p:outputLabel for="cbFlagAtivo" value="Ativo" />
+				<p:selectBooleanCheckbox id="cbFlagAtivo" value="#{mbeanModel.flagAtivo}" />
+	  		
+	  		</h:panelGrid>
+	  		
+	  		<h:panelGrid columns="1" style="width: 90%">
+	  		
+	  			<p:outputPanel id="opVisualizacaoImagem">
+					
+					<style type="text/css">
+						.imagemFoto img{height: 159px; align: left;}
+					</style>
+					
+					<div class="imagemFoto" align="center">
+						<p:graphicImage value="#{mbeanModel.imagem}" cache="false" />
+					</div>
+					
+				</p:outputPanel>
+	  		
+	  		</h:panelGrid>
+	  		
+	  	</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  		
+  		<h:panelGrid columns="1" style="width:50%">
+  		
+	  		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+		  	<p:inputText id="descricaoPesquisa"  value="#{mbeanPesquisaModel.descricao}" maxlength="50" styleClass="coluna90"/>
+		  	
+		  	<p:outputLabel for="cbFlagAtivoPesquisa" value="Ativo" />
 			<p:selectBooleanCheckbox id="cbFlagAtivoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
-
-		</h:panelGrid>
-		<br />
-	</ui:define>
-
-	<ui:define name="colunasTabela">
-
-		<p:column headerText="ID">
-			<h:outputText value="#{linha.id}" />
-		</p:column>
-
-		<p:column headerText="DescriÃ§Ã£o">
-			<h:outputText value="#{linha.descricao}" />
-		</p:column>
-
-		<p:column headerText="Origem">
-			<h:outputText value="#{linha.origem.descricao}" />
-		</p:column>
-
-		<p:column headerText="SituaÃ§Ã£o">
-			<h:outputText value="#{linha.situacao}" />
-		</p:column>
-
-	</ui:define>
-
-
+		  	
+	  	</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Descrição">
+  			<h:outputText value="#{linha.descricao}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
 </ui:composition>

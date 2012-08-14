@@ -102,7 +102,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
 
-			ZapeatUtil.criaArquivo(this.getCrudModel().getArquivo().getContents(), Constantes.PASTA_UPLOAD_TEMP + this.getCrudModel().getLogoMarca());
+			ZapeatUtil.criaArquivo(this.getCrudModel().getArquivo(), Constantes.PASTA_UPLOAD_TEMP + this.getCrudModel().getLogoMarca());
 		}
 
 	}

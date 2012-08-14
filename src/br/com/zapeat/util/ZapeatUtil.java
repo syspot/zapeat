@@ -1,12 +1,18 @@
 package br.com.zapeat.util;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.io.FileUtils;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
+
+import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 
 public class ZapeatUtil {
@@ -57,16 +63,51 @@ public class ZapeatUtil {
 		return "translate(lower(trim(".concat(campo).concat(")), '·ÈÌÛ˙‡ËÏÚ˘„ı‚ÍÓÙÙ‰ÎÔˆ¸Á¡…Õ”⁄¿»Ã“Ÿ√’¬ Œ‘€ƒÀœ÷‹«', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
 
-	public static void criaArquivo(byte[] bytes, String arquivo) {
-		FileOutputStream fos;
+	public static void criaArquivo(InputStream file, String arquivo) {
+		
 		try {
-			fos = new FileOutputStream(arquivo);
-			fos.write(bytes);
-			fos.close();
-		} catch (FileNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			ex.printStackTrace();
+			FileUtils.copyInputStreamToFile(file, new File(arquivo));
+		} catch (Exception ex) {
+			throw new TSSystemException(ex);
+		}
+		
+	}
+	
+	public static void criaArquivo(UploadedFile file, String arquivo) {
+		try {
+			criaArquivo(file.getInputstream(), arquivo);
+		} catch (IOException e) {
+			throw new TSSystemException(e);
 		}
 	}
+	
+	public static long gerarNumeroAleatorio() {
+		return (long) ((10000 * Math.random()) * (100 * Math.random()));
+	}
+	
+	public static String obterNomeArquivo(UploadedFile file) {
+
+		if(!TSUtil.isEmpty(file)){
+			if(file.getFileName().contains("\\")){
+				String[] fileName = file.getFileName().split("\\\\");
+				return fileName[fileName.length-1];
+			} else{
+				return file.getFileName();
+			}
+		} else{
+			return null;
+		}
+	}
+	
+	public static String criarImagemTemp(FileUploadEvent event) {
+		
+		String nomeArquivo = gerarNumeroAleatorio() + TSFile.obterExtensaoArquivo(event.getFile().getFileName());
+		String arquivo =  Constantes.PASTA_UPLOAD_TEMP + nomeArquivo;
+		
+		criaArquivo(event.getFile(), arquivo);
+		
+		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
+		
+	}
+	
 }
