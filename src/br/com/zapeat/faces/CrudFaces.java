@@ -143,7 +143,7 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 
 		this.limpar();
 
-		this.grid = this.crudPesquisaModel.findByModel();
+		this.grid = this.crudPesquisaModel.findByModel(getFieldOrdem());
 
 		this.tabIndex = 1;
 
