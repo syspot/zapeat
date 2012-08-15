@@ -17,6 +17,7 @@
 
 		<property name="hibernate.show_sql">true</property>
 
+ 		<mapping class="br.com.zapeat.model.Banner" />
  		<mapping class="br.com.zapeat.model.Categoria" />
  		<mapping class="br.com.zapeat.model.Cidade" />
  		<mapping class="br.com.zapeat.model.Estado" />

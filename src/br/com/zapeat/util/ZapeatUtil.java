@@ -62,6 +62,11 @@ public class ZapeatUtil {
 	public static String semAcento(String campo) {
 		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
+	
+	public static String getStringParamSemAcento(String campo) {
+		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
+				" like translate(?, 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
+	}
 
 	public static void criaArquivo(InputStream file, String arquivo) {
 
@@ -118,6 +123,18 @@ public class ZapeatUtil {
 		criaArquivo(file, arquivo);
 
 		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
+
+	}
+	
+	public static Double tratarDouble(Double valor) {
+
+		if (!TSUtil.isEmpty(valor) && valor.equals(0)) {
+
+			valor = null;
+
+		}
+
+		return valor;
 
 	}
 

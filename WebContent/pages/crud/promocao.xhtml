@@ -12,33 +12,37 @@
   	
   	<ui:define name="cadastro">
   	
-  		<h:panelGrid columns="1" style="width: 90%">
+  		<h:panelGrid columns="1" style="width: 50%">
   		
 	  		<p:outputLabel for="descricao" value="Descrição" />
-		  	<p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Existem campos obrigatórios" maxlength="50" styleClass="coluna90"/>
+		  	<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="1000" autoResize="false" rows="10" style="width:78%"/>
 		  	
 		  	<p:outputLabel for="fornecedor" value="Fornecedor" />
-		  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" style="width:95%">
+		  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" style="width:80%">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbean.fornecedores}" />
 			</p:selectOneMenu>
 			
 		  	<p:outputLabel for="tipoPromocao" value="Tipo de Promoção" />
-		  	<p:selectOneMenu id="tipoPromocao" required="true" requiredMessage="Tipo de Promoção: Campo obrigatório" value="#{mbeanModel.tipoPromocao.id}" style="width:95%">
+		  	<p:selectOneMenu id="tipoPromocao" required="true" requiredMessage="Tipo de Promoção: Campo obrigatório" value="#{mbeanModel.tipoPromocao.id}" style="width:80%">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbean.tiposPromocoes}" />
 			</p:selectOneMenu>
 			
+		</h:panelGrid>
+		
+		<h:panelGrid columns="2" style="width: 30%">
+		
 			<p:outputLabel for="dataInicial" value="Data Inicial" />
-			<p:calendar id="dataInicial" pattern="dd/MM/yyyy" required="true" requiredMessage="Data Inicial: Campo obrigatório" value="#{mbeanModel.inicio}" style="width:90%" />
-		  	
 			<p:outputLabel for="dataFinal" value="Data Final" />
-			<p:calendar id="dataFinal" pattern="dd/MM/yyyy" required="true" requiredMessage="Data Final: Campo obrigatório" value="#{mbeanModel.fim}" style="width:90%" />
+		  	
+			<p:calendar id="dataInicial" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data Inicial: Campo obrigatório" value="#{mbeanModel.inicio}" style="width:90%" />
+			<p:calendar id="dataFinal" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data Final: Campo obrigatório" value="#{mbeanModel.fim}" style="width:90%" />
 		  	
 		  	<p:outputLabel for="precoOriginal" value="Preço Original" />
-		  	<p:inputText id="precoOriginal" value="#{mbeanModel.precoOriginal}" required="true" requiredMessage="Preço Original: Campo obrigatório" maxlength="5" styleClass="coluna90"/>
-		  	
 		  	<p:outputLabel for="precoPromocional" value="Preço Promocional" />
+		  	
+		  	<p:inputText id="precoOriginal" value="#{mbeanModel.precoOriginal}" required="true" requiredMessage="Preço Original: Campo obrigatório" maxlength="5" styleClass="coluna90"/>
 		  	<p:inputText id="precoPromocional" value="#{mbeanModel.precoPromocional}" required="true" requiredMessage="Preço Promocional: Campo obrigatório" maxlength="5" styleClass="coluna90"/>
 		  	
   		</h:panelGrid>
@@ -47,37 +51,53 @@
   	
   	<ui:define name="pesquisaCampos">
   		
-  		<h:panelGrid columns="1" style="width:50%">
+  		<h:panelGrid columns="2" style="width:90%">
   		
-	  		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
-		  	<p:inputText id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="50" styleClass="coluna90"/>
-		  	
-		  	<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
-		  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:95%">
-				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-				<f:selectItems value="#{mbean.fornecedores}" />
-			</p:selectOneMenu>
+  			<h:panelGrid columns="1" style="width:100%">
+  			
+		  		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+			  	<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="1000" rows="12" cols="50" autoResize="false" style="width: 90%"/>
+			  	
+			</h:panelGrid>
 			
-		  	<p:outputLabel for="tipoPromocaoPesquisa" value="Tipo de Promoção" />
-		  	<p:selectOneMenu id="tipoPromocaoPesquisa" value="#{mbeanPesquisaModel.tipoPromocao.id}" style="width:95%">
-				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-				<f:selectItems value="#{mbean.tiposPromocoes}" />
-			</p:selectOneMenu>
+			<h:panelGrid columns="1" style="width:100%">
 			
-			<p:outputLabel for="dataInicialPesquisa" value="Data Inicial" />
-			<p:calendar id="dataInicialPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.inicio}" style="width:90%" />
-		  	
-			<p:outputLabel for="dataFinalPesquisa" value="Data Final" />
-			<p:calendar id="dataFinalPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.fim}" style="width:90%" />
-		  	
-		  	<p:outputLabel for="precoOriginalPesquisa" value="Preço Original" />
-		  	<p:inputText id="precoOriginalPesquisa" value="#{mbeanPesquisaModel.precoOriginal}" maxlength="5" styleClass="coluna90"/>
-		  	
-		  	<p:outputLabel for="precoPromocionalPesquisa" value="Preço Promocional" />
-		  	<p:inputText id="precoPromocionalPesquisa" value="#{mbeanPesquisaModel.precoPromocional}" maxlength="5" styleClass="coluna90"/>
-		  	
-	  	</h:panelGrid>
-	  	
+				<h:panelGrid columns="1" style="width:100%">
+				
+					<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
+				  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:80%">
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.fornecedores}" />
+					</p:selectOneMenu>
+					
+				  	<p:outputLabel for="tipoPromocaoPesquisa" value="Tipo de Promoção" />
+				  	<p:selectOneMenu id="tipoPromocaoPesquisa" value="#{mbeanPesquisaModel.tipoPromocao.id}" style="width:80%">
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.tiposPromocoes}" />
+					</p:selectOneMenu>
+				
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2" style="width:50%">
+			
+					<p:outputLabel for="dataInicialPesquisa" value="Data Inicial" />
+					<p:outputLabel for="dataFinalPesquisa" value="Data Final" />
+				  	
+					<p:calendar id="dataInicialPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.inicio}" style="width:90%" />
+					<p:calendar id="dataFinalPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.fim}" style="width:90%" />
+				  	
+				  	<p:outputLabel for="precoOriginalPesquisa" value="Preço Original" />
+				  	<p:outputLabel for="precoPromocionalPesquisa" value="Preço Promocional" />
+				  	
+				  	<p:inputText id="precoOriginalPesquisa" value="#{mbeanPesquisaModel.precoOriginal}" maxlength="5" styleClass="coluna90"/>
+				  	<p:inputText id="precoPromocionalPesquisa" value="#{mbeanPesquisaModel.precoPromocional}" maxlength="5" styleClass="coluna90"/>
+				  	
+			  	</h:panelGrid>
+			
+			</h:panelGrid>
+			
+		</h:panelGrid>	
+		
   	</ui:define>
   	
   	<ui:define name="colunasTabela">

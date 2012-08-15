@@ -1,6 +1,8 @@
 package br.com.zapeat.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,7 @@ import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.util.ZapeatUtil;
 
 @Entity
 @SuppressWarnings("serial")
@@ -94,7 +97,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	}
 
 	public Double getPrecoOriginal() {
-		return precoOriginal;
+		return ZapeatUtil.tratarDouble(precoOriginal);
 	}
 
 	public void setPrecoOriginal(Double precoOriginal) {
@@ -102,7 +105,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	}
 
 	public Double getPrecoPromocional() {
-		return precoPromocional;
+		return ZapeatUtil.tratarDouble(precoPromocional);
 	}
 
 	public void setPrecoPromocional(Double precoPromocional) {
@@ -132,6 +135,75 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public List<Promocao> findByModel(String... fieldsOrderBy) {
+
+		StringBuilder query = new StringBuilder();
+
+		query.append(" from Promocao p where 1 = 1 ");
+
+		if (!TSUtil.isEmpty(tipoPromocao) && !TSUtil.isEmpty(tipoPromocao.getId())) {
+			query.append(" and tipoPromocao.id = ? ");
+		}
+		
+		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
+			query.append(" and fornecedor.id = ? ");
+		}
+
+		if (!TSUtil.isEmpty(descricao)) {
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("descricao"));
+		}
+
+		if (!TSUtil.isEmpty(inicio)) {
+			query.append(" and p.inicio = ? ");
+		}
+
+		if (!TSUtil.isEmpty(fim)) {
+			query.append(" and p.fim = ? ");
+		}
+
+		if (!TSUtil.isEmpty(precoOriginal)) {
+			query.append(" and p.precoOriginal = ? ");
+		}
+
+		if (!TSUtil.isEmpty(precoPromocional)) {
+			query.append(" and p.precoPromocional = ? ");
+		}
+
+		List<Object> params = new ArrayList<Object>();
+		
+		if (!TSUtil.isEmpty(tipoPromocao) && !TSUtil.isEmpty(tipoPromocao.getId())) {
+			params.add(tipoPromocao.getId());
+		}
+		
+		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
+			params.add(fornecedor.getId());
+		}
+
+		if (!TSUtil.isEmpty(descricao)) {
+			params.add(descricao);
+		}
+
+		if (!TSUtil.isEmpty(inicio)) {
+			params.add(inicio);
+		}
+
+		if (!TSUtil.isEmpty(fim)) {
+			params.add(fim);
+		}
+
+		if (!TSUtil.isEmpty(precoOriginal)) {
+			params.add(precoOriginal);
+		}
+
+		if (!TSUtil.isEmpty(precoPromocional)) {
+			params.add(precoPromocional);
+		}
+
+		return super.find(query.toString(), params.toArray());
+
 	}
 
 }
