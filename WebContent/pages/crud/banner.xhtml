@@ -79,43 +79,43 @@
   	
   	<ui:define name="pesquisaCampos">
   		
-  		<h:panelGrid columns="2" style="width:90%">
+  		<h:panelGrid columns="2" columnClasses="coluna50_2, coluna50" style="width:80%">
 			
-			<h:panelGrid columns="1" style="width:100%">
+			<h:panelGrid columns="1" style="width:90%">
 			
 				<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
-			  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:80%">
+			  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:100%">
 					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					<f:selectItems value="#{mbean.fornecedores}" />
 				</p:selectOneMenu>
 				
 			  	<p:outputLabel for="tipoBannerPesquisa" value="Tipo de Banner" />
-			  	<p:selectOneMenu id="tipoBannerPesquisa" value="#{mbeanPesquisaModel.tipoBanner.id}" style="width:80%">
+			  	<p:selectOneMenu id="tipoBannerPesquisa" value="#{mbeanPesquisaModel.tipoBanner.id}" style="width:100%">
 					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					<f:selectItems value="#{mbean.tiposBanners}" />
 				</p:selectOneMenu>
 			
 			</h:panelGrid>
 			
-			<h:panelGrid columns="2" style="width:50%">
-		
-				<p:outputLabel for="dataInicialPesquisa" value="Data Inicial" />
-				<p:outputLabel for="dataFinalPesquisa" value="Data Final" />
+			<h:panelGrid style="width:80%">
+			
+				<h:panelGrid columns="2" style="width:80%">
+			
+					<p:outputLabel for="dataInicialPesquisa" value="Data Inicial" />
+					<p:outputLabel for="dataFinalPesquisa" value="Data Final" />
+				  	
+					<p:calendar id="dataInicialPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.inicio}" style="width:90%" />
+					<p:calendar id="dataFinalPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.fim}" style="width:90%" />
+				  	
+					<p:outputLabel for="taxaPrioridadePesquisa" value="Taxa de Prioridade" />
+				  	<p:outputLabel for="cbFlagAtivoPesquisa" value="Ativo" />
+				  	
+				  	<p:inputText id="taxaPrioridadePesquisa" value="#{mbeanPesquisaModel.taxaPrioridade}" maxlength="5" styleClass="coluna90"/>
+					<p:selectBooleanCheckbox id="cbFlagAtivoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
+					
+			  	</h:panelGrid>
 			  	
-				<p:calendar id="dataInicialPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.inicio}" style="width:90%" />
-				<p:calendar id="dataFinalPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.fim}" style="width:90%" />
-			  	
-		  	</h:panelGrid>
-		  	
-		  	<h:panelGrid columns="1" style="width: 30%">
-		
-				<p:outputLabel for="taxaPrioridadePesquisa" value="Taxa de Prioridade" />
-			  	<p:inputText id="taxaPrioridadePesquisa" value="#{mbeanPesquisaModel.taxaPrioridade}" maxlength="5" styleClass="coluna90"/>
-			  	
-			  	<p:outputLabel for="cbFlagAtivoPesquisa" value="Ativo" />
-				<p:selectBooleanCheckbox id="cbFlagAtivoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
-			  	
-	  		</h:panelGrid>
+			</h:panelGrid>
 			
 		</h:panelGrid>	
 		
@@ -127,13 +127,13 @@
   			<h:outputText value="#{linha.fornecedor.descricao}" />
   		</p:column>
   	
-  		<p:column headerText="Data Início">
+  		<p:column headerText="Data Início" style="text-align: center">
   			<h:outputText value="#{linha.inicio}" >
   				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
   			</h:outputText>
   		</p:column>
   	
-  		<p:column headerText="Data Fim">
+  		<p:column headerText="Data Fim" style="text-align: center">
   			<h:outputText value="#{linha.fim}" >
   				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
   			</h:outputText>

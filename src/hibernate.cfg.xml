@@ -23,6 +23,7 @@
  		<mapping class="br.com.zapeat.model.Estado" />
  		<mapping class="br.com.zapeat.model.Fornecedor" />
  		<mapping class="br.com.zapeat.model.Grupo" />
+ 		<mapping class="br.com.zapeat.model.ImagemPromocao" />
  		<mapping class="br.com.zapeat.model.Menu" />
  		<mapping class="br.com.zapeat.model.Permissao" />
  		<mapping class="br.com.zapeat.model.Promocao" />

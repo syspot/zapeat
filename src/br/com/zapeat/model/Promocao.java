@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -46,6 +50,9 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	
 	@Column(name = "preco_promocional")
 	private Double precoPromocional;
+	
+	@OneToMany(mappedBy = "promocao", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ImagemPromocao> imagensPromocoes;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -112,6 +119,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		this.precoPromocional = precoPromocional;
 	}
 
+	public List<ImagemPromocao> getImagensPromocoes() {
+		return imagensPromocoes;
+	}
+
+	public void setImagensPromocoes(List<ImagemPromocao> imagensPromocoes) {
+		this.imagensPromocoes = imagensPromocoes;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -164,11 +179,11 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 			query.append(" and p.fim = ? ");
 		}
 
-		if (!TSUtil.isEmpty(precoOriginal)) {
+		if (!TSUtil.isEmpty(getPrecoOriginal())) {
 			query.append(" and p.precoOriginal = ? ");
 		}
 
-		if (!TSUtil.isEmpty(precoPromocional)) {
+		if (!TSUtil.isEmpty(getPrecoPromocional())) {
 			query.append(" and p.precoPromocional = ? ");
 		}
 
@@ -183,7 +198,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		}
 
 		if (!TSUtil.isEmpty(descricao)) {
-			params.add(descricao);
+			params.add(ZapeatUtil.tratarString(descricao));
 		}
 
 		if (!TSUtil.isEmpty(inicio)) {
@@ -194,12 +209,12 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 			params.add(fim);
 		}
 
-		if (!TSUtil.isEmpty(precoOriginal)) {
-			params.add(precoOriginal);
+		if (!TSUtil.isEmpty(getPrecoOriginal())) {
+			params.add(getPrecoOriginal());
 		}
 
-		if (!TSUtil.isEmpty(precoPromocional)) {
-			params.add(precoPromocional);
+		if (!TSUtil.isEmpty(getPrecoPromocional())) {
+			params.add(getPrecoPromocional());
 		}
 
 		return super.find(query.toString(), params.toArray());

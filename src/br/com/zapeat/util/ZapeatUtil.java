@@ -3,6 +3,7 @@ package br.com.zapeat.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -128,7 +129,7 @@ public class ZapeatUtil {
 	
 	public static Double tratarDouble(Double valor) {
 
-		if (!TSUtil.isEmpty(valor) && valor.equals(0)) {
+		if (!TSUtil.isEmpty(valor) && valor.equals(0.0)) {
 
 			valor = null;
 
@@ -136,6 +137,51 @@ public class ZapeatUtil {
 
 		return valor;
 
+	}
+	
+	public static <ObjetoGenerico> List<ObjetoGenerico> movimentarLista(List<ObjetoGenerico> lista, ObjetoGenerico selecao, int mover) {
+
+		int tamanho = lista.size();
+
+		int posicao = lista.indexOf(selecao);
+
+		ObjetoGenerico elemento = lista.get(posicao);
+
+		if (mover == -1) { // UP
+
+			if (posicao == 0) {
+
+				lista.add(tamanho, elemento);
+
+				lista.remove(posicao);
+
+			} else {
+
+				lista.add(posicao + mover, elemento);
+
+				lista.remove(posicao + 1);
+			}
+
+		} else { // DOWN
+
+			if (posicao == --tamanho) {
+
+				lista.add(0, elemento);
+
+				lista.remove(tamanho + 1);
+
+			} else {
+
+				elemento = lista.get(++posicao);
+
+				lista.add(posicao - 1, elemento);
+
+				lista.remove(posicao + 1);
+
+			}
+		}
+
+		return lista;
 	}
 
 }

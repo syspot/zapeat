@@ -17,7 +17,7 @@
 	  		<h:panelGrid columns="1" style="width: 90%">
 	  		
 		  		<p:outputLabel for="descricao" value="Descrição" />
-			  	<p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Existem campos obrigatórios" maxlength="50" styleClass="coluna90"/>
+			  	<p:inputText id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="50" styleClass="coluna97"/>
 			  	
 			  	<p:outputLabel for="imagem" value="Imagem" />
 			  	<p:fileUpload id="imagem" label="Selecionar Imagem" auto="true" fileUploadListener="#{mbean.enviarImagem}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="opVisualizacaoImagem" />

@@ -79,7 +79,7 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 	protected void posDetail() {
 	}
 
-	protected void posPersist() throws TSSystemException, TSApplicationException {
+	protected void posPersist() throws TSApplicationException {
 	}
 
 	@Override

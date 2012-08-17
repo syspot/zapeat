@@ -77,8 +77,8 @@ public class BannerFaces extends CrudFaces<Banner> {
 		if(!TSUtil.isEmpty(getCrudModel().getUploadedFile())){
 			
 			String nomeArquivo = getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getImagem());
-			getCrudModel().setImagem(Constantes.PASTA_DOWNLOAD + nomeArquivo);
-			ZapeatUtil.criaArquivo(getCrudModel().getUploadedFile(), Constantes.PASTA_UPLOAD + nomeArquivo);
+			getCrudModel().setImagem(Constantes.PASTA_DOWNLOAD_BANNER + nomeArquivo);
+			ZapeatUtil.criaArquivo(getCrudModel().getUploadedFile(), Constantes.PASTA_UPLOAD_BANNER + nomeArquivo);
 			
 			getCrudModel().update();
 			
