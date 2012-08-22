@@ -25,7 +25,7 @@
 		  	<p:outputLabel for="cnpj" value="CNPJ" />
 		  	<p:outputLabel for="nomeFantasia" value="Nome Fantasia" />
 		  	
-		  	<p:inputText id="cnpj" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.cnpj}" required="true" requiredMessage="CNPJ: Campo obrigatório" maxlength="14"/>
+		  	<p:inputMask mask="99.999.999/9999-99" id="cnpj" value="#{mbeanModel.cnpj}" required="true" requiredMessage="CNPJ: Campo obrigatório" maxlength="18"/>
 		  	<p:inputText id="nomeFantasia" style="width: 303%;" value="#{mbeanModel.nomeFantasia}" maxlength="100"/>
 		  	
 		  	</h:panelGrid>
@@ -55,7 +55,7 @@
 	  			<p:outputLabel for="cep" value="Cep" />
 	  			
 	  			<p:inputText id="numero" value="#{mbeanModel.numero}" maxlength="10"/>
-	  			<p:inputText id="cep" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.cep}" maxlength="8"/>
+	  			<p:inputMask mask="99.999-999" id="cep" value="#{mbeanModel.cep}" maxlength="10"/>
 	  		</h:panelGrid>
 	  		
 	  		<br/>

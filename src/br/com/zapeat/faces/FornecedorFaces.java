@@ -73,30 +73,6 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	}
 
 	@Override
-	protected boolean validaCampos() {
-
-		boolean validado = true;
-
-		if (this.getCrudModel().getCnpj().length() < 14) {
-
-			validado = false;
-
-			super.addErrorMessage("CNPJ: Campo deve conter 14 números.");
-
-		}
-
-		if (this.getCrudModel().getCep().length() < 8) {
-
-			validado = false;
-
-			super.addErrorMessage("Cep: Campo deve conter 8 números.");
-
-		}
-
-		return validado;
-	}
-
-	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException {
 
 		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
