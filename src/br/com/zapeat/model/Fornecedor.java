@@ -45,6 +45,10 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	private String numero;
 
 	private String bairro;
+	
+	private String site;
+	
+	private String telefone;
 
 	private Integer latitude;
 
@@ -167,6 +171,10 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		if (!TSUtil.isEmpty(cep)) {
 			query.append("and ").append(ZapeatUtil.semAcento("f.cep")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
 		}
+		
+		if (!TSUtil.isEmpty(flagAtivo)) {
+			query.append("and f.flagAtivo = ?").append(" ");
+		}
 
 		List<Object> params = new ArrayList<Object>();
 
@@ -200,6 +208,10 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 		if (!TSUtil.isEmpty(cep)) {
 			params.add(ZapeatUtil.tratarString(cep));
+		}
+		
+		if (!TSUtil.isEmpty(flagAtivo)) {
+			params.add(flagAtivo);
 		}
 
 		return super.find(query.toString(), params.toArray());
@@ -332,6 +344,22 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 }

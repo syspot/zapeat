@@ -1,5 +1,6 @@
 package br.com.zapeat.faces;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Cidade;
 import br.com.zapeat.model.Fornecedor;
+import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
 @ManagedBean(name = "fornecedorFaces")
@@ -77,7 +79,17 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
 
-			ZapeatUtil.criarImagemTemp(this.getCrudModel().getArquivo());
+			try {
+
+				ZapeatUtil.gravarLogoFornecedor(this.getCrudModel().getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getCrudModel().getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD_TEMP);
+
+			} catch (IOException e) {
+
+				super.addErrorMessage("Não foi possível gravar a LogoMarca.");
+
+				e.printStackTrace();
+			}
+
 		}
 
 	}
