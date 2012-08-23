@@ -31,8 +31,8 @@
  		<mapping class="br.com.zapeat.model.TipoBanner" />
  		<mapping class="br.com.zapeat.model.Usuario" />
  		<mapping class="br.com.zapeat.model.UsuarioAdm" />
-
+	
 	</session-factory>
-
+	
 </hibernate-configuration>
 	

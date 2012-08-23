@@ -5,16 +5,25 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-  	<ui:param name="mbean" value="${fornecedorFaces}" />
-  	<ui:param name="mbeanModel" value="${fornecedorFaces.crudModel}" />
-  	<ui:param name="mbeanPesquisaModel" value="${fornecedorFaces.crudPesquisaModel}" />
+  	<ui:param name="mbean" value="${usuarioAdmFaces}" />
+  	<ui:param name="mbeanModel" value="${usuarioAdmFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${usuarioAdmFaces.crudPesquisaModel}" />
   	
   	<ui:define name="cadastro">
   			
   			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
-  			<p:outputLabel for="login" value="Razão Social" />
-  			<p:inputText style="width: 149.5%;" id="razaSocial" value="#{mbeanModel.razaoSocial}" required="true" requiredMessage="Razão Social: Campo obrigatório" maxlength="100"/>
+  			<p:outputLabel for="login" value="Login" />
+  			<p:inputText style="width: 80%;" id="login" value="#{mbeanModel.login}" required="true" requiredMessage="Login: Campo obrigatório" maxlength="30"/>
+  			<br/>
+  			<p:outputLabel for="senha" value="Senha" />
+  			<h:inputSecret redisplay="true" style="width: 80%;" id="senha" value="#{mbeanModel.senha}" required="true" requiredMessage="Senha: Campo obrigatório" maxlength="50"/>
+  			<br/>
+  			<p:outputLabel for="fornecedor" value="Fornecedor" />
+  			<p:selectOneMenu id="fornecedor" value="#{mbeanModel.fornecedor.id}">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.fornecedores}" />
+			</p:selectOneMenu>
   			
   			</h:panelGrid>
 		  	
@@ -25,8 +34,16 @@
   			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
   			<p:outputLabel for="loginPesquisa" value="Login" />
-  			<p:inputText style="width: 149.5%;" id="loginPesquisa" value="#{mbeanPesquisaModel.razaoSocial}" maxlength="100"/>
+  			<p:inputText style="width: 80%;" id="loginPesquisa" value="#{mbeanPesquisaModel.login}" maxlength="30"/>
+  			<br/>
   			
+  			<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
+  			<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.fornecedores}" />
+			</p:selectOneMenu>
+  			
+  			<br/>
   			</h:panelGrid>
 	  	
   	</ui:define>

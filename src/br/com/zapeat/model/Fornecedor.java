@@ -45,9 +45,9 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	private String numero;
 
 	private String bairro;
-	
+
 	private String site;
-	
+
 	private String telefone;
 
 	private Integer latitude;
@@ -171,7 +171,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		if (!TSUtil.isEmpty(cep)) {
 			query.append("and ").append(ZapeatUtil.semAcento("f.cep")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
 		}
-		
+
 		if (!TSUtil.isEmpty(flagAtivo)) {
 			query.append("and f.flagAtivo = ?").append(" ");
 		}
@@ -209,7 +209,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		if (!TSUtil.isEmpty(cep)) {
 			params.add(ZapeatUtil.tratarString(cep));
 		}
-		
+
 		if (!TSUtil.isEmpty(flagAtivo)) {
 			params.add(flagAtivo);
 		}

@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
-import br.com.zapeat.util.ZapeatUtil;
 
 @SuppressWarnings("serial")
 @Entity
@@ -40,7 +39,7 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 		query.append(" from UsuarioAdm u where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(login)) {
-			query.append("and ").append(ZapeatUtil.semAcento("u.login")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append("and u.login like ?");
 		}
 
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
@@ -50,7 +49,7 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 		List<Object> params = new ArrayList<Object>();
 
 		if (!TSUtil.isEmpty(login)) {
-			params.add(login);
+			params.add("%" + login + "%");
 		}
 
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {

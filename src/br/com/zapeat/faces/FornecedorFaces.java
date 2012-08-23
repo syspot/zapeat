@@ -43,17 +43,17 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
 		this.getCrudModel().setArquivo(null);
 		this.setFlagAlterar(Boolean.FALSE);
-		return null;
+		return SUCESSO;
 	}
 
 	@Override
 	public String limparPesquisa() {
-		this.setFieldOrdem("descricao");
+		this.setFieldOrdem("nomeFantasia");
 		this.setCrudPesquisaModel(new Fornecedor());
 		this.getCrudPesquisaModel().setCidade(new Cidade());
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		this.setGrid(new ArrayList<Fornecedor>());
-		return "sucesso";
+		return SUCESSO;
 	}
 
 	public void listenerLogoMarca(FileUploadEvent event) {
