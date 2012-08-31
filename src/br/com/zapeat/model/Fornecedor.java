@@ -50,9 +50,9 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	private String telefone;
 
-	private Integer latitude;
+	private Double latitude;
 
-	private Integer longitude;
+	private Double longitude;
 
 	@Column(name = "logomarca")
 	private String logoMarca;
@@ -265,23 +265,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-
-	public Integer getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(Integer latitude) {
-		this.latitude = latitude;
-	}
-
-	public Integer getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(Integer longitude) {
-		this.longitude = longitude;
-	}
-
+	
 	public String getLogoMarca() {
 		return logoMarca;
 	}
@@ -362,4 +346,20 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		this.telefone = telefone;
 	}
 
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	
 }
