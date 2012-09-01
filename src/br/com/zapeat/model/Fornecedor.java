@@ -13,8 +13,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.primefaces.model.UploadedFile;
-
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
@@ -73,9 +71,6 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	private Cidade cidade;
 
 	@Transient
-	private UploadedFile arquivo;
-
-	@Transient
 	private String caminhoLogoMarca;
 
 	public String getCaminhoLogoMarca() {
@@ -90,14 +85,6 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setCaminhoLogoMarca(String caminhoLogoMarca) {
 		this.caminhoLogoMarca = caminhoLogoMarca;
-	}
-
-	public UploadedFile getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(UploadedFile arquivo) {
-		this.arquivo = arquivo;
 	}
 
 	public Long getId() {

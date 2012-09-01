@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
@@ -25,6 +26,7 @@ import br.com.zapeat.util.ZapeatUtil;
 public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private List<SelectItem> cidades;
+	private UploadedFile arquivo;
 
 	@PostConstruct
 	protected void init() {
@@ -41,7 +43,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setCrudModel(new Fornecedor());
 		this.getCrudModel().setCidade(new Cidade());
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
-		this.getCrudModel().setArquivo(null);
+		this.setArquivo(null);
 		this.setFlagAlterar(Boolean.FALSE);
 		return SUCESSO;
 	}
@@ -60,16 +62,16 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		if (!TSUtil.isEmpty(event) && !TSUtil.isEmpty(event.getFile())) {
 
-			this.getCrudModel().setArquivo(event.getFile());
+			this.setArquivo(event.getFile());
 		}
 	}
 
 	@Override
 	protected void prePersist() {
 
-		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
+		if (!TSUtil.isEmpty(this.getArquivo())) {
 
-			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(this.getCrudModel().getArquivo().getFileName()));
+			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()));
 
 		}
 	}
@@ -77,11 +79,11 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException {
 
-		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
+		if (!TSUtil.isEmpty(this.getArquivo())) {
 
 			try {
 
-				ZapeatUtil.gravarLogoFornecedor(this.getCrudModel().getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getCrudModel().getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD_TEMP);
+				ZapeatUtil.gravarLogoFornecedor(this.getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD_TEMP);
 
 			} catch (IOException e) {
 
@@ -100,6 +102,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
+	}
+
+	public UploadedFile getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(UploadedFile arquivo) {
+		this.arquivo = arquivo;
 	}
 
 }
