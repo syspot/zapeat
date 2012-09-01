@@ -24,5 +24,7 @@ public class Constantes {
 	
 	public static final String FOTO_80x80 = "80x80_";
 	public static final String FOTO_180x79 = "180x79_";
+	
+	public static final String REGEX_LATITUDE_LONGITUDE = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
 
 }

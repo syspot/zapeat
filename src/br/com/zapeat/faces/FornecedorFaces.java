@@ -3,6 +3,7 @@ package br.com.zapeat.faces;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -64,6 +65,28 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 			this.setArquivo(event.getFile());
 		}
+	}
+
+	@Override
+	protected boolean validaCampos() {
+
+		boolean validado = true;
+
+		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLatitude().toString())) {
+
+			validado = false;
+
+			super.addErrorMessage("Latiude: Formato inválido.");
+		}
+
+		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLongitude().toString())) {
+
+			validado = false;
+
+			super.addErrorMessage("Longitude: Formato inválido.");
+		}
+
+		return validado;
 	}
 
 	@Override

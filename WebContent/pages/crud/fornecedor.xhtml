@@ -83,7 +83,7 @@
 	  		
 	  		<p:outputLabel for="descricao" value="Descrição" />
 	  		<br/>
-	  		<p:inputTextarea id="descricao" rows="5" cols="30" value="#{mbeanModel.descricao}"/>
+	  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="1000" id="descricao" rows="5" cols="30" value="#{mbeanModel.descricao}"/>
 	  		
 	  		<br/><br/>
 	  			
@@ -109,10 +109,10 @@
 	  						 fileUploadListener="#{mbean.listenerLogoMarca}" 
 	  						 allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/"/>
 	  		
+	  		<br/>
+	  		
 	  		<h:panelGrid columns="2">
 	  		
-	  		<br/>
-				
 			<h:outputLabel value="Ativo " for="ativo"/>
 			<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
 				
