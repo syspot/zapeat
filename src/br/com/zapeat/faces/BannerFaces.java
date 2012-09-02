@@ -10,7 +10,6 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
 
-import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Banner;
@@ -72,15 +71,15 @@ public class BannerFaces extends CrudFaces<Banner> {
 	}
 	
 	@Override
-	protected void posPersist() throws TSApplicationException {
+	protected void prePersist() {
 		
 		if(!TSUtil.isEmpty(getCrudModel().getUploadedFile())){
 			
-			String nomeArquivo = getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getImagem());
-			getCrudModel().setImagem(Constantes.PASTA_DOWNLOAD_BANNER + nomeArquivo);
-			ZapeatUtil.criaArquivo(getCrudModel().getUploadedFile(), Constantes.PASTA_UPLOAD_BANNER + nomeArquivo);
+			String nomeArquivo = TSUtil.gerarId() + TSFile.obterExtensaoArquivo(getCrudModel().getImagem());
 			
-			getCrudModel().update();
+			getCrudModel().setImagem(nomeArquivo);
+			
+			ZapeatUtil.criaArquivo(getCrudModel().getUploadedFile(), Constantes.PASTA_UPLOAD_BANNER + nomeArquivo);
 			
 		}
 		

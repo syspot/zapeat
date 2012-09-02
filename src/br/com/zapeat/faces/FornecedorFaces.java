@@ -28,6 +28,8 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private List<SelectItem> cidades;
 	private UploadedFile arquivo;
+	
+	private UploadedFile imagemThumb;
 
 	@PostConstruct
 	protected void init() {
@@ -88,10 +90,25 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		return validado;
 	}
+	
+	@Override
+	protected void posDetail() {
+		getCrudModel().setImagemCadastrada(Boolean.TRUE);
+	}
 
 	@Override
 	protected void prePersist() {
 
+		if(!TSUtil.isEmpty(imagemThumb)){
+			
+			String nomeArquivo = TSUtil.gerarId() + TSFile.obterExtensaoArquivo(getCrudModel().getImagemThumb());
+			
+			getCrudModel().setImagemThumb(nomeArquivo);
+			
+			ZapeatUtil.gravarImagemComRedimensionamento(imagemThumb, Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + nomeArquivo, Constantes.PASTA_UPLOAD_FORNECEDOR, Constantes.LARGURA_FORNECEDOR_THUMB, Constantes.ALTURA_FORNECEDOR_THUMB);
+			
+		}
+		
 		if (!TSUtil.isEmpty(this.getArquivo())) {
 
 			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()));
@@ -118,6 +135,11 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		}
 
 	}
+	
+	public void enviarImagem(FileUploadEvent event) {
+		this.imagemThumb = event.getFile();
+		getCrudModel().setImagemThumb(ZapeatUtil.criarImagemTemp(event));
+	}
 
 	public List<SelectItem> getCidades() {
 		return cidades;
@@ -133,6 +155,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setArquivo(UploadedFile arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public UploadedFile getImagemThumb() {
+		return imagemThumb;
+	}
+
+	public void setImagemThumb(UploadedFile imagemThumb) {
+		this.imagemThumb = imagemThumb;
 	}
 
 }

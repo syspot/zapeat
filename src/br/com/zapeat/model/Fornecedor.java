@@ -18,10 +18,14 @@ import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "fornecedores")
 public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 387687850417340185L;
 
 	@Id
 	@SequenceGenerator(name = "FORNECEDORES_ID_SEQ", sequenceName = "fornecedores_id_seq", allocationSize = 1)
@@ -69,10 +73,20 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	@ManyToOne
 	private Cidade cidade;
+	
+	@Column(name = "imagem_thumb")
+	private String imagemThumb;
 
 	@Transient
 	private String caminhoLogoMarca;
+	
+	@Transient
+	private boolean imagemCadastrada;
 
+	public String getImagemThumbView() {
+		return imagemCadastrada ? Constantes.PASTA_DOWNLOAD_FORNECEDOR + Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + getImagemThumb() : Constantes.PASTA_DOWNLOAD_TEMP + getImagemThumb(); 
+	}
+	
 	public String getCaminhoLogoMarca() {
 
 		if (!TSUtil.isEmpty(this.logoMarca)) {
@@ -347,6 +361,23 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getImagemThumb() {
+		return imagemThumb;
+	}
+
+	public void setImagemThumb(String imagemThumb) {
+		this.imagemCadastrada = false;
+		this.imagemThumb = imagemThumb;
+	}
+
+	public boolean isImagemCadastrada() {
+		return imagemCadastrada;
+	}
+
+	public void setImagemCadastrada(boolean imagemCadastrada) {
+		this.imagemCadastrada = imagemCadastrada;
 	}
 	
 }

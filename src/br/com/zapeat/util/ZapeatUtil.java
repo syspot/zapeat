@@ -127,7 +127,7 @@ public class ZapeatUtil {
 
 		criaArquivo(file, arquivo);
 
-		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
+		return nomeArquivo;
 
 	}
 

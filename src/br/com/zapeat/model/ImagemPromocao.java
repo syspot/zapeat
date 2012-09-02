@@ -19,6 +19,11 @@ import br.com.zapeat.util.Constantes;
 @Table(name = "imagens_promocoes")
 public class ImagemPromocao extends TSActiveRecordAb<ImagemPromocao>{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7797419767827957163L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="imagens_promocoes_id")
 	@SequenceGenerator(name="imagens_promocoes_id", sequenceName="imagens_promocoes_id_seq")
