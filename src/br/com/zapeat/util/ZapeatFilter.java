@@ -16,7 +16,7 @@ import br.com.topsys.util.TSUtil;
 /**
  * Servlet Filter implementation class Piloto
  */
-@WebFilter("/piloto")
+@WebFilter("/")
 public class ZapeatFilter implements Filter {
 
 	@Override

@@ -1,5 +1,7 @@
 package br.com.zapeat.util;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +9,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.primefaces.event.FileUploadEvent;
@@ -63,10 +66,9 @@ public class ZapeatUtil {
 	public static String semAcento(String campo) {
 		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
-	
+
 	public static String getStringParamSemAcento(String campo) {
-		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" +
-				" like translate(?, 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
+		return "translate(lower(trim(".concat(campo).concat(")), 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')" + " like translate(?, 'áéíóúàèìòùãõâêîôôäëïöüçÁÉÍÓÚÀÈÌÒÙÃÕÂÊÎÔÛÄËÏÖÜÇ', 'aeiouaeiouaoaeiooaeioucAEIOUAEIOUAOAEIOOAEIOUC')");
 	}
 
 	public static void criaArquivo(InputStream file, String arquivo) {
@@ -115,7 +117,7 @@ public class ZapeatUtil {
 		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
 
 	}
-	
+
 	public static String criarImagemTemp(UploadedFile file) {
 
 		String nomeArquivo = gerarNumeroAleatorio() + TSFile.obterExtensaoArquivo(file.getFileName());
@@ -126,7 +128,7 @@ public class ZapeatUtil {
 		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
 
 	}
-	
+
 	public static Double tratarDouble(Double valor) {
 
 		if (!TSUtil.isEmpty(valor) && valor.equals(0.0)) {
@@ -138,7 +140,7 @@ public class ZapeatUtil {
 		return valor;
 
 	}
-	
+
 	public static <ObjetoGenerico> List<ObjetoGenerico> movimentarLista(List<ObjetoGenerico> lista, ObjetoGenerico selecao, int mover) {
 
 		int tamanho = lista.size();
@@ -182,6 +184,49 @@ public class ZapeatUtil {
 		}
 
 		return lista;
+	}
+
+	public static boolean gravarLogoFornecedor(InputStream streamImagem, String extensao, String nomeArquivo, String destino) throws IOException {
+
+		StringBuilder nomeImagem = new StringBuilder();
+
+		nomeImagem.append(extensao.toLowerCase());
+
+		try {
+			
+			BufferedImage imagem = ImageIO.read(streamImagem);
+			
+			ImageIO.write(redimensionarLogoFornecedor(imagem, imagem.getWidth(), imagem.getHeight()), extensao.replace(".", ""), new File(destino + nomeArquivo));
+
+			ImageIO.write(redimensionarLogoFornecedor(imagem, Constantes.LARGURA_ALTURA_80, Constantes.LARGURA_ALTURA_80), extensao.replace(".", ""), new File(destino + Constantes.FOTO_80x80 + nomeArquivo));
+
+			ImageIO.write(redimensionarLogoFornecedor(imagem, Constantes.LARGURA_180, Constantes.ALTURA_79), extensao.replace(".", ""), new File(destino + Constantes.FOTO_180x79 + nomeArquivo));
+
+		} catch (IOException ex) {
+			
+			ex.printStackTrace();
+
+			return false;
+
+		} finally {
+
+			streamImagem.close();
+
+		}
+
+		return true;
+
+	}
+
+	public static BufferedImage redimensionarLogoFornecedor(BufferedImage imagem, int largura, int altura) {
+
+		Image thumb = imagem.getScaledInstance(largura, altura, BufferedImage.SCALE_SMOOTH);
+
+		BufferedImage newImg = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
+
+		newImg.createGraphics().drawImage(thumb, 0, 0, largura, altura, null);
+
+		return newImg;
 	}
 
 }

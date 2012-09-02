@@ -16,7 +16,8 @@
 		<property name="hibernate.connection.password">15rt01</property>
 
 		<property name="hibernate.show_sql">true</property>
-
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		
  		<mapping class="br.com.zapeat.model.Banner" />
  		<mapping class="br.com.zapeat.model.Categoria" />
  		<mapping class="br.com.zapeat.model.Comentario" />
@@ -32,9 +33,9 @@
  		<mapping class="br.com.zapeat.model.TipoBanner" />
  		<mapping class="br.com.zapeat.model.Usuario" />
  		<mapping class="br.com.zapeat.model.UsuarioAdm" />
-
+	
 	</session-factory>
-
+	
 </hibernate-configuration>
 <?xml version='1.0' encoding='ISO-8859-1'?>
 <!DOCTYPE hibernate-configuration PUBLIC

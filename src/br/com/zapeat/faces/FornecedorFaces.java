@@ -1,7 +1,9 @@
 package br.com.zapeat.faces;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -9,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
@@ -16,6 +19,7 @@ import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Cidade;
 import br.com.zapeat.model.Fornecedor;
+import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
 @ManagedBean(name = "fornecedorFaces")
@@ -23,6 +27,7 @@ import br.com.zapeat.util.ZapeatUtil;
 public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private List<SelectItem> cidades;
+	private UploadedFile arquivo;
 
 	@PostConstruct
 	protected void init() {
@@ -39,36 +44,26 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setCrudModel(new Fornecedor());
 		this.getCrudModel().setCidade(new Cidade());
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
-		this.getCrudModel().setArquivo(null);
+		this.setArquivo(null);
 		this.setFlagAlterar(Boolean.FALSE);
-		return null;
+		return SUCESSO;
 	}
 
 	@Override
 	public String limparPesquisa() {
-		this.setFieldOrdem("descricao");
+		this.setFieldOrdem("nomeFantasia");
 		this.setCrudPesquisaModel(new Fornecedor());
 		this.getCrudPesquisaModel().setCidade(new Cidade());
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		this.setGrid(new ArrayList<Fornecedor>());
-		return "sucesso";
+		return SUCESSO;
 	}
 
 	public void listenerLogoMarca(FileUploadEvent event) {
 
 		if (!TSUtil.isEmpty(event) && !TSUtil.isEmpty(event.getFile())) {
 
-			this.getCrudModel().setArquivo(event.getFile());
-		}
-	}
-
-	@Override
-	protected void prePersist() {
-
-		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
-
-			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(this.getCrudModel().getArquivo().getFileName()));
-
+			this.setArquivo(event.getFile());
 		}
 	}
 
@@ -77,31 +72,49 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		boolean validado = true;
 
-		if (this.getCrudModel().getCnpj().length() < 14) {
+		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLatitude().toString())) {
 
 			validado = false;
 
-			super.addErrorMessage("CNPJ: Campo deve conter 14 números.");
-
+			super.addErrorMessage("Latiude: Formato inválido.");
 		}
 
-		if (this.getCrudModel().getCep().length() < 8) {
+		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLongitude().toString())) {
 
 			validado = false;
 
-			super.addErrorMessage("Cep: Campo deve conter 8 números.");
-
+			super.addErrorMessage("Longitude: Formato inválido.");
 		}
 
 		return validado;
 	}
 
 	@Override
+	protected void prePersist() {
+
+		if (!TSUtil.isEmpty(this.getArquivo())) {
+
+			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()));
+
+		}
+	}
+
+	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException {
 
-		if (!TSUtil.isEmpty(this.getCrudModel().getArquivo())) {
+		if (!TSUtil.isEmpty(this.getArquivo())) {
 
-			ZapeatUtil.criarImagemTemp(this.getCrudModel().getArquivo());
+			try {
+
+				ZapeatUtil.gravarLogoFornecedor(this.getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD_TEMP);
+
+			} catch (IOException e) {
+
+				super.addErrorMessage("Não foi possível gravar a LogoMarca.");
+
+				e.printStackTrace();
+			}
+
 		}
 
 	}
@@ -112,6 +125,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
+	}
+
+	public UploadedFile getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(UploadedFile arquivo) {
+		this.arquivo = arquivo;
 	}
 
 }

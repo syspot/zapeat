@@ -13,8 +13,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.primefaces.model.UploadedFile;
-
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
@@ -46,9 +44,13 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	private String bairro;
 
-	private Integer latitude;
+	private String site;
 
-	private Integer longitude;
+	private String telefone;
+
+	private Double latitude;
+
+	private Double longitude;
 
 	@Column(name = "logomarca")
 	private String logoMarca;
@@ -69,9 +71,6 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	private Cidade cidade;
 
 	@Transient
-	private UploadedFile arquivo;
-
-	@Transient
 	private String caminhoLogoMarca;
 
 	public String getCaminhoLogoMarca() {
@@ -86,14 +85,6 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setCaminhoLogoMarca(String caminhoLogoMarca) {
 		this.caminhoLogoMarca = caminhoLogoMarca;
-	}
-
-	public UploadedFile getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(UploadedFile arquivo) {
-		this.arquivo = arquivo;
 	}
 
 	public Long getId() {
@@ -168,6 +159,10 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 			query.append("and ").append(ZapeatUtil.semAcento("f.cep")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
 		}
 
+		if (!TSUtil.isEmpty(flagAtivo)) {
+			query.append("and f.flagAtivo = ?").append(" ");
+		}
+
 		List<Object> params = new ArrayList<Object>();
 
 		if (!TSUtil.isEmpty(razaoSocial)) {
@@ -200,6 +195,10 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 		if (!TSUtil.isEmpty(cep)) {
 			params.add(ZapeatUtil.tratarString(cep));
+		}
+
+		if (!TSUtil.isEmpty(flagAtivo)) {
+			params.add(flagAtivo);
 		}
 
 		return super.find(query.toString(), params.toArray());
@@ -253,23 +252,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-
-	public Integer getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(Integer latitude) {
-		this.latitude = latitude;
-	}
-
-	public Integer getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(Integer longitude) {
-		this.longitude = longitude;
-	}
-
+	
 	public String getLogoMarca() {
 		return logoMarca;
 	}
@@ -334,4 +317,36 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		this.razaoSocial = razaoSocial;
 	}
 
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	
 }
