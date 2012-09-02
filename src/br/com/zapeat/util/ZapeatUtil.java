@@ -1,7 +1,9 @@
 package br.com.zapeat.util;
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -114,7 +116,7 @@ public class ZapeatUtil {
 
 		criaArquivo(event.getFile(), arquivo);
 
-		return Constantes.PASTA_DOWNLOAD_TEMP + nomeArquivo;
+		return nomeArquivo;
 
 	}
 
@@ -228,5 +230,59 @@ public class ZapeatUtil {
 
 		return newImg;
 	}
+	
+	public static void gravarImagemComRedimensionamento(UploadedFile arquivo, String nomeArquivo, String destino, int largura, int altura) {
+		
+		BufferedInputStream streamImagem = null;
+		
+		try {
+		
+			streamImagem = new BufferedInputStream(arquivo.getInputstream());
+			
+		} catch (IOException e1) {
+			
+			e1.printStackTrace();
+			
+		}
+		
+		String extensao = TSFile.obterExtensaoArquivo(nomeArquivo);
+		
+		try {
+			
+			BufferedImage imagem = ImageIO.read(streamImagem);
+			
+			ImageIO.write(redimensionarImagem(imagem, largura, altura), extensao.replace(".", ""), new File(destino + nomeArquivo));
+			
+		} catch (Exception ex) {
+			
+			ex.printStackTrace();
+			
+		} finally {
+			
+			try {
+				streamImagem.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
+	public static BufferedImage redimensionarImagem(BufferedImage bufferedImage, int largura, int altura) {
+		 
+		Image image = bufferedImage.getScaledInstance(largura, altura, Image.SCALE_AREA_AVERAGING);
+        
+		BufferedImage newBufferedImage = new BufferedImage(largura, altura, BufferedImage.TYPE_INT_RGB);
+		
+		Graphics2D graphics2D = newBufferedImage.createGraphics();
+		
+		graphics2D.drawImage(image, 0, 0, null);
+		
+		graphics2D.dispose();
+		
+		return newBufferedImage;
+        
+    }
 
 }

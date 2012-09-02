@@ -51,9 +51,6 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	@Column(name = "preco_promocional")
 	private Double precoPromocional;
 	
-	@Column(name = "imagem_thumb")
-	private String imagemThumb;
-	
 	@OneToMany(mappedBy = "promocao", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ImagemPromocao> imagensPromocoes;
 
@@ -124,14 +121,6 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 	public Double getPrecoPromocional() {
 		return ZapeatUtil.tratarDouble(precoPromocional);
-	}
-
-	public String getImagemThumb() {
-		return imagemThumb;
-	}
-
-	public void setImagemThumb(String imagemThumb) {
-		this.imagemThumb = imagemThumb;
 	}
 
 	public void setPrecoPromocional(Double precoPromocional) {

@@ -9,7 +9,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
@@ -31,8 +30,6 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	private ImagemPromocao imagemPromocaoSelecionada;
 	private Integer mover;
 	
-	private UploadedFile imagemThumbUpload;
-
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
@@ -67,29 +64,21 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	@Override
 	protected void posPersist() throws TSApplicationException {
 		
-		if(!TSUtil.isEmpty(imagemThumbUpload)){
-			
-			getCrudModel().setImagemThumb(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(getCrudModel().getImagemThumb()));
-			ZapeatUtil.criaArquivo(imagemThumbUpload, Constantes.PASTA_UPLOAD_PROMOCAO + getCrudModel().getImagemThumb());
-			
-		}
-		
 		for(ImagemPromocao imagem : getCrudModel().getImagensPromocoes()){
 			
 			if(!TSUtil.isEmpty(imagem.getUploadedFile())){
 				
-				ImagemPromocao img = imagem.getByModel();
+				String nomeArquivo = TSUtil.gerarId() + TSFile.obterExtensaoArquivo(imagem.getImagem());
 				
-				imagem.setId(img.getId());
+				imagem.setImagem(nomeArquivo);
 				
-				String nomeArquivo = imagem.getId() + TSFile.obterExtensaoArquivo(imagem.getImagem());
-				imagem.setImagem(Constantes.PASTA_DOWNLOAD_PROMOCAO + nomeArquivo);
-				
-				ZapeatUtil.criaArquivo(imagem.getUploadedFile(), Constantes.PASTA_UPLOAD_PROMOCAO + nomeArquivo);
+				ZapeatUtil.gravarImagemComRedimensionamento(imagem.getUploadedFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + nomeArquivo, Constantes.PASTA_UPLOAD_PROMOCAO, Constantes.LARGURA_PROMOCAO_FULL, Constantes.ALTURA_PROMOCAO_FULL);
+				ZapeatUtil.gravarImagemComRedimensionamento(imagem.getUploadedFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_THUMB + nomeArquivo, Constantes.PASTA_UPLOAD_PROMOCAO, Constantes.LARGURA_PROMOCAO_THUMB, Constantes.ALTURA_PROMOCAO_THUMB);
 				
 				imagem.update();
 				
 			}
+			
 		}
 		
 	}
@@ -142,14 +131,5 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	public void setMover(Integer mover) {
 		this.mover = mover;
 	}
-
-	public UploadedFile getImagemThumbUpload() {
-		return imagemThumbUpload;
-	}
-
-	public void setImagemThumbUpload(UploadedFile imagemThumbUpload) {
-		this.imagemThumbUpload = imagemThumbUpload;
-	}
-	
 
 }
