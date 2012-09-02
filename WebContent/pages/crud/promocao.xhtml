@@ -18,6 +18,9 @@
 	  		
 	  			<h:panelGrid columns="1" style="width:100%">
 	  			
+			  		<p:outputLabel for="titulo" value="Título" />
+				  	<p:inputText id="titulo" value="#{mbeanModel.titulo}" required="true" requiredMessage="Título: Campo obrigatório" maxlength="100" style="width:78%"/>
+	  			
 			  		<p:outputLabel for="descricao" value="Descrição" />
 				  	<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="1000" autoResize="false" rows="10" style="width:78%"/>
 				  	
@@ -100,6 +103,9 @@
   		
   			<h:panelGrid columns="1" style="width:100%">
   			
+		  		<p:outputLabel for="tituloPesquisa" value="Título" />
+			  	<p:inputText id="tituloPesquisa" value="#{mbeanPesquisaModel.titulo}" maxlength="100" style="width:78%"/>
+			  	
 		  		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
 			  	<p:inputTextarea id="descricaoPesquisa" value="#{mbeanPesquisaModel.descricao}" maxlength="1000" rows="12" cols="50" autoResize="false" style="width: 90%"/>
 			  	

@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.ZapeatUtil;
@@ -39,6 +37,8 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	@ManyToOne
 	private Fornecedor fornecedor;
 	
+	private String titulo;
+	
 	private String descricao;
 	
 	private Date inicio;
@@ -51,6 +51,9 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	@Column(name = "preco_promocional")
 	private Double precoPromocional;
 	
+	@Column(name = "imagem_thumb")
+	private String imagemThumb;
+	
 	@OneToMany(mappedBy = "promocao", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ImagemPromocao> imagensPromocoes;
 
@@ -60,6 +63,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getDescricao() {
@@ -113,6 +124,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 	public Double getPrecoPromocional() {
 		return ZapeatUtil.tratarDouble(precoPromocional);
+	}
+
+	public String getImagemThumb() {
+		return imagemThumb;
+	}
+
+	public void setImagemThumb(String imagemThumb) {
+		this.imagemThumb = imagemThumb;
 	}
 
 	public void setPrecoPromocional(Double precoPromocional) {
@@ -170,6 +189,10 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		if (!TSUtil.isEmpty(descricao)) {
 			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("descricao"));
 		}
+		
+		if (!TSUtil.isEmpty(titulo)) {
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("titulo"));
+		}
 
 		if (!TSUtil.isEmpty(inicio)) {
 			query.append(" and p.inicio = ? ");
@@ -199,6 +222,10 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 		if (!TSUtil.isEmpty(descricao)) {
 			params.add(ZapeatUtil.tratarString(descricao));
+		}
+		
+		if (!TSUtil.isEmpty(titulo)) {
+			params.add(ZapeatUtil.tratarString(titulo));
 		}
 
 		if (!TSUtil.isEmpty(inicio)) {

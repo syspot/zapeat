@@ -10,15 +10,16 @@
 		<property name="current_session_context_class">thread</property>
 
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/zapeat</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://204.45.81.210:5432/zapeat</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-		<property name="hibernate.connection.username">postgres</property>
-		<property name="hibernate.connection.password">nayara</property>
+		<property name="hibernate.connection.username">zapeat</property>
+		<property name="hibernate.connection.password">15rt01</property>
 
 		<property name="hibernate.show_sql">true</property>
 
  		<mapping class="br.com.zapeat.model.Banner" />
  		<mapping class="br.com.zapeat.model.Categoria" />
+ 		<mapping class="br.com.zapeat.model.Comentario" />
  		<mapping class="br.com.zapeat.model.Cidade" />
  		<mapping class="br.com.zapeat.model.Estado" />
  		<mapping class="br.com.zapeat.model.Fornecedor" />
@@ -34,5 +35,43 @@
 
 	</session-factory>
 
+</hibernate-configuration>
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+	
+<hibernate-configuration>
+
+	<session-factory>
+		
+		<property name="current_session_context_class">thread</property>
+
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/zapeat</property>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.username">zapeat</property>
+		<property name="hibernate.connection.password">15rt01</property>
+
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		
+ 		<mapping class="br.com.zapeat.model.Banner" />
+ 		<mapping class="br.com.zapeat.model.Categoria" />
+ 		<mapping class="br.com.zapeat.model.Cidade" />
+ 		<mapping class="br.com.zapeat.model.Estado" />
+ 		<mapping class="br.com.zapeat.model.Fornecedor" />
+ 		<mapping class="br.com.zapeat.model.Grupo" />
+ 		<mapping class="br.com.zapeat.model.ImagemPromocao" />
+ 		<mapping class="br.com.zapeat.model.Menu" />
+ 		<mapping class="br.com.zapeat.model.Permissao" />
+ 		<mapping class="br.com.zapeat.model.Promocao" />
+ 		<mapping class="br.com.zapeat.model.TipoPromocao" />
+ 		<mapping class="br.com.zapeat.model.TipoBanner" />
+ 		<mapping class="br.com.zapeat.model.Usuario" />
+ 		<mapping class="br.com.zapeat.model.UsuarioAdm" />
+	
+	</session-factory>
+	
 </hibernate-configuration>
 	

@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
@@ -29,6 +30,8 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	
 	private ImagemPromocao imagemPromocaoSelecionada;
 	private Integer mover;
+	
+	private UploadedFile imagemThumbUpload;
 
 	@PostConstruct
 	protected void init() {
@@ -63,6 +66,13 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	
 	@Override
 	protected void posPersist() throws TSApplicationException {
+		
+		if(!TSUtil.isEmpty(imagemThumbUpload)){
+			
+			getCrudModel().setImagemThumb(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(getCrudModel().getImagemThumb()));
+			ZapeatUtil.criaArquivo(imagemThumbUpload, Constantes.PASTA_UPLOAD_PROMOCAO + getCrudModel().getImagemThumb());
+			
+		}
 		
 		for(ImagemPromocao imagem : getCrudModel().getImagensPromocoes()){
 			
@@ -131,6 +141,14 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 	public void setMover(Integer mover) {
 		this.mover = mover;
+	}
+
+	public UploadedFile getImagemThumbUpload() {
+		return imagemThumbUpload;
+	}
+
+	public void setImagemThumbUpload(UploadedFile imagemThumbUpload) {
+		this.imagemThumbUpload = imagemThumbUpload;
 	}
 	
 
