@@ -9,9 +9,7 @@
   	<ui:param name="mbeanModel" value="${fornecedorFaces.crudModel}" />
   	<ui:param name="mbeanPesquisaModel" value="${fornecedorFaces.crudPesquisaModel}" />
   	
-  	<ui:define name="cadastro">
-  	
-  			
+  	<ui:define name="cadastro">		
   			
   			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
@@ -116,7 +114,7 @@
 	  		<h:panelGrid columns="1" style="margin-left: -5px;">
   			
   			<p:outputLabel for="pickList" value="Categorias" style="margin-left: 3px;"/>
-  			<p:pickList id="pickList" value="#{fornecedorFaces.categorias}" converter="categoriaConverter"
+  			<p:pickList required="true" requiredMessage="Categorias: Selecione pelo menos uma" id="pickList" value="#{fornecedorFaces.categorias}" converter="categoriaConverter"
                 var="categoria"
                 itemLabel="#{categoria.descricao}"
                 itemValue="#{categoria.id}" />
