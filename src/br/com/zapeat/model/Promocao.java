@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.ZapeatUtil;
@@ -38,6 +36,8 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	
 	@ManyToOne
 	private Fornecedor fornecedor;
+	
+	private String titulo;
 	
 	private String descricao;
 	
@@ -60,6 +60,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getDescricao() {
@@ -170,6 +178,10 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		if (!TSUtil.isEmpty(descricao)) {
 			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("descricao"));
 		}
+		
+		if (!TSUtil.isEmpty(titulo)) {
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("titulo"));
+		}
 
 		if (!TSUtil.isEmpty(inicio)) {
 			query.append(" and p.inicio = ? ");
@@ -199,6 +211,10 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 		if (!TSUtil.isEmpty(descricao)) {
 			params.add(ZapeatUtil.tratarString(descricao));
+		}
+		
+		if (!TSUtil.isEmpty(titulo)) {
+			params.add(ZapeatUtil.tratarString(titulo));
 		}
 
 		if (!TSUtil.isEmpty(inicio)) {

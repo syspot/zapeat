@@ -12,11 +12,18 @@ import javax.persistence.Transient;
 import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSUtil;
+import br.com.zapeat.util.Constantes;
 
 @Entity
 @Table(name = "imagens_promocoes")
 public class ImagemPromocao extends TSActiveRecordAb<ImagemPromocao>{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7797419767827957163L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="imagens_promocoes_id")
 	@SequenceGenerator(name="imagens_promocoes_id", sequenceName="imagens_promocoes_id_seq")
@@ -60,6 +67,10 @@ public class ImagemPromocao extends TSActiveRecordAb<ImagemPromocao>{
 
 	public void setUploadedFile(UploadedFile uploadedFile) {
 		this.uploadedFile = uploadedFile;
+	}
+	
+	public String getImagemView(){
+		return TSUtil.isEmpty(getId()) ? Constantes.PASTA_DOWNLOAD_TEMP + getImagem() : Constantes.PASTA_DOWNLOAD_PROMOCAO + Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + getImagem();
 	}
 
 	@Override

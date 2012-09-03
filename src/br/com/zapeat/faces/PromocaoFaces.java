@@ -10,7 +10,6 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
 
-import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Fornecedor;
@@ -29,7 +28,7 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	
 	private ImagemPromocao imagemPromocaoSelecionada;
 	private Integer mover;
-
+	
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
@@ -62,24 +61,21 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	}
 	
 	@Override
-	protected void posPersist() throws TSApplicationException {
+	protected void prePersist() {
 		
 		for(ImagemPromocao imagem : getCrudModel().getImagensPromocoes()){
 			
 			if(!TSUtil.isEmpty(imagem.getUploadedFile())){
 				
-				ImagemPromocao img = imagem.getByModel();
+				String nomeArquivo = TSUtil.gerarId() + TSFile.obterExtensaoArquivo(imagem.getImagem());
 				
-				imagem.setId(img.getId());
+				imagem.setImagem(nomeArquivo);
 				
-				String nomeArquivo = imagem.getId() + TSFile.obterExtensaoArquivo(imagem.getImagem());
-				imagem.setImagem(Constantes.PASTA_DOWNLOAD_PROMOCAO + nomeArquivo);
-				
-				ZapeatUtil.criaArquivo(imagem.getUploadedFile(), Constantes.PASTA_UPLOAD_PROMOCAO + nomeArquivo);
-				
-				imagem.update();
+				ZapeatUtil.gravarImagemComRedimensionamento(imagem.getUploadedFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + nomeArquivo, Constantes.PASTA_UPLOAD_PROMOCAO, Constantes.LARGURA_PROMOCAO_FULL, Constantes.ALTURA_PROMOCAO_FULL);
+				ZapeatUtil.gravarImagemComRedimensionamento(imagem.getUploadedFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_THUMB + nomeArquivo, Constantes.PASTA_UPLOAD_PROMOCAO, Constantes.LARGURA_PROMOCAO_THUMB, Constantes.ALTURA_PROMOCAO_THUMB);
 				
 			}
+			
 		}
 		
 	}
@@ -132,6 +128,5 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	public void setMover(Integer mover) {
 		this.mover = mover;
 	}
-	
 
 }
