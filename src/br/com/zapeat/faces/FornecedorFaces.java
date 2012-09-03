@@ -11,14 +11,17 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.model.Categoria;
 import br.com.zapeat.model.Cidade;
 import br.com.zapeat.model.Fornecedor;
+import br.com.zapeat.model.FornecedorCategoria;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
@@ -28,6 +31,9 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private List<SelectItem> cidades;
 	private UploadedFile arquivo;
+	private DualListModel<Categoria> categorias;
+	private DualListModel<Categoria> targetCategorias;
+	private List<Categoria> categoriasSources;
 
 	@PostConstruct
 	protected void init() {
@@ -46,6 +52,16 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
 		this.setArquivo(null);
 		this.setFlagAlterar(Boolean.FALSE);
+		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
+
+		this.categoriasSources = new Categoria().findAll("descricao");
+
+		this.targetCategorias = new DualListModel<Categoria>();
+
+		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
+
+		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
+
 		return SUCESSO;
 	}
 
@@ -92,11 +108,58 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	@Override
 	protected void prePersist() {
 
+		int count = 1;
+
+		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
+
+		if (this.isFlagAlterar()) {
+
+			try {
+				new FornecedorCategoria().delete("delete from FornecedorCategoria fc where fc.fornecedor.id = ?", this.getCrudModel().getId());
+			} catch (TSApplicationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		for (Categoria item : this.categorias.getTarget()) {
+
+			FornecedorCategoria model = new FornecedorCategoria();
+
+			model.setFornecedor(this.getCrudModel());
+
+			model.setCategoria(item);
+
+			model.setPrioridade(count);
+
+			count++;
+
+			this.getCrudModel().getFornecedorCategorias().add(model);
+
+		}
+
 		if (!TSUtil.isEmpty(this.getArquivo())) {
 
 			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()));
 
 		}
+	}
+
+	@Override
+	protected void posDetail() {
+
+		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
+
+		List<FornecedorCategoria> fornecedorCategorias = new FornecedorCategoria().findByModel("prioridade");
+
+		for (FornecedorCategoria item : fornecedorCategorias) {
+
+			categoriaTarget.add(item.getCategoria());
+
+		}
+
+		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
+
 	}
 
 	@Override
@@ -133,6 +196,30 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setArquivo(UploadedFile arquivo) {
 		this.arquivo = arquivo;
+	}
+
+	public DualListModel<Categoria> getTargetCategorias() {
+		return targetCategorias;
+	}
+
+	public void setTargetCategorias(DualListModel<Categoria> targetCategorias) {
+		this.targetCategorias = targetCategorias;
+	}
+
+	public DualListModel<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(DualListModel<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public List<Categoria> getCategoriasSources() {
+		return categoriasSources;
+	}
+
+	public void setCategoriasSources(List<Categoria> categoriasSources) {
+		this.categoriasSources = categoriasSources;
 	}
 
 }

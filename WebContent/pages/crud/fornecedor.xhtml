@@ -10,6 +10,8 @@
   	<ui:param name="mbeanPesquisaModel" value="${fornecedorFaces.crudPesquisaModel}" />
   	
   	<ui:define name="cadastro">
+  	
+  			
   			
   			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
@@ -97,10 +99,21 @@
 	  		<p:outputLabel for="latitude" value="Latitude" />
 	  		<p:outputLabel for="longitude" value="Longitude" />
 	  		
-			<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.latitude}"/>
-	  		<p:inputText required="true" requiredMessage="Longitude: Campo obrigatório" id="longitude" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.longitude}"/>
+			<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" value="#{mbeanModel.latitude}"/>
+	  		<p:inputText required="true" requiredMessage="Longitude: Campo obrigatório" id="longitude" value="#{mbeanModel.longitude}"/>
 	  		
 	  		</h:panelGrid>
+	  		
+	  		<br/>
+	  		
+	  		<h:panelGrid columns="1" style="margin-left: -5px;">
+  			
+  			<p:outputLabel for="pickList" value="Categorias" style="margin-left: 3px;"/>
+  			<p:pickList id="pickList" value="#{fornecedorFaces.categorias}" converter="categoriaConverter"
+                var="categoria"
+                itemLabel="#{categoria.descricao}"
+                itemValue="#{categoria.id}" />
+  			</h:panelGrid>
 	  		
 	  		<br/>
 	  		
@@ -160,17 +173,6 @@
 	  		
 			<br/>
 	  		
-	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
-	  			
-	  			<p:outputLabel for="numeroPesquisa" value="Número" />
-	  			<p:outputLabel for="cepPesquisa" value="Cep" />
-	  			
-	  			<p:inputText id="numeroPesquisa" value="#{mbeanPesquisaModel.numero}" maxlength="10"/>
-	  			<p:inputText id="cepPesquisa" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanPesquisaModel.cep}" maxlength="8"/>
-	  		</h:panelGrid>
-	  		
-	  		<br/>
-		  	
 	  		<h:panelGrid columns="2">
 				
 			<h:outputLabel value="Ativo " for="ativoPesquisa"/>

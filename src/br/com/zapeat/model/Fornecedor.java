@@ -3,12 +3,14 @@ package br.com.zapeat.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -69,6 +71,9 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	@ManyToOne
 	private Cidade cidade;
+
+	@OneToMany(mappedBy="fornecedor",cascade = CascadeType.MERGE)
+	private List<FornecedorCategoria> fornecedorCategorias;
 
 	@Transient
 	private String caminhoLogoMarca;
@@ -252,7 +257,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	
+
 	public String getLogoMarca() {
 		return logoMarca;
 	}
@@ -348,5 +353,13 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
+
+	public List<FornecedorCategoria> getFornecedorCategorias() {
+		return fornecedorCategorias;
+	}
+
+	public void setFornecedorCategorias(List<FornecedorCategoria> fornecedorCategorias) {
+		this.fornecedorCategorias = fornecedorCategorias;
+	}
+
 }
