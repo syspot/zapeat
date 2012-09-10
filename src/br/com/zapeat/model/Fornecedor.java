@@ -85,7 +85,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 		if (!TSUtil.isEmpty(this.logoMarca)) {
 
-			this.caminhoLogoMarca = Constantes.PASTA_DOWNLOAD_TEMP + this.logoMarca;
+			this.caminhoLogoMarca = Constantes.PASTA_DOWNLOAD + this.logoMarca;
 		}
 
 		return caminhoLogoMarca;

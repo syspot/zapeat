@@ -13,9 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -51,9 +48,6 @@ public class Banner extends TSActiveRecordAb<Banner> {
 	
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
-	
-	@Transient
-	private UploadedFile uploadedFile;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -125,14 +119,6 @@ public class Banner extends TSActiveRecordAb<Banner> {
 
 	public void setFlagAtivo(Boolean flagAtivo) {
 		this.flagAtivo = flagAtivo;
-	}
-
-	public UploadedFile getUploadedFile() {
-		return uploadedFile;
-	}
-
-	public void setUploadedFile(UploadedFile uploadedFile) {
-		this.uploadedFile = uploadedFile;
 	}
 
 	@Override

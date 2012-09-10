@@ -109,21 +109,21 @@ public class ZapeatUtil {
 		}
 	}
 
-	public static String criarImagemTemp(FileUploadEvent event) {
+	public static String criarImagem(FileUploadEvent event) {
 
 		String nomeArquivo = gerarNumeroAleatorio() + TSFile.obterExtensaoArquivo(event.getFile().getFileName());
-		String arquivo = Constantes.PASTA_UPLOAD_TEMP + nomeArquivo;
+		String arquivo = Constantes.PASTA_UPLOAD + nomeArquivo;
 
 		criaArquivo(event.getFile(), arquivo);
 
 		return nomeArquivo;
 
 	}
-
-	public static String criarImagemTemp(UploadedFile file) {
+	
+	public static String criarImagem(UploadedFile file) {
 
 		String nomeArquivo = gerarNumeroAleatorio() + TSFile.obterExtensaoArquivo(file.getFileName());
-		String arquivo = Constantes.PASTA_UPLOAD_TEMP + nomeArquivo;
+		String arquivo = Constantes.PASTA_UPLOAD + nomeArquivo;
 
 		criaArquivo(file, arquivo);
 
