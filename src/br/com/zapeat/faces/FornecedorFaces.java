@@ -22,6 +22,7 @@ import br.com.zapeat.model.Categoria;
 import br.com.zapeat.model.Cidade;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.FornecedorCategoria;
+import br.com.zapeat.model.ImagemFornecedor;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
@@ -34,6 +35,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	private DualListModel<Categoria> categorias;
 	private DualListModel<Categoria> targetCategorias;
 	private List<Categoria> categoriasSources;
+	private List<UploadedFile> imagens;
 
 	@PostConstruct
 	protected void init() {
@@ -53,6 +55,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setArquivo(null);
 		this.setFlagAlterar(Boolean.FALSE);
 		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
+		this.getCrudModel().setImagensAmbiente(new ArrayList<ImagemFornecedor>());
 
 		this.categoriasSources = new Categoria().findAll("descricao");
 
@@ -61,6 +64,8 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
+
+		this.setImagens(new ArrayList<UploadedFile>());
 
 		return SUCESSO;
 	}
@@ -102,6 +107,13 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			super.addErrorMessage("Longitude: Formato inválido.");
 		}
 
+		if (TSUtil.isEmpty(this.categorias.getTarget())) {
+
+			validado = false;
+
+			super.addErrorMessage("Longitude: Formato inválido.");
+		}
+
 		return validado;
 	}
 
@@ -111,11 +123,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		int count = 1;
 
 		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
+		this.getCrudModel().setImagensAmbiente(new ArrayList<ImagemFornecedor>());
 
 		if (this.isFlagAlterar()) {
 
 			try {
+
 				new FornecedorCategoria().delete("delete from FornecedorCategoria fc where fc.fornecedor.id = ?", this.getCrudModel().getId());
+
 			} catch (TSApplicationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -138,19 +153,37 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		}
 
+		for (UploadedFile item : this.imagens) {
+
+			ImagemFornecedor imagemFornecedor = new ImagemFornecedor();
+
+			imagemFornecedor.setFornecedor(this.getCrudModel());
+
+			imagemFornecedor.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(item.getFileName()));
+
+			imagemFornecedor.setFile(item);
+
+			this.getCrudModel().getImagensAmbiente().add(imagemFornecedor);
+		}
+
 		if (!TSUtil.isEmpty(this.getArquivo())) {
 
-			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()));
+			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + "_logo" + TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()));
 
 		}
+
 	}
 
 	@Override
 	protected void posDetail() {
 
 		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
+		
+		FornecedorCategoria fc = new FornecedorCategoria();
+		
+		fc.setFornecedor(this.getCrudModel());
 
-		List<FornecedorCategoria> fornecedorCategorias = new FornecedorCategoria().findByModel("prioridade");
+		List<FornecedorCategoria> fornecedorCategorias = fc.findByModel("prioridade");
 
 		for (FornecedorCategoria item : fornecedorCategorias) {
 
@@ -165,11 +198,26 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	@Override
 	protected void posPersist() throws TSSystemException, TSApplicationException {
 
+		if (!TSUtil.isEmpty(this.imagens)) {
+
+			for (ImagemFornecedor item : this.getCrudModel().getImagensAmbiente()) {
+
+				try {
+
+					ZapeatUtil.gravarLogoFornecedor(item.getFile().getInputstream(), TSFile.obterExtensaoArquivo(item.getImagem()), item.getImagem(), Constantes.PASTA_UPLOAD);
+
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+			}
+		}
+
 		if (!TSUtil.isEmpty(this.getArquivo())) {
 
 			try {
 
-				ZapeatUtil.gravarLogoFornecedor(this.getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD_TEMP);
+				ZapeatUtil.gravarLogoFornecedor(this.getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD);
 
 			} catch (IOException e) {
 
@@ -179,6 +227,12 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			}
 
 		}
+
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+
+		this.imagens.add(event.getFile());
 
 	}
 
@@ -220,6 +274,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setCategoriasSources(List<Categoria> categoriasSources) {
 		this.categoriasSources = categoriasSources;
+	}
+
+	public List<UploadedFile> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(List<UploadedFile> imagens) {
+		this.imagens = imagens;
 	}
 
 }

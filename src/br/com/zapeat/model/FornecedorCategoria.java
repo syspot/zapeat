@@ -101,7 +101,7 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 		query.append(" from FornecedorCategoria fc where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
-			query.append("and fc.fornecedor_id = ?").append(" ");
+			query.append("and fc.fornecedor = ?").append(" ");
 		}
 
 		List<Object> params = new ArrayList<Object>();
@@ -113,9 +113,9 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 		return super.find(query.toString(), params.toArray());
 
 	}
-	
+
 	public int delete(String hql, Object... objects) throws TSApplicationException {
-		
+
 		return super.delete(hql, objects);
 	}
 

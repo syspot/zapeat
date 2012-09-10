@@ -203,6 +203,8 @@ public class ZapeatUtil {
 			ImageIO.write(redimensionarLogoFornecedor(imagem, Constantes.LARGURA_ALTURA_80, Constantes.LARGURA_ALTURA_80), extensao.replace(".", ""), new File(destino + Constantes.FOTO_80x80 + nomeArquivo));
 
 			ImageIO.write(redimensionarLogoFornecedor(imagem, Constantes.LARGURA_180, Constantes.ALTURA_79), extensao.replace(".", ""), new File(destino + Constantes.FOTO_180x79 + nomeArquivo));
+			
+			ImageIO.write(redimensionarLogoFornecedor(imagem, Constantes.LARGURA_590, Constantes.ALTURA_260), extensao.replace(".", ""), new File(destino + Constantes.FOTO_590x260 + nomeArquivo));
 
 		} catch (IOException ex) {
 			

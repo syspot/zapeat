@@ -100,13 +100,7 @@
 	  		
 			<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" value="#{mbeanModel.latitude}"/>
 	  		<p:inputText required="true" requiredMessage="Longitude: Campo obrigatório" id="longitude" value="#{mbeanModel.longitude}"/>
-
-		  		<p:outputLabel for="latitude" value="Latitude" />
-		  		<p:outputLabel for="longitude" value="Longitude" />
 		  		
-				<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.latitude}"/>
-		  		<p:inputText required="true" requiredMessage="Longitude: Campo obrigatório" id="longitude" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.longitude}"/>
-	  		
 	  		</h:panelGrid>
 	  		
 	  		<br/>
@@ -129,6 +123,11 @@
 	  		
 	  		<br/>
 	  		
+	  		<p:fileUpload fileUploadListener="#{fornecedorFaces.handleFileUpload}" auto="true" id="fileMultiplo"
+	            multiple="true"
+	            sizeLimit="1000000" label="Selecione as Imagens"
+	            allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/"/>
+	  		
 	  		<h:panelGrid columns="2">
 	  		
 				<h:outputLabel value="Ativo " for="ativo"/>
@@ -136,22 +135,6 @@
 					
 			</h:panelGrid>
 			
-			<h:panelGrid columns="2">
-			
-				<h:panelGrid columns="1" style="width:80%">
-		  			
-		  			<p:fileUpload label="Selecionar Imagem" auto="true" fileUploadListener="#{mbean.enviarImagem}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" />
-		  			
-		  		</h:panelGrid>
-		  		
-		  		<p:outputPanel autoUpdate="true">
-				
-	            	<p:graphicImage value="#{mbeanModel.imagemThumbView}" width="80px" />
-				        
-				</p:outputPanel>
-			
-			</h:panelGrid>
-	  	
   	</ui:define>
   	
   	<ui:define name="pesquisaCampos">

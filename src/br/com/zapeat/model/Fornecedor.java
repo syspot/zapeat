@@ -72,8 +72,11 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	@ManyToOne
 	private Cidade cidade;
 
-	@OneToMany(mappedBy="fornecedor",cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy="fornecedor", cascade = CascadeType.ALL)
 	private List<FornecedorCategoria> fornecedorCategorias;
+	
+	@OneToMany(mappedBy="fornecedor")
+	private List<ImagemFornecedor> imagensAmbiente;
 
 	@Transient
 	private String caminhoLogoMarca;
@@ -361,5 +364,15 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	public void setFornecedorCategorias(List<FornecedorCategoria> fornecedorCategorias) {
 		this.fornecedorCategorias = fornecedorCategorias;
 	}
+
+	public List<ImagemFornecedor> getImagensAmbiente() {
+		return imagensAmbiente;
+	}
+
+	public void setImagensAmbiente(List<ImagemFornecedor> imagensAmbiente) {
+		this.imagensAmbiente = imagensAmbiente;
+	}
+
+	
 
 }
