@@ -72,10 +72,10 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	@ManyToOne
 	private Cidade cidade;
 
-	@OneToMany(mappedBy="fornecedor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="fornecedor", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<FornecedorCategoria> fornecedorCategorias;
 	
-	@OneToMany(mappedBy="fornecedor")
+	@OneToMany(mappedBy="fornecedor", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<ImagemFornecedor> imagensAmbiente;
 
 	@Transient
