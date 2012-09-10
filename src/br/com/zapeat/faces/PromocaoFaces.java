@@ -38,7 +38,7 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	
 	private void initCombos(){
 		this.tiposPromocoes = super.initCombo(new TipoPromocao().findAll(), "id", "descricao");
-		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "descricao");
+		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "nomeFantasia");
 	}
 	
 	@Override
@@ -60,33 +60,15 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		return null;
 	}
 	
-	@Override
-	protected void prePersist() {
-		
-		for(ImagemPromocao imagem : getCrudModel().getImagensPromocoes()){
-			
-			if(!TSUtil.isEmpty(imagem.getUploadedFile())){
-				
-				String nomeArquivo = TSUtil.gerarId() + TSFile.obterExtensaoArquivo(imagem.getImagem());
-				
-				imagem.setImagem(nomeArquivo);
-				
-				ZapeatUtil.gravarImagemComRedimensionamento(imagem.getUploadedFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + nomeArquivo, Constantes.PASTA_UPLOAD_PROMOCAO, Constantes.LARGURA_PROMOCAO_FULL, Constantes.ALTURA_PROMOCAO_FULL);
-				ZapeatUtil.gravarImagemComRedimensionamento(imagem.getUploadedFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_THUMB + nomeArquivo, Constantes.PASTA_UPLOAD_PROMOCAO, Constantes.LARGURA_PROMOCAO_THUMB, Constantes.ALTURA_PROMOCAO_THUMB);
-				
-			}
-			
-		}
-		
-	}
-	
 	public void enviarImagem(FileUploadEvent event) {
 		
 		ImagemPromocao imagemPromocao = new ImagemPromocao();
 		
 		imagemPromocao.setPromocao(getCrudModel());
 		imagemPromocao.setUploadedFile(event.getFile());
-		imagemPromocao.setImagem(ZapeatUtil.criarImagemTemp(event));
+		imagemPromocao.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + imagemPromocao.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_PROMOCAO_FULL, Constantes.ALTURA_PROMOCAO_FULL);
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_THUMB + imagemPromocao.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_PROMOCAO_THUMB, Constantes.ALTURA_PROMOCAO_THUMB);
 		
 		getCrudModel().getImagensPromocoes().add(imagemPromocao);
 		

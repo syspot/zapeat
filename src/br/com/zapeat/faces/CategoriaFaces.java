@@ -8,7 +8,6 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.FileUploadEvent;
 
-import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Categoria;
@@ -47,7 +46,7 @@ public class CategoriaFaces extends CrudFaces<Categoria> {
 		
 		boolean valida = true;
 		
-		if(TSUtil.isEmpty(getCrudModel().getId()) && TSUtil.isEmpty(getCrudModel().getUploadedFile())){
+		if(TSUtil.isEmpty(getCrudModel().getImagem())){
 			valida = false;
 			ZapeatUtil.addErrorMessage("Imagem: Campo obrigatório");
 		}
@@ -55,24 +54,9 @@ public class CategoriaFaces extends CrudFaces<Categoria> {
 		return valida;
 	}
 	
-	@Override
-	protected void posPersist() throws TSApplicationException {
-		
-		if(!TSUtil.isEmpty(getCrudModel().getUploadedFile())){
-			
-			String nomeArquivo = getCrudModel().getId() + TSFile.obterExtensaoArquivo(getCrudModel().getImagem());
-			getCrudModel().setImagem(Constantes.PASTA_DOWNLOAD + nomeArquivo);
-			ZapeatUtil.criaArquivo(getCrudModel().getUploadedFile(), Constantes.PASTA_UPLOAD + nomeArquivo);
-			
-			getCrudModel().update();
-			
-		}
-		
-	}
-	
 	public void enviarImagem(FileUploadEvent event) {
-		getCrudModel().setUploadedFile(event.getFile());
-		getCrudModel().setImagem(ZapeatUtil.criarImagemTemp(event));
+		getCrudModel().setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_CATEGORIA, Constantes.ALTURA_CATEGORIA);
 	}
 
 }

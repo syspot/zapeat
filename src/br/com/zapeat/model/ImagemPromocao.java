@@ -70,7 +70,7 @@ public class ImagemPromocao extends TSActiveRecordAb<ImagemPromocao>{
 	}
 	
 	public String getImagemView(){
-		return TSUtil.isEmpty(getId()) ? Constantes.PASTA_DOWNLOAD_TEMP + getImagem() : Constantes.PASTA_DOWNLOAD_PROMOCAO + Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + getImagem();
+		return TSUtil.isEmpty(getId()) ? Constantes.PASTA_DOWNLOAD + getImagem() : Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + getImagem();
 	}
 
 	@Override

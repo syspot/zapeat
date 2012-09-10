@@ -95,13 +95,7 @@
 	  		
 	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
 
-	  		<p:outputLabel for="latitude" value="Latitude" />
-	  		<p:outputLabel for="longitude" value="Longitude" />
-	  		
-			<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" value="#{mbeanModel.latitude}"/>
-	  		<p:inputText required="true" requiredMessage="Longitude: Campo obrigatório" id="longitude" value="#{mbeanModel.longitude}"/>
-
-		  		<p:outputLabel for="latitude" value="Latitude" />
+	  			<p:outputLabel for="latitude" value="Latitude" />
 		  		<p:outputLabel for="longitude" value="Longitude" />
 		  		
 				<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" onblur="return Mascara(this,Integer)" onkeyup="return Mascara(this,Integer)" value="#{mbeanModel.latitude}"/>
@@ -146,7 +140,7 @@
 		  		
 		  		<p:outputPanel autoUpdate="true">
 				
-	            	<p:graphicImage value="#{mbeanModel.imagemThumbView}" width="80px" />
+	            	<p:graphicImage value="#{mbeanModel.caminhoLogoMarca}" width="80px" />
 				        
 				</p:outputPanel>
 			

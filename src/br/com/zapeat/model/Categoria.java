@@ -7,9 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -31,9 +28,6 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 	
 	private String imagem;
 	
-	@Transient
-	private UploadedFile uploadedFile;
-
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -64,14 +58,6 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
-	}
-
-	public UploadedFile getUploadedFile() {
-		return uploadedFile;
-	}
-
-	public void setUploadedFile(UploadedFile uploadedFile) {
-		this.uploadedFile = uploadedFile;
 	}
 
 	@Override

@@ -169,7 +169,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 			try {
 
-				ZapeatUtil.gravarLogoFornecedor(this.getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD_TEMP);
+				ZapeatUtil.gravarLogoFornecedor(this.getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD);
 
 			} catch (IOException e) {
 
