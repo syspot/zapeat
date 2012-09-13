@@ -51,5 +51,6 @@ public class Constantes {
 	public static final String PREFIXO_IMAGEM_BANNER_THUMB = "260x170_";
 
 	public static final String REGEX_LATITUDE_LONGITUDE = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+	public static final String REGEX_SITE = "\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
 }

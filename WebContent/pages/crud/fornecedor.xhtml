@@ -66,7 +66,7 @@
 	  			<p:outputLabel for="site" value="Site" />
 	  			
 	  			<p:inputMask mask="(99) 9999-9999" required="true" requiredMessage="Telefone: Campo Obrigatório" id="telefone" value="#{mbeanModel.telefone}" maxlength="14"/>
-	  			<p:inputText id="site" value="#{mbeanModel.site}" maxlength="50" style="width: 200%;"/>
+	  			<p:inputText id="site" value="#{mbeanModel.site}" maxlength="50" style="width: 200%;" onkeyup="mascara(this,Site)"/>
 	  			
 	  		</h:panelGrid>
 	  		
@@ -76,7 +76,7 @@
 	  			<p:inputText style="width: 200%" id="facebook" value="#{mbeanModel.facebook}" maxlength="100"/>
 	  			
 	  			<p:outputLabel for="twitter" value="Twitter" />
-	  			<p:inputText style="width: 200%" id="twitter" value="#{mbeanModel.twitter}" maxlength="100"/>
+	  			<p:inputText style="width: 200%" id="twitter" value="#{mbeanModel.twitter}" maxlength="100" />
 	  			
 	  		</h:panelGrid>
 	  		

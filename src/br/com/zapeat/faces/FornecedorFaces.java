@@ -172,15 +172,20 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		}
 
+		if (!TSUtil.isEmpty(this.getCrudModel().getSite()) && !this.getCrudModel().getSite().contains("http://")) {
+
+			this.getCrudModel().setSite("http://" + this.getCrudModel().getSite());
+		}
+
 	}
 
 	@Override
 	protected void posDetail() {
 
 		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
-		
+
 		FornecedorCategoria fc = new FornecedorCategoria();
-		
+
 		fc.setFornecedor(this.getCrudModel());
 
 		List<FornecedorCategoria> fornecedorCategorias = fc.findByModel("prioridade");
