@@ -26,6 +26,7 @@
 			  	<p:selectOneMenu id="tipoBanner" required="true" requiredMessage="Tipo de Banner: Campo obrigatório" value="#{mbeanModel.tipoBanner.id}" style="width:100%">
 					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					<f:selectItems value="#{mbean.tiposBanners}" />
+					<p:ajax event="change" process="@this" global="false" listener="#{mbean.limparImagem}" />
 				</p:selectOneMenu>
 				
 				<p:outputLabel for="imagem" value="Imagem" />
@@ -62,13 +63,9 @@
 		<h:panelGrid columns="1" style="width: 100%; margin-top: 30px">
 		
 			<p:outputPanel id="opVisualizacaoImagem">
-					
-				<style type="text/css">
-					.imagemFoto img{height: 159px; align: left;}
-				</style>
 				
 				<div class="imagemFoto" align="left">
-					<p:graphicImage value="#{mbeanModel.imagem}" cache="false" />
+					<p:graphicImage value="#{mbeanModel.imagemView}" cache="false" rendered="#{mbeanModel.imagem != null}"/>
 				</div>
 				
 			</p:outputPanel>
@@ -123,17 +120,21 @@
   	
   	<ui:define name="colunasTabela">
   	
-  		<p:column headerText="Fornecedor">
-  			<h:outputText value="#{linha.fornecedor.descricao}" />
+  		<p:column headerText="Fornecedor" styleClass="coluna50">
+  			<h:outputText value="#{linha.fornecedor.nomeFantasia}" />
   		</p:column>
   	
-  		<p:column headerText="Data Início" style="text-align: center">
+  		<p:column headerText="Tipo de banner" styleClass="coluna10">
+  			<h:outputText value="#{linha.tipoBanner.descricao}" />
+  		</p:column>
+  	
+  		<p:column headerText="Data Início" style="text-align: center" styleClass="coluna15">
   			<h:outputText value="#{linha.inicio}" >
   				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
   			</h:outputText>
   		</p:column>
   	
-  		<p:column headerText="Data Fim" style="text-align: center">
+  		<p:column headerText="Data Fim" style="text-align: center" styleClass="coluna15">
   			<h:outputText value="#{linha.fim}" >
   				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR" timeZone="America/Sao_Paulo" />
   			</h:outputText>

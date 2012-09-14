@@ -13,17 +13,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "fornecedores")
 public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1535196802149853131L;
 
 	@Id
 	@SequenceGenerator(name = "FORNECEDORES_ID_SEQ", sequenceName = "fornecedores_id_seq", allocationSize = 1)
@@ -68,29 +71,18 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	private String twitter;
 
 	private String facebook;
+	
+	@ManyToOne
+	private Estabelecimento estabelecimento;
 
 	@ManyToOne
 	private Cidade cidade;
 
-	@OneToMany(mappedBy="fornecedor",cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FornecedorCategoria> fornecedorCategorias;
-
-	@Transient
-	private String caminhoLogoMarca;
-
-	public String getCaminhoLogoMarca() {
-
-		if (!TSUtil.isEmpty(this.logoMarca)) {
-
-			this.caminhoLogoMarca = Constantes.PASTA_DOWNLOAD + this.logoMarca;
-		}
-
-		return caminhoLogoMarca;
-	}
-
-	public void setCaminhoLogoMarca(String caminhoLogoMarca) {
-		this.caminhoLogoMarca = caminhoLogoMarca;
-	}
+	
+	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ImagemFornecedor> imagensFornecedores;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -98,116 +90,6 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Fornecedor other = (Fornecedor) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
-	@Override
-	public List<Fornecedor> findByModel(String... fieldsOrderBy) {
-
-		StringBuilder query = new StringBuilder();
-
-		query.append(" from Fornecedor f where 1 = 1 ");
-
-		if (!TSUtil.isEmpty(razaoSocial)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.razaoSocial")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
-		}
-
-		if (!TSUtil.isEmpty(cnpj)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.cnpj")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
-		}
-
-		if (!TSUtil.isEmpty(nomeFantasia)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.nomeFantasia")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
-		}
-
-		if (!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())) {
-			query.append("and f.cidade = ?").append(" ");
-		}
-
-		if (!TSUtil.isEmpty(bairro)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.bairro")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
-		}
-
-		if (!TSUtil.isEmpty(logradouro)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.logradouro")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
-		}
-
-		if (!TSUtil.isEmpty(numero)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.numero")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
-		}
-
-		if (!TSUtil.isEmpty(cep)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.cep")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
-		}
-
-		if (!TSUtil.isEmpty(flagAtivo)) {
-			query.append("and f.flagAtivo = ?").append(" ");
-		}
-
-		List<Object> params = new ArrayList<Object>();
-
-		if (!TSUtil.isEmpty(razaoSocial)) {
-			params.add(ZapeatUtil.tratarString(razaoSocial));
-		}
-
-		if (!TSUtil.isEmpty(cnpj)) {
-			params.add(ZapeatUtil.tratarString(cnpj));
-		}
-
-		if (!TSUtil.isEmpty(nomeFantasia)) {
-			params.add(ZapeatUtil.tratarString(nomeFantasia));
-		}
-
-		if (!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())) {
-			params.add(cidade);
-		}
-
-		if (!TSUtil.isEmpty(bairro)) {
-			params.add(ZapeatUtil.tratarString(bairro));
-		}
-
-		if (!TSUtil.isEmpty(logradouro)) {
-			params.add(ZapeatUtil.tratarString(logradouro));
-		}
-
-		if (!TSUtil.isEmpty(numero)) {
-			params.add(ZapeatUtil.tratarString(numero));
-		}
-
-		if (!TSUtil.isEmpty(cep)) {
-			params.add(ZapeatUtil.tratarString(cep));
-		}
-
-		if (!TSUtil.isEmpty(flagAtivo)) {
-			params.add(flagAtivo);
-		}
-
-		return super.find(query.toString(), params.toArray());
-
 	}
 
 	public String getCnpj() {
@@ -360,6 +242,136 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setFornecedorCategorias(List<FornecedorCategoria> fornecedorCategorias) {
 		this.fornecedorCategorias = fornecedorCategorias;
+	}
+
+	public Estabelecimento getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public void setEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabelecimento = estabelecimento;
+	}
+	
+	public List<ImagemFornecedor> getImagensFornecedores() {
+		return imagensFornecedores;
+	}
+
+	public void setImagensFornecedores(List<ImagemFornecedor> imagensFornecedores) {
+		this.imagensFornecedores = imagensFornecedores;
+	}
+
+	public String getLogoMarcaView() {
+		return TSUtil.isEmpty(this.logoMarca) ? this.logoMarca : Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_FORNECEDOR_LOGOMARCA + this.logoMarca;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fornecedor other = (Fornecedor) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public List<Fornecedor> findByModel(String... fieldsOrderBy) {
+
+		StringBuilder query = new StringBuilder();
+
+		query.append(" from Fornecedor f where 1 = 1 ");
+
+		if (!TSUtil.isEmpty(razaoSocial)) {
+			query.append("and ").append(ZapeatUtil.semAcento("f.razaoSocial")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(cnpj)) {
+			query.append("and ").append(ZapeatUtil.semAcento("f.cnpj")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(nomeFantasia)) {
+			query.append("and ").append(ZapeatUtil.semAcento("f.nomeFantasia")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())) {
+			query.append("and f.cidade = ?").append(" ");
+		}
+
+		if (!TSUtil.isEmpty(bairro)) {
+			query.append("and ").append(ZapeatUtil.semAcento("f.bairro")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(logradouro)) {
+			query.append("and ").append(ZapeatUtil.semAcento("f.logradouro")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(numero)) {
+			query.append("and ").append(ZapeatUtil.semAcento("f.numero")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(cep)) {
+			query.append("and ").append(ZapeatUtil.semAcento("f.cep")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
+		if (!TSUtil.isEmpty(flagAtivo)) {
+			query.append("and f.flagAtivo = ?").append(" ");
+		}
+
+		List<Object> params = new ArrayList<Object>();
+
+		if (!TSUtil.isEmpty(razaoSocial)) {
+			params.add(ZapeatUtil.tratarString(razaoSocial));
+		}
+
+		if (!TSUtil.isEmpty(cnpj)) {
+			params.add(ZapeatUtil.tratarString(cnpj));
+		}
+
+		if (!TSUtil.isEmpty(nomeFantasia)) {
+			params.add(ZapeatUtil.tratarString(nomeFantasia));
+		}
+
+		if (!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())) {
+			params.add(cidade);
+		}
+
+		if (!TSUtil.isEmpty(bairro)) {
+			params.add(ZapeatUtil.tratarString(bairro));
+		}
+
+		if (!TSUtil.isEmpty(logradouro)) {
+			params.add(ZapeatUtil.tratarString(logradouro));
+		}
+
+		if (!TSUtil.isEmpty(numero)) {
+			params.add(ZapeatUtil.tratarString(numero));
+		}
+
+		if (!TSUtil.isEmpty(cep)) {
+			params.add(ZapeatUtil.tratarString(cep));
+		}
+
+		if (!TSUtil.isEmpty(flagAtivo)) {
+			params.add(flagAtivo);
+		}
+
+		return super.find(query.toString(), params.toArray());
+
 	}
 
 }

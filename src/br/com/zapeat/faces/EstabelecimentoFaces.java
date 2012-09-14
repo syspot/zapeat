@@ -6,11 +6,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import br.com.zapeat.model.Categoria;
+import br.com.zapeat.model.Estabelecimento;
 
 @ViewScoped
-@ManagedBean(name = "categoriaFaces")
-public class CategoriaFaces extends CrudFaces<Categoria> {
+@ManagedBean(name = "estabelecimentoFaces")
+public class EstabelecimentoFaces extends CrudFaces<Estabelecimento> {
 
 
 	@PostConstruct
@@ -21,7 +21,7 @@ public class CategoriaFaces extends CrudFaces<Categoria> {
 	
 	@Override
 	public String limpar() {
-		setCrudModel(new Categoria());
+		setCrudModel(new Estabelecimento());
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		setFlagAlterar(Boolean.FALSE);
 		return null;
@@ -29,10 +29,10 @@ public class CategoriaFaces extends CrudFaces<Categoria> {
 	
 	@Override
 	public String limparPesquisa() {
-		setCrudPesquisaModel(new Categoria());
+		setCrudPesquisaModel(new Estabelecimento());
 		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
-		setGrid(new ArrayList<Categoria>());
+		setGrid(new ArrayList<Estabelecimento>());
 		return null;
 	}
-	
+
 }

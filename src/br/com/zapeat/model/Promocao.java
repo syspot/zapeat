@@ -53,6 +53,9 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	
 	@OneToMany(mappedBy = "promocao", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ImagemPromocao> imagensPromocoes;
+	
+	@Column(name = "imagem_thumb")
+	private String imagemThumb;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -133,6 +136,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 	public void setImagensPromocoes(List<ImagemPromocao> imagensPromocoes) {
 		this.imagensPromocoes = imagensPromocoes;
+	}
+
+	public String getImagemThumb() {
+		return imagemThumb;
+	}
+
+	public void setImagemThumb(String imagemThumb) {
+		this.imagemThumb = imagemThumb;
 	}
 
 	@Override

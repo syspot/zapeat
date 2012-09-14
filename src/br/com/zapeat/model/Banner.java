@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.util.Constantes;
 
 @Entity
 @SuppressWarnings("serial")
@@ -119,6 +120,10 @@ public class Banner extends TSActiveRecordAb<Banner> {
 
 	public void setFlagAtivo(Boolean flagAtivo) {
 		this.flagAtivo = flagAtivo;
+	}
+	
+	public String getImagemView(){
+		return Constantes.PASTA_DOWNLOAD + tipoBanner.getPrefixoImagem() + imagem;
 	}
 
 	@Override

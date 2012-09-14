@@ -34,7 +34,7 @@ public class BannerFaces extends CrudFaces<Banner> {
 	
 	private void initCombos(){
 		this.tiposBanners = super.initCombo(new TipoBanner().findAll(), "id", "descricao");
-		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "descricao");
+		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "nomeFantasia");
 	}
 	
 	@Override
@@ -71,9 +71,29 @@ public class BannerFaces extends CrudFaces<Banner> {
 	}
 	
 	public void enviarImagem(FileUploadEvent event) {
+
+		if(TSUtil.isEmpty(getCrudModel().getTipoBanner().getId())){
+			ZapeatUtil.addErrorMessage("Tipo de Banner: Campo obrigatório");
+			return;
+		}
+		
 		getCrudModel().setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_FULL + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_FULL, Constantes.ALTURA_BANNER_FULL);
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_THUMB + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_THUMB, Constantes.ALTURA_BANNER_THUMB);
+
+		if(Constantes.TIPO_BANNER_FULL.equals(getCrudModel().getTipoBanner().getId())){
+			
+			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_FULL + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_FULL, Constantes.ALTURA_BANNER_FULL);
+			
+		} else if(Constantes.TIPO_BANNER_THUMB.equals(getCrudModel().getTipoBanner().getId())){
+			
+			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_THUMB + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_THUMB, Constantes.ALTURA_BANNER_THUMB);
+			
+		}
+		
+	}
+	
+	public String limparImagem(){
+		getCrudModel().setImagem(null);
+		return null;
 	}
 
 	public List<SelectItem> getTiposBanners() {

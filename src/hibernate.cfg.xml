@@ -10,7 +10,7 @@
 		<property name="current_session_context_class">thread</property>
 
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-		<property name="hibernate.connection.url">jdbc:postgresql://204.45.81.210:5432/zapeat</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/zapeat</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 		<property name="hibernate.connection.username">zapeat</property>
 		<property name="hibernate.connection.password">15rt01</property>
@@ -23,10 +23,12 @@
  		<mapping class="br.com.zapeat.model.Comentario" />
  		<mapping class="br.com.zapeat.model.Cidade" />
  		<mapping class="br.com.zapeat.model.Estado" />
+ 		<mapping class="br.com.zapeat.model.Estabelecimento" />
  		<mapping class="br.com.zapeat.model.Fornecedor" />
  		<mapping class="br.com.zapeat.model.FornecedorCategoria" />
  		<mapping class="br.com.zapeat.model.Grupo" />
  		<mapping class="br.com.zapeat.model.ImagemPromocao" />
+ 		<mapping class="br.com.zapeat.model.ImagemFornecedor" />
  		<mapping class="br.com.zapeat.model.Menu" />
  		<mapping class="br.com.zapeat.model.Permissao" />
  		<mapping class="br.com.zapeat.model.Promocao" />

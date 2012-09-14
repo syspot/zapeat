@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.util.Constantes;
 
 @Entity
 @SuppressWarnings("serial")
@@ -48,6 +49,11 @@ public class TipoBanner extends TSActiveRecordAb<TipoBanner> {
 
 	public void setFlagAtivo(Boolean flagAtivo) {
 		this.flagAtivo = flagAtivo;
+	}
+	
+	public String getPrefixoImagem(){
+		return Constantes.TIPO_BANNER_FULL.equals(getId()) ? Constantes.PREFIXO_IMAGEM_BANNER_FULL : 
+			Constantes.TIPO_BANNER_THUMB.equals(getId()) ? Constantes.PREFIXO_IMAGEM_BANNER_THUMB : ""; 
 	}
 
 	@Override
