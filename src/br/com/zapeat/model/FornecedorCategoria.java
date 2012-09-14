@@ -120,3 +120,4 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 	}
 
 }
+

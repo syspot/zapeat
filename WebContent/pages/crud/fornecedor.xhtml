@@ -9,131 +9,170 @@
   	<ui:param name="mbeanModel" value="${fornecedorFaces.crudModel}" />
   	<ui:param name="mbeanPesquisaModel" value="${fornecedorFaces.crudPesquisaModel}" />
   	
-  	<ui:define name="cadastro">		
+  	<ui:define name="cadastro">
+  	
+  			<h:panelGrid style="width:100%">
   			
-  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+  				<p:fieldset legend="Dados da Empresa">
+  				
+  					<h:panelGrid columns="2" styleClass="coluna50_2, coluna50_2" style="width:100%">
+  					
+  						<h:panelGrid style="width:100%">
+  						
+  							<h:panelGrid columns="1" style="width:90%">
   			
-	  			<p:outputLabel for="razaSocial" value="Razão Social" />
-	  			<p:inputText style="width: 149.5%;" id="razaSocial" value="#{mbeanModel.razaoSocial}" required="true" requiredMessage="Razão Social: Campo obrigatório" maxlength="100"/>
-  			
-  			</h:panelGrid>
-		  	
-		  	<br/>
-		  	
-		  	<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
-		  	
-			  	<p:outputLabel for="cnpj" value="CNPJ" />
-			  	<p:outputLabel for="nomeFantasia" value="Nome Fantasia" />
-			  	
-			  	<p:inputMask mask="99.999.999/9999-99" id="cnpj" value="#{mbeanModel.cnpj}" required="true" requiredMessage="CNPJ: Campo obrigatório" maxlength="18"/>
-			  	<p:inputText id="nomeFantasia" style="width: 303%;" value="#{mbeanModel.nomeFantasia}" maxlength="100"/>
-		  	
-		  	</h:panelGrid>
-		  	
-		  	<br/>
-		  	
-	  		<h:panelGrid width="43%" columns="3" style="margin-left: -4px">
-	  		
-		  		<p:outputLabel for="cidade" value="Cidade" />
-		  		<p:outputLabel for="bairro" value="Bairro" />
-				<p:outputLabel for="logradouro" value="Logradouro" />
+					  			<p:outputLabel for="razaSocial" value="Razão Social" />
+					  			<p:inputText id="razaSocial" value="#{mbeanModel.razaoSocial}" required="true" requiredMessage="Razão Social: Campo obrigatório" maxlength="100" styleClass="coluna90"/>
+			  			
+				  			</h:panelGrid>
+				  			
+						  	<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:90%">
+						  	
+							  	<p:outputLabel for="cnpj" value="CNPJ" />
+							  	<p:outputLabel for="nomeFantasia" value="Nome Fantasia" />
+							  	
+							  	<p:inputMask mask="99.999.999/9999-99" id="cnpj" value="#{mbeanModel.cnpj}" required="true" requiredMessage="CNPJ: Campo obrigatório" maxlength="18" styleClass="coluna90"/>
+							  	<p:inputText id="nomeFantasia" value="#{mbeanModel.nomeFantasia}" maxlength="100" styleClass="coluna85"/>
+						  	
+						  	</h:panelGrid>
+						  	
+						  	<h:panelGrid columns="1" style="width:60%">
+		  			
+					  			<p:outputLabel for="descricao" value="Descrição" />
+						  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="1000" id="descricao" rows="7" cols="90" value="#{mbeanModel.descricao}"/>
+			  			
+			  					<h:outputLabel value="Ativo " for="ativo"/>
+								<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
 				
-				<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbean.cidades}" />
-				</p:selectOneMenu>
-				
-				<p:inputText id="bairro" style="width: 90%;" value="#{mbeanModel.bairro}" required="true" requiredMessage="Bairro: Campo obrigatório" maxlength="50"/>
-				<p:inputText id="logradouro" style="width: 180%;" value="#{mbeanModel.logradouro}" required="true" requiredMessage="Logradouro: Campo obrigatório" maxlength="200" />
-	  			
-	  		</h:panelGrid>
-	  		
-			<br/>
-	  		
-	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
-	  			
-	  			<p:outputLabel for="numero" value="Número" />
-	  			<p:outputLabel for="cep" value="Cep" />
-	  			
-	  			<p:inputText id="numero" value="#{mbeanModel.numero}" maxlength="10"/>
-	  			<p:inputMask mask="99.999-999" id="cep" value="#{mbeanModel.cep}" maxlength="10"/>
-	  			
-	  		</h:panelGrid>
-	  		
-	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
-	  			
-	  			<p:outputLabel for="telefone" value="Telefone" />
-	  			<p:outputLabel for="site" value="Site" />
-	  			
-	  			<p:inputMask mask="(99) 9999-9999" required="true" requiredMessage="Telefone: Campo Obrigatório" id="telefone" value="#{mbeanModel.telefone}" maxlength="14"/>
-	  			<p:inputText id="site" value="#{mbeanModel.site}" maxlength="50" style="width: 200%;" onkeyup="mascara(this,Site)"/>
-	  			
-	  		</h:panelGrid>
-	  		
-	  		<h:panelGrid columns="1" style="margin-left: -4px">
-	  			
-	  			<p:outputLabel for="facebook" value="Facebook" />
-	  			<p:inputText style="width: 200%" id="facebook" value="#{mbeanModel.facebook}" maxlength="100"/>
-	  			
-	  			<p:outputLabel for="twitter" value="Twitter" />
-	  			<p:inputText style="width: 200%" id="twitter" value="#{mbeanModel.twitter}" maxlength="100" />
-	  			
-	  		</h:panelGrid>
-	  		
-	  		<br/>
-	  		
-	  		<p:outputLabel for="descricao" value="Descrição" />
-	  		<br/>
-	  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="1000" id="descricao" rows="5" cols="30" value="#{mbeanModel.descricao}"/>
-	  		
-	  		<br/><br/>
-	  			
-	  		<p:outputLabel for="horarioFuncionamento" value="Horários de Funcionamento" />
-	  		<br/>
-	  		<p:inputText styleClass="coluna50" id="horarioFuncionamento" value="#{mbeanModel.horariosFuncionamento}" maxlength="500"/>
-	  		<br/><br/>
-	  		
-	  		<h:panelGrid width="30%" columns="2" style="margin-left: -4px">
-
-	  		<p:outputLabel for="latitude" value="Latitude" />
-	  		<p:outputLabel for="longitude" value="Longitude" />
-	  		
-			<p:inputText required="true" requiredMessage="Latitude: Campo obrigatório" id="latitude" value="#{mbeanModel.latitude}"/>
-	  		<p:inputText required="true" requiredMessage="Longitude: Campo obrigatório" id="longitude" value="#{mbeanModel.longitude}"/>
-
-	  		</h:panelGrid>
-	  		
-	  		<br/>
-	  		
-	  		<h:panelGrid columns="1" style="margin-left: -5px;">
+				  			</h:panelGrid>
+  						
+  						</h:panelGrid>
+  						
+  						<h:panelGrid style="width:100%">
+  						
+	  						<p:outputLabel for="pickList" value="Categorias" style="margin-left: 3px;"/>
+				  			<p:pickList required="true" requiredMessage="Categorias: Selecione pelo menos uma" id="pickList" value="#{fornecedorFaces.categorias}" converter="categoriaConverter"
+				                var="categoria" itemLabel="#{categoria.descricao}" itemValue="#{categoria.id}" />
+	  					
+	  					</h:panelGrid>
+  					
+  					</h:panelGrid>
+  					
+  				</p:fieldset>
   			
-  			<p:outputLabel for="pickList" value="Categorias" style="margin-left: 3px;"/>
-  			<p:pickList required="true" requiredMessage="Categorias: Selecione pelo menos uma" id="pickList" value="#{fornecedorFaces.categorias}" converter="categoriaConverter"
-                var="categoria"
-                itemLabel="#{categoria.descricao}"
-                itemValue="#{categoria.id}" />
-  			</h:panelGrid>
-	  		
-	  		<br/>
-	  		
-	  		<p:fileUpload label="Selecionar Logomarca" 
-	  						auto="true" id="uploadArquivoImagem"
-	  						 fileUploadListener="#{mbean.listenerLogoMarca}" 
-	  						 allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/"/>
-	  		
-	  		<br/>
-	  		
-	  		<p:fileUpload fileUploadListener="#{fornecedorFaces.handleFileUpload}" auto="true" id="fileMultiplo"
-	            multiple="true"
-	            sizeLimit="1000000" label="Selecione as Imagens"
-	            allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/"/>
-	  		
-	  		<h:panelGrid columns="2">
-	  		
-				<h:outputLabel value="Ativo " for="ativo"/>
-				<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
+  				<p:fieldset legend="Endereço e Informações complementares" style="margin-top:20px">
+  				
+  					<h:panelGrid columns="3" columnClasses="coluna20, coluna50, coluna30" style="width:60%">
+		  		
+		  				<p:outputLabel for="cep" value="Cep" />
+						<p:outputLabel for="logradouro" value="Logradouro" />
+				  		<p:outputLabel for="bairro" value="Bairro" />
+						
+		  				<p:inputMask id="cep" mask="99.999-999" value="#{mbeanModel.cep}" maxlength="10" styleClass="coluna90"/>
+						<p:inputText id="logradouro" value="#{mbeanModel.logradouro}" required="true" requiredMessage="Logradouro: Campo obrigatório" maxlength="200" styleClass="coluna95"/>
+						<p:inputText id="bairro" value="#{mbeanModel.bairro}" required="true" requiredMessage="Bairro: Campo obrigatório" maxlength="50" styleClass="coluna90"/>
+			  			
+		  			</h:panelGrid>
+		  			
+		  			<h:panelGrid columns="3" columnClasses="coluna20, coluna40, coluna40" style="width:40%">
+		  			
+			  			<p:outputLabel for="cidade" value="Cidade" />
+						<p:outputLabel for="numero" value="Número" />
+						<p:outputLabel for="telefone" value="Telefone" />
+			  			
+			  			<p:selectOneMenu id="cidade" value="#{mbeanModel.cidade.id}" required="true" requiredMessage="Cidade: Campo obrigatório">
+							<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+							<f:selectItems value="#{mbean.cidades}" />
+						</p:selectOneMenu>
+			  			<p:inputText id="numero" value="#{mbeanModel.numero}" maxlength="10" styleClass="coluna90"/>
+			  			<p:inputMask id="telefone" mask="(99) 9999-9999" required="true" requiredMessage="Telefone: Campo Obrigatório" value="#{mbeanModel.telefone}" maxlength="14" styleClass="coluna90"/>
+						
+			  		</h:panelGrid>
+			  		
+			  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:30%">
+	
+			  			<p:outputLabel for="latitude" value="Latitude" />
+				  		<p:outputLabel for="longitude" value="Longitude" />
+				  		
+						<p:inputText id="latitude" required="true" requiredMessage="Latitude: Campo obrigatório" onblur="return Mascara(this,Integer)" onkeypress="return Mascara(this,Integer)" value="#{mbeanModel.latitude}" styleClass="coluna90"/>
+				  		<p:inputText id="longitude" required="true" requiredMessage="Longitude: Campo obrigatório"  onblur="return Mascara(this,Integer)" onkeypress="return Mascara(this,Integer)" value="#{mbeanModel.longitude}" styleClass="coluna90"/>
+			  		
+			  		</h:panelGrid>
+			  		  				
+			  		<h:panelGrid columns="1" style="width:40%">
+			  			
+				  		<p:outputLabel for="horarioFuncionamento" value="Horário de Funcionamento" />
+				  		<p:inputText id="horarioFuncionamento" value="#{mbeanModel.horariosFuncionamento}" maxlength="500" styleClass="coluna90"/>
+			  			
+			  			<p:outputLabel for="site" value="Site" />
+			  			<p:inputText id="site" value="#{mbeanModel.site}" maxlength="50" styleClass="coluna90"/>
+			  			
+			  		</h:panelGrid>
+			  		
+  				</p:fieldset>
+		  		
+		  		<p:fieldset legend="Redes Sociais" style="margin-top:20px">
+		  		
+	  				<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:60%">
+		  			
+			  			<p:outputLabel for="facebook" value="Facebook" />
+			  			<p:outputLabel for="twitter" value="Twitter" />
+			  			
+			  			<p:inputText id="facebook" value="#{mbeanModel.facebook}" maxlength="100" styleClass="coluna90"/>
+			  			<p:inputText id="twitter" value="#{mbeanModel.twitter}" maxlength="100" styleClass="coluna90"/>
+			  			
+			  		</h:panelGrid>
+		  			
+		  		</p:fieldset>
+		  		
+		  		<p:fieldset legend="Imagens">
+
+			  		<h:panelGrid columns="2" columnClasses="coluna70_4, coluna30_4" style="width: 50%; vertical-align: bottom;">
 					
-			</h:panelGrid>
+						<p:outputPanel>
+							<p:outputLabel for="uploadLogoMarca" value="LogoMarca:"/>
+							<p:fileUpload id="uploadLogoMarca" label="Selecionar Logomarca" auto="true" fileUploadListener="#{mbean.enviarLogoMarca}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/"/>
+						</p:outputPanel>
+					
+						<p:outputPanel id="opVisualizacaoLogoMarca" autoUpdate="true">
+						
+							<style type="text/css">
+								.imagemLogoMarca img{height: 56px; align: left;}
+							</style>
+							
+							<div class="imagemLogoMarca" align="left">
+								<p:graphicImage value="#{mbeanModel.logoMarcaView}" cache="false" />
+							</div>
+							
+						</p:outputPanel>
+					
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" style="width:50%">
+			
+						<p:outputLabel for="uploadImagens" value="Imagens do Ambiente:"/>
+			  			<p:fileUpload id="uploadImagens" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagens}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="dgImagens"/>
+				  			
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" style="width:100%">
+			
+						<p:dataGrid id="dgImagens" var="imagemFornecedor" value="#{mbeanModel.imagensFornecedores}" columns="4"  
+					        rows="4" paginator="true" >
+					          
+					        <p:column>
+					            
+					            <p:graphicImage value="#{imagemFornecedor.imagemThumbView}" cache="false" />
+					            
+					        </p:column>  
+					  
+					    </p:dataGrid>
+				  			
+					</h:panelGrid>
+		  		
+		  		</p:fieldset>
+		  		
+  			</h:panelGrid>
 			
   	</ui:define>
   	
@@ -188,7 +227,6 @@
 		
 			<p:outputPanel id="otpLogo" autoUpdate="true">
 	
-				<img src="#{fornecedorFaces.crudModel.caminhoLogoMarca}"  />
 	
 			</p:outputPanel>
 			
