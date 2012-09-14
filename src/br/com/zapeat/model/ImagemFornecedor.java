@@ -4,47 +4,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
-import br.com.topsys.util.TSUtil;
-import br.com.zapeat.util.Constantes;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "imagens_fornecedores")
-public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7797419767827957163L;
+public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="imagens_fornecedores_id")
-	@SequenceGenerator(name="imagens_fornecedores_id", sequenceName="imagens_fornecedores_id_seq")
+	@SequenceGenerator(name = "IMAGENS_FORNECEDORES_ID_SEQ", sequenceName = "imagens_fornecedores_id_seq", allocationSize = 1)
+	@GeneratedValue(generator = "IMAGENS_FORNECEDORES_ID_SEQ", strategy = GenerationType.SEQUENCE)
 	private Long id;
-	
-	@ManyToOne
+
+	@ManyToOne()
+	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
-	
+
 	private String imagem;
-	
+
+	@Transient
+	private UploadedFile file;
+
 	public Long getId() {
-		return TSUtil.tratarLong(id);
+		return id;
 	}
 
 	public void setId(Long id) {
-		this.id = TSUtil.tratarLong(id);
-	}
-
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
+		this.id = id;
 	}
 
 	public String getImagem() {
@@ -53,14 +47,6 @@ public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
-	}
-	
-	public String getImagemFullView(){
-		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_FORNECEDOR_FULL + getImagem();
-	}
-	
-	public String getImagemThumbView(){
-		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + getImagem();
 	}
 
 	@Override
@@ -87,5 +73,21 @@ public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
 			return false;
 		return true;
 	}
-	
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
+	}
+
 }

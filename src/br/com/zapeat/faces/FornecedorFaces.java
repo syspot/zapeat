@@ -1,5 +1,6 @@
 package br.com.zapeat.faces;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -11,7 +12,10 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DualListModel;
+import org.primefaces.model.UploadedFile;
 
+import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.exception.TSSystemException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Categoria;
@@ -22,14 +26,16 @@ import br.com.zapeat.model.ImagemFornecedor;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
-@ViewScoped
 @ManagedBean(name = "fornecedorFaces")
+@ViewScoped
 public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private List<SelectItem> cidades;
-	private List<Categoria> categoriasSources;
+	private UploadedFile arquivo;
 	private DualListModel<Categoria> categorias;
 	private DualListModel<Categoria> targetCategorias;
+	private List<Categoria> categoriasSources;
+	private List<UploadedFile> imagens;
 
 	@PostConstruct
 	protected void init() {
@@ -46,9 +52,10 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setCrudModel(new Fornecedor());
 		this.getCrudModel().setCidade(new Cidade());
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
+		this.setArquivo(null);
 		this.setFlagAlterar(Boolean.FALSE);
 		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
-		this.getCrudModel().setImagensFornecedores(new ArrayList<ImagemFornecedor>());
+		this.getCrudModel().setImagensAmbiente(new ArrayList<ImagemFornecedor>());
 
 		this.categoriasSources = new Categoria().findAll("descricao");
 
@@ -58,7 +65,9 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
 
-		return null;
+		this.setImagens(new ArrayList<UploadedFile>());
+
+		return SUCESSO;
 	}
 
 	@Override
@@ -68,7 +77,15 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudPesquisaModel().setCidade(new Cidade());
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		this.setGrid(new ArrayList<Fornecedor>());
-		return null;
+		return SUCESSO;
+	}
+
+	public void listenerLogoMarca(FileUploadEvent event) {
+
+		if (!TSUtil.isEmpty(event) && !TSUtil.isEmpty(event.getFile())) {
+
+			this.setArquivo(event.getFile());
+		}
 	}
 
 	@Override
@@ -77,39 +94,89 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		boolean validado = true;
 
 		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLatitude().toString())) {
+
 			validado = false;
-			ZapeatUtil.addErrorMessage("Latitude: Formato inválido.");
+
+			super.addErrorMessage("Latiude: Formato inválido.");
 		}
 
 		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLongitude().toString())) {
+
 			validado = false;
-			ZapeatUtil.addErrorMessage("Longitude: Formato inválido.");
+
+			super.addErrorMessage("Longitude: Formato inválido.");
+		}
+
+		if (TSUtil.isEmpty(this.categorias.getTarget())) {
+
+			validado = false;
+
+			super.addErrorMessage("Longitude: Formato inválido.");
 		}
 
 		return validado;
 	}
-	
+
 	@Override
 	protected void prePersist() {
-		
-		FornecedorCategoria fornecedorCategoria;
-		
-		getCrudModel().getFornecedorCategorias().clear();
-		
-		int cont = 1;
-		
-		for(Categoria categoria : categorias.getTarget()){
-			
-			fornecedorCategoria = new FornecedorCategoria();
-			
-			fornecedorCategoria.setCategoria(categoria);
-			fornecedorCategoria.setFornecedor(getCrudModel());
-			fornecedorCategoria.setPrioridade(cont++);
-			
-			getCrudModel().getFornecedorCategorias().add(fornecedorCategoria);
-			
+
+		int count = 1;
+
+		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
+		this.getCrudModel().setImagensAmbiente(new ArrayList<ImagemFornecedor>());
+
+		if (this.isFlagAlterar()) {
+
+			try {
+
+				new FornecedorCategoria().delete("delete from FornecedorCategoria fc where fc.fornecedor.id = ?", this.getCrudModel().getId());
+
+			} catch (TSApplicationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
+
+		for (Categoria item : this.categorias.getTarget()) {
+
+			FornecedorCategoria model = new FornecedorCategoria();
+
+			model.setFornecedor(this.getCrudModel());
+
+			model.setCategoria(item);
+
+			model.setPrioridade(count);
+
+			count++;
+
+			this.getCrudModel().getFornecedorCategorias().add(model);
+
+		}
+
+		for (UploadedFile item : this.imagens) {
+
+			ImagemFornecedor imagemFornecedor = new ImagemFornecedor();
+
+			imagemFornecedor.setFornecedor(this.getCrudModel());
+
+			imagemFornecedor.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(item.getFileName()));
+
+			imagemFornecedor.setFile(item);
+
+			this.getCrudModel().getImagensAmbiente().add(imagemFornecedor);
+		}
+
+		if (!TSUtil.isEmpty(this.getArquivo())) {
+
+			this.getCrudModel().setLogoMarca(TSUtil.gerarId() + "_logo" + TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()));
+
+		}
+
+		if (!TSUtil.isEmpty(this.getCrudModel().getSite()) && !this.getCrudModel().getSite().contains("http://")) {
+
+			this.getCrudModel().setSite("http://" + this.getCrudModel().getSite());
+		}
+
 	}
 
 	@Override
@@ -117,34 +184,61 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
 
-		for (FornecedorCategoria item : getCrudModel().getFornecedorCategorias()) {
+		FornecedorCategoria fc = new FornecedorCategoria();
+
+		fc.setFornecedor(this.getCrudModel());
+
+		List<FornecedorCategoria> fornecedorCategorias = fc.findByModel("prioridade");
+
+		for (FornecedorCategoria item : fornecedorCategorias) {
 
 			categoriaTarget.add(item.getCategoria());
 
 		}
-		
-		this.categoriasSources.removeAll(categoriaTarget);
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
 
 	}
 
-	public void enviarLogoMarca(FileUploadEvent event) {
-		getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_LOGOMARCA + getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_FORNECEDOR_LOGOMARCA, Constantes.ALTURA_FORNECEDOR_LOGOMARCA);
+	@Override
+	protected void posPersist() throws TSSystemException, TSApplicationException {
+
+		if (!TSUtil.isEmpty(this.imagens)) {
+
+			for (ImagemFornecedor item : this.getCrudModel().getImagensAmbiente()) {
+
+				try {
+
+					ZapeatUtil.gravarLogoFornecedor(item.getFile().getInputstream(), TSFile.obterExtensaoArquivo(item.getImagem()), item.getImagem(), Constantes.PASTA_UPLOAD);
+
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+			}
+		}
+
+		if (!TSUtil.isEmpty(this.getArquivo())) {
+
+			try {
+
+				ZapeatUtil.gravarLogoFornecedor(this.getArquivo().getInputstream(), TSFile.obterExtensaoArquivo(this.getArquivo().getFileName()), this.getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD);
+
+			} catch (IOException e) {
+
+				super.addErrorMessage("Não foi possível gravar a LogoMarca.");
+
+				e.printStackTrace();
+			}
+
+		}
+
 	}
-	
-	public void enviarImagens(FileUploadEvent event) {
-		
-		ImagemFornecedor imagemFornecedor = new ImagemFornecedor();
-		
-		imagemFornecedor.setFornecedor(getCrudModel());
-		imagemFornecedor.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
-		
-		getCrudModel().getImagensFornecedores().add(imagemFornecedor);
-		
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_FULL + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_FORNECEDOR_FULL, Constantes.ALTURA_FORNECEDOR_FULL);
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_FORNECEDOR_THUMB, Constantes.ALTURA_FORNECEDOR_THUMB);
+
+	public void handleFileUpload(FileUploadEvent event) {
+
+		this.imagens.add(event.getFile());
+
 	}
 
 	public List<SelectItem> getCidades() {
@@ -153,6 +247,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
+	}
+
+	public UploadedFile getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(UploadedFile arquivo) {
+		this.arquivo = arquivo;
 	}
 
 	public DualListModel<Categoria> getTargetCategorias() {
@@ -177,6 +279,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setCategoriasSources(List<Categoria> categoriasSources) {
 		this.categoriasSources = categoriasSources;
+	}
+
+	public List<UploadedFile> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(List<UploadedFile> imagens) {
+		this.imagens = imagens;
 	}
 
 }
