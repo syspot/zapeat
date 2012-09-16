@@ -151,11 +151,13 @@
 				<h:panelGrid columns="1" style="width:50%">
 		
 					<p:outputLabel for="uploadImagens" value="Imagens do Ambiente:"/>
-		  			<p:fileUpload id="uploadImagens" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagens}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="dgImagens"/>
+		  			<p:fileUpload id="uploadImagens" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagens}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="pgImagensFornecedor"/>
 			  			
 				</h:panelGrid>
 				
-				<h:panelGrid columns="1" style="width:100%">
+				<p:remoteCommand name="removerImagemFornecedor" action="#{mbean.removerImagemFornecedor}" update="pgImagensFornecedor" global="false"/>
+				
+				<h:panelGrid id="pgImagensFornecedor" columns="1" style="width:100%">
 		
 					<p:dataGrid id="dgImagens" var="imagemFornecedor" value="#{mbeanModel.imagensFornecedores}" columns="4"  
 				        rows="4" paginator="true" emptyMessage="Nenhuma imagem cadastrada" rendered="#{not empty mbeanModel.imagensFornecedores}">
@@ -163,6 +165,13 @@
 				        <p:column>
 				            
 				            <p:graphicImage value="#{imagemFornecedor.imagemThumbView}" cache="false" />
+				            
+				            <p:commandLink global="false" process="@this" oncomplete="removerImagemFornecedor();" title="Clique aqui para remover a imagem">
+								<h:panelGrid columns="1" style="width:100%">
+									<p:graphicImage style="border:0px;"	value="/resources/images/del.png" />
+								</h:panelGrid>
+								<f:setPropertyActionListener target="#{mbean.imagemFornecedorSelecionada}" value="#{imagemFornecedor}" />
+							</p:commandLink>
 				            
 				        </p:column>  
 				  

@@ -28,6 +28,8 @@
 		<p:fileUpload id="imagemCarroChefe" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagensCarrosChefes}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="pgImagensCarrosChefes"/>
 	
 	</h:panelGrid>
+	
+	<p:remoteCommand name="removerImagemCarroChefe" action="#{mbean.removerImagemCarroChefe}" update="pgImagensCarrosChefes" global="false"/>
 		
 	<h:panelGrid id="pgImagensCarrosChefes" columns="1" style="width:100%">
 		
@@ -38,7 +40,7 @@
 	            
 	            <p:graphicImage value="#{imagemCarroChefe.imagemThumbView}" cache="false" />
 	            
-	            <p:commandLink ajax="false" action="#{mbean.removerImagemCarroChefe}" process="@this" title="Clique aqui para remover a imagem">
+	            <p:commandLink global="false" process="@this" oncomplete="removerImagemCarroChefe();" title="Clique aqui para remover a imagem">
 					<h:panelGrid columns="1" style="width:100%">
 						<p:graphicImage style="border:0px;"	value="/resources/images/del.png" />
 					</h:panelGrid>

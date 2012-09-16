@@ -90,8 +90,9 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		
 	}
 	
-	public void removerImagem(){
+	public String removerImagem(){
 		getCrudModel().getImagensPromocoes().remove(this.imagemPromocaoSelecionada);
+		return null;
 	}
 	
 	public List<SelectItem> getTiposPromocoes() {

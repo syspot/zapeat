@@ -84,7 +84,17 @@ public class ImagemPromocao extends TSActiveRecordAb<ImagemPromocao>{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (imagem == null) {
+			if (other.imagem != null)
+				return false;
+		} else if (!imagem.equals(other.imagem))
+			return false;
+		if (promocao == null) {
+			if (other.promocao != null)
+				return false;
+		} else if (!promocao.equals(other.promocao))
+			return false;
 		return true;
 	}
-	
+
 }

@@ -69,7 +69,10 @@ public class ImagemCarroChefe extends TSActiveRecordAb<ImagemCarroChefe>{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((carroChefe == null) ? 0 : carroChefe.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((imagem == null) ? 0 : imagem.hashCode());
 		return result;
 	}
 
@@ -82,12 +85,22 @@ public class ImagemCarroChefe extends TSActiveRecordAb<ImagemCarroChefe>{
 		if (getClass() != obj.getClass())
 			return false;
 		ImagemCarroChefe other = (ImagemCarroChefe) obj;
+		if (carroChefe == null) {
+			if (other.carroChefe != null)
+				return false;
+		} else if (!carroChefe.equals(other.carroChefe))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (imagem == null) {
+			if (other.imagem != null)
+				return false;
+		} else if (!imagem.equals(other.imagem))
+			return false;
 		return true;
 	}
-	
+
 }
