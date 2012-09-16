@@ -16,10 +16,14 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "fornecedores_categorias")
 public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5699174442602125251L;
 
 	@Id
 	@SequenceGenerator(name = "FORNECEDORES_CATEGORIAS_ID_SEQ", sequenceName = "fornecedores_categorias_id_seq", allocationSize = 1)

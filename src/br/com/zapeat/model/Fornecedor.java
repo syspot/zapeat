@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -71,6 +72,9 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	private String twitter;
 
 	private String facebook;
+	
+	@OneToOne(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
+	private CarroChefe carroChefe;
 	
 	@ManyToOne
 	private Estabelecimento estabelecimento;
@@ -258,6 +262,14 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setImagensFornecedores(List<ImagemFornecedor> imagensFornecedores) {
 		this.imagensFornecedores = imagensFornecedores;
+	}
+
+	public CarroChefe getCarroChefe() {
+		return carroChefe;
+	}
+
+	public void setCarroChefe(CarroChefe carroChefe) {
+		this.carroChefe = carroChefe;
 	}
 
 	public String getLogoMarcaView() {

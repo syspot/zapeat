@@ -11,14 +11,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
 @Entity
 @Table(name = "grupos")
 public class Grupo extends TSActiveRecordAb<Grupo>  {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4967258305777024288L;
 
 	@Id
 	@SequenceGenerator(name = "GRUPOS_ID_SEQ", sequenceName = "grupos_id_seq", allocationSize = 1)
@@ -27,8 +30,7 @@ public class Grupo extends TSActiveRecordAb<Grupo>  {
 	
 	private String descricao;
 	
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-	@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Permissao> permissoes;	
 	
 	public Long getId() {

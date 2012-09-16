@@ -7,12 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import org.primefaces.model.UploadedFile;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
-import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
 
 @Entity
@@ -34,9 +30,6 @@ public class ImagemPromocao extends TSActiveRecordAb<ImagemPromocao>{
 	
 	private String imagem;
 	
-	@Transient
-	private UploadedFile uploadedFile;
-
 	public Long getId() {
 		return id;
 	}
@@ -61,16 +54,12 @@ public class ImagemPromocao extends TSActiveRecordAb<ImagemPromocao>{
 		this.imagem = imagem;
 	}
 
-	public UploadedFile getUploadedFile() {
-		return uploadedFile;
-	}
-
-	public void setUploadedFile(UploadedFile uploadedFile) {
-		this.uploadedFile = uploadedFile;
+	public String getImagemFullView(){
+		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + getImagem();
 	}
 	
-	public String getImagemView(){
-		return TSUtil.isEmpty(getId()) ? Constantes.PASTA_DOWNLOAD + getImagem() : Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + getImagem();
+	public String getImagemThumbView(){
+		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_PROMOCAO_THUMB + getImagem();
 	}
 
 	@Override

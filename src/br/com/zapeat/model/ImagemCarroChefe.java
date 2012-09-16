@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -13,8 +14,8 @@ import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
 
 @Entity
-@Table(name = "imagens_fornecedores")
-public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
+@Table(name = "imagens_carros_chefes")
+public class ImagemCarroChefe extends TSActiveRecordAb<ImagemCarroChefe>{
 	
 	/**
 	 * 
@@ -22,12 +23,13 @@ public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
 	private static final long serialVersionUID = 7797419767827957163L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="imagens_fornecedores_id")
-	@SequenceGenerator(name="imagens_fornecedores_id", sequenceName="imagens_fornecedores_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="imagens_carros_chefes_id")
+	@SequenceGenerator(name="imagens_carros_chefes_id", sequenceName="imagens_carros_chefes_id_seq")
 	private Long id;
 	
 	@ManyToOne
-	private Fornecedor fornecedor;
+	@JoinColumn(name = "carro_chefe_id")
+	private CarroChefe carroChefe;
 	
 	private String imagem;
 	
@@ -39,12 +41,12 @@ public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
 		this.id = TSUtil.tratarLong(id);
 	}
 
-	public Fornecedor getFornecedor() {
-		return fornecedor;
+	public CarroChefe getCarroChefe() {
+		return carroChefe;
 	}
 
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
+	public void setCarroChefe(CarroChefe carroChefe) {
+		this.carroChefe = carroChefe;
 	}
 
 	public String getImagem() {
@@ -56,11 +58,11 @@ public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
 	}
 	
 	public String getImagemFullView(){
-		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_FORNECEDOR_FULL + getImagem();
+		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_FULL + getImagem();
 	}
 	
 	public String getImagemThumbView(){
-		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + getImagem();
+		return Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_THUMB + getImagem();
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public class ImagemFornecedor extends TSActiveRecordAb<ImagemFornecedor>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ImagemFornecedor other = (ImagemFornecedor) obj;
+		ImagemCarroChefe other = (ImagemCarroChefe) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

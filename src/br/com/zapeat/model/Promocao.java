@@ -18,12 +18,17 @@ import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
 
 @Entity
-@SuppressWarnings("serial")
 @Table(name = "promocoes")
 public class Promocao extends TSActiveRecordAb<Promocao> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3341691578335676454L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="promocoes_id")
@@ -62,7 +67,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id = TSUtil.tratarLong(id);
 	}
 
 	public String getTitulo() {
@@ -144,6 +149,22 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 	public void setImagemThumb(String imagemThumb) {
 		this.imagemThumb = imagemThumb;
+	}
+	
+	public String getImagemThumbView(){
+		return TSUtil.isEmpty(this.imagemThumb) ? this.imagemThumb : Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_PROMOCAO_THUMB + imagemThumb;
+	}
+	
+	public boolean isPromocaoDaSemana(){
+		return Constantes.TIPO_PROMOCAO_SEMANA.equals(tipoPromocao.getId());
+	}
+	
+	public boolean isPromocaoDaHora(){
+		return Constantes.TIPO_PROMOCAO_HORA.equals(tipoPromocao.getId());
+	}
+	
+	public boolean isPromocaoDoDia(){
+		return Constantes.TIPO_PROMOCAO_DIA.equals(tipoPromocao.getId());
 	}
 
 	@Override

@@ -1,10 +1,15 @@
 package br.com.zapeat.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -12,30 +17,54 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
 @Entity
-@Table(name = "tipos_promocoes")
-public class TipoPromocao extends TSActiveRecordAb<TipoPromocao> {
+@Table(name = "carros_chefes")
+public class CarroChefe extends TSActiveRecordAb<CarroChefe> {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 566821188901588569L;
+	private static final long serialVersionUID = 198171025259068866L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="tipos_promocoes_id")
-	@SequenceGenerator(name="tipos_promocoes_id", sequenceName="tipos_promocoes_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="carros_chefes_id")
+	@SequenceGenerator(name="carros_chefes_id", sequenceName="carros_chefes_id_seq")
 	private Long id;
 
+	@ManyToOne
+	private Fornecedor fornecedor;
+	
+	private String titulo;
+	
 	private String descricao;
-
+	
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
-
+	
+	@OneToMany(mappedBy = "carroChefe", cascade = CascadeType.ALL, orphanRemoval = true)	
+	private List<ImagemCarroChefe> imagensCarrosChefes;
+	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id = TSUtil.tratarLong(id);
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getDescricao() {
@@ -54,6 +83,14 @@ public class TipoPromocao extends TSActiveRecordAb<TipoPromocao> {
 		this.flagAtivo = flagAtivo;
 	}
 
+	public List<ImagemCarroChefe> getImagensCarrosChefes() {
+		return imagensCarrosChefes;
+	}
+
+	public void setImagensCarrosChefes(List<ImagemCarroChefe> imagensCarrosChefes) {
+		this.imagensCarrosChefes = imagensCarrosChefes;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -70,7 +107,7 @@ public class TipoPromocao extends TSActiveRecordAb<TipoPromocao> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TipoPromocao other = (TipoPromocao) obj;
+		CarroChefe other = (CarroChefe) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -79,4 +116,5 @@ public class TipoPromocao extends TSActiveRecordAb<TipoPromocao> {
 		return true;
 	}
 
+	
 }

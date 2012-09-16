@@ -14,10 +14,14 @@ import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.ZapeatUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "cidades")
 public class Cidade extends TSActiveRecordAb<Cidade> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 484862093492812288L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)

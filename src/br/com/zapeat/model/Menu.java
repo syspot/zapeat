@@ -18,6 +18,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "menus")
 public final class Menu extends TSActiveRecordAb<Menu> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5780740765382371694L;
+
 	@Id
 	@GeneratedValue
 	private Long id;

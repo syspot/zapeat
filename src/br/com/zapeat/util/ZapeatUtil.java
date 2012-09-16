@@ -7,6 +7,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -286,5 +288,12 @@ public class ZapeatUtil {
 		return newBufferedImage;
         
     }
+	
+	public static Date getProximoDia(Date data){
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		c.add(Calendar.DAY_OF_MONTH, 1);
+		return c.getTime();
+	}
 
 }

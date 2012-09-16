@@ -17,6 +17,11 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "permissoes")
 public class Permissao extends TSActiveRecordAb<Permissao> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4844538971596910288L;
+
 	@Id
 	@SequenceGenerator(name = "PERMISSOES_ID_SEQ", sequenceName = "permissoes_id_seq", allocationSize = 1)
 	@GeneratedValue(generator="PERMISSOES_ID_SEQ", strategy=GenerationType.SEQUENCE)

@@ -13,9 +13,13 @@ import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
 
 @Entity
-@SuppressWarnings("serial")
 @Table(name = "tipos_banners")
 public class TipoBanner extends TSActiveRecordAb<TipoBanner> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2116048001652529251L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="tipos_banners_id")

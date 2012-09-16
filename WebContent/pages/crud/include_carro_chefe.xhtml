@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	
+	<ui:param name="mbean" value="${fornecedorFaces}" />
+	<ui:param name="mbeanModel" value="${fornecedorFaces.crudModel}" />
+  	
+	<h:panelGrid columns="1" style="width:100%">
+ 			
+  		<p:outputLabel for="tituloCarroChefe" value="Título" />
+	  	<p:inputText id="tituloCarroChefe" value="#{mbeanModel.carroChefe.titulo}" maxlength="100" style="width:90%"/>
+			
+  		<p:outputLabel for="descricaoCarroChefe" value="Descrição" />
+	  	<p:inputTextarea id="descricaoCarroChefe" value="#{mbeanModel.carroChefe.descricao}" maxlength="1000" autoResize="false" rows="10" style="width:90%"/>
+	  	
+	  	<p:outputLabel value="Ativo " for="flagAtivoCarroChefe"/>
+		<p:selectBooleanCheckbox id="flagAtivoCarroChefe" value="#{mbeanModel.carroChefe.flagAtivo}"/>
+			
+	</h:panelGrid>
+  			
+	<h:panelGrid columns="1" style="width: 46%">
+  			
+		<p:outputLabel for="imagemCarroChefe" value="Imagens do Carro-Chefe" />
+		<p:fileUpload id="imagemCarroChefe" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagensCarrosChefes}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="pgImagensCarrosChefes"/>
+	
+	</h:panelGrid>
+		
+	<h:panelGrid id="pgImagensCarrosChefes" columns="1" style="width:100%">
+		
+		<p:dataGrid id="dgImagemCarroChefe" var="imagemCarroChefe" value="#{mbeanModel.carroChefe.imagensCarrosChefes}" columns="4"  
+			        rows="4" paginator="true" emptyMessage="Nenhuma imagem cadastrada" rendered="#{not empty mbeanModel.carroChefe.imagensCarrosChefes}">
+	          
+	        <p:column>
+	            
+	            <p:graphicImage value="#{imagemCarroChefe.imagemThumbView}" cache="false" />
+	            
+	            <p:commandLink ajax="false" action="#{mbean.removerImagemCarroChefe}" process="@this" title="Clique aqui para remover a imagem">
+					<h:panelGrid columns="1" style="width:100%">
+						<p:graphicImage style="border:0px;"	value="/resources/images/del.png" />
+					</h:panelGrid>
+					<f:setPropertyActionListener target="#{mbean.imagemCarroChefeSelecionada}" value="#{imagemCarroChefe}" />
+				</p:commandLink>
+	            
+	        </p:column>  
+	  
+	    </p:dataGrid>
+			    
+	</h:panelGrid>
+  	
+</ui:composition>

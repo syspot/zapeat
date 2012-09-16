@@ -14,10 +14,14 @@ import javax.persistence.Table;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "usuarios_adm")
 public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7584052979369318920L;
 
 	@Id
 	@SequenceGenerator(name = "USUARIOS_ADM_ID_SEQ", sequenceName = "usuarios_adm_id_seq", allocationSize = 1)

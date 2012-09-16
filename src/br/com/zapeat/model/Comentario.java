@@ -14,9 +14,13 @@ import javax.persistence.Table;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 
 @Entity
-@SuppressWarnings("serial")
 @Table(name = "comentarios")
 public class Comentario extends TSActiveRecordAb<Comentario> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5549443246528896143L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="comentarios_id")

@@ -23,6 +23,11 @@ import br.com.zapeat.util.Utilitarios;
 @Table(name = "usuarios")
 public class Usuario extends TSActiveRecordAb<Usuario> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5854694795019704440L;
+
 	@Id
 	@SequenceGenerator(name = "USUARIOS_ID_SEQ", sequenceName = "usuarios_id_seq", allocationSize = 1)
 	@GeneratedValue(generator="USUARIOS_ID_SEQ", strategy=GenerationType.SEQUENCE)

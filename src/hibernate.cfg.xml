@@ -19,14 +19,16 @@
 		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
 		
  		<mapping class="br.com.zapeat.model.Banner" />
+ 		<mapping class="br.com.zapeat.model.CarroChefe" />
  		<mapping class="br.com.zapeat.model.Categoria" />
- 		<mapping class="br.com.zapeat.model.Comentario" />
  		<mapping class="br.com.zapeat.model.Cidade" />
- 		<mapping class="br.com.zapeat.model.Estado" />
+ 		<mapping class="br.com.zapeat.model.Comentario" />
  		<mapping class="br.com.zapeat.model.Estabelecimento" />
+ 		<mapping class="br.com.zapeat.model.Estado" />
  		<mapping class="br.com.zapeat.model.Fornecedor" />
  		<mapping class="br.com.zapeat.model.FornecedorCategoria" />
  		<mapping class="br.com.zapeat.model.Grupo" />
+ 		<mapping class="br.com.zapeat.model.ImagemCarroChefe" />
  		<mapping class="br.com.zapeat.model.ImagemFornecedor" />
  		<mapping class="br.com.zapeat.model.ImagemPromocao" />
  		<mapping class="br.com.zapeat.model.Menu" />

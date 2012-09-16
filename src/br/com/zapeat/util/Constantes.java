@@ -16,23 +16,32 @@ public class Constantes {
 	public static final Integer LARGURA_THUMB = 80;
 	public static final Integer ALTURA_THUMB = 80;
 	
-	public static final Integer LARGURA_PROMOCAO_FULL = 590;
-	public static final Integer ALTURA_PROMOCAO_FULL = 260;
+	public static final Integer LARGURA_IMAGEM_PROMOCAO_FULL = 590;
+	public static final Integer ALTURA_IMAGEM_PROMOCAO_FULL = 260;
 	
 	public static final Integer LARGURA_BANNER_FULL = 728;
 	public static final Integer ALTURA_BANNER_FULL = 90;
 	
-	public static final Integer LARGURA_PROMOCAO_THUMB = 180;
-	public static final Integer ALTURA_PROMOCAO_THUMB = 79;
+	public static final Integer LARGURA_IMAGEM_PROMOCAO_THUMB = 180;
+	public static final Integer ALTURA_IMAGEM_PROMOCAO_THUMB = 79;
+	
+	public static final Integer LARGURA_PROMOCAO_THUMB = 80;
+	public static final Integer ALTURA_PROMOCAO_THUMB = 80;
 	
 	public static final Integer LARGURA_BANNER_THUMB = 260;
 	public static final Integer ALTURA_BANNER_THUMB = 170;
 	
-	public static final Integer LARGURA_FORNECEDOR_FULL = 590;
-	public static final Integer ALTURA_FORNECEDOR_FULL = 260;
+	public static final Integer LARGURA_IMAGEM_FORNECEDOR_FULL = 590;
+	public static final Integer ALTURA_IMAGEM_FORNECEDOR_FULL = 260;
 	
-	public static final Integer LARGURA_FORNECEDOR_THUMB = 180;
-	public static final Integer ALTURA_FORNECEDOR_THUMB = 79;
+	public static final Integer LARGURA_IMAGEM_CARRO_CHEFE_FULL = 590;
+	public static final Integer ALTURA_IMAGEM_CARRO_CHEFE_FULL = 260;
+	
+	public static final Integer LARGURA_IMAGEM_FORNECEDOR_THUMB = 180;
+	public static final Integer ALTURA_IMAGEM_FORNECEDOR_THUMB = 79;
+	
+	public static final Integer LARGURA_IMAGEM_CARRO_CHEFE_THUMB = 180;
+	public static final Integer ALTURA_IMAGEM_CARRO_CHEFE_THUMB = 79;
 	
 	public static final Integer LARGURA_FORNECEDOR_LOGOMARCA = 80;
 	public static final Integer ALTURA_FORNECEDOR_LOGOMARCA = 80;
@@ -48,8 +57,11 @@ public class Constantes {
 	
 	public static final String PREFIXO_IMAGEM_PROMOCAO_FULL = "590x260_";
 	public static final String PREFIXO_IMAGEM_PROMOCAO_THUMB = "180x79_";
+	public static final String PREFIXO_PROMOCAO_THUMB = "80x80_";
 	public static final String PREFIXO_IMAGEM_FORNECEDOR_FULL = "590x260_";
 	public static final String PREFIXO_IMAGEM_FORNECEDOR_THUMB = "180x79_";
+	public static final String PREFIXO_IMAGEM_CARRO_CHEFE_FULL = "590x260_";
+	public static final String PREFIXO_IMAGEM_CARRO_CHEFE_THUMB = "180x79_";
 	public static final String PREFIXO_IMAGEM_FORNECEDOR_LOGOMARCA = "80x80_";
 	public static final String PREFIXO_IMAGEM_BANNER_FULL = "728x90_";
 	public static final String PREFIXO_IMAGEM_BANNER_THUMB = "260x170_";
@@ -58,5 +70,9 @@ public class Constantes {
 	
 	public static final Long TIPO_BANNER_FULL = 1L;
 	public static final Long TIPO_BANNER_THUMB = 2L;
+	
+	public static Long TIPO_PROMOCAO_HORA = 1L;
+	public static Long TIPO_PROMOCAO_DIA = 2L;
+	public static Long TIPO_PROMOCAO_SEMANA = 3L;
 
 }

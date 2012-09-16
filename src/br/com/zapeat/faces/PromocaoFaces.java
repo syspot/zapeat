@@ -60,17 +60,33 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		return null;
 	}
 	
+	@Override
+	protected void prePersist() {
+		
+		if(getCrudModel().isPromocaoDoDia()){
+			getCrudModel().setFim(ZapeatUtil.getProximoDia(getCrudModel().getInicio()));
+		}
+		
+	}
+	
 	public void enviarImagem(FileUploadEvent event) {
 		
 		ImagemPromocao imagemPromocao = new ImagemPromocao();
 		
 		imagemPromocao.setPromocao(getCrudModel());
-		imagemPromocao.setUploadedFile(event.getFile());
 		imagemPromocao.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + imagemPromocao.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_PROMOCAO_FULL, Constantes.ALTURA_PROMOCAO_FULL);
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_THUMB + imagemPromocao.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_PROMOCAO_THUMB, Constantes.ALTURA_PROMOCAO_THUMB);
+		
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_FULL + imagemPromocao.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_PROMOCAO_FULL, Constantes.ALTURA_IMAGEM_PROMOCAO_FULL);
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_PROMOCAO_THUMB + imagemPromocao.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_PROMOCAO_THUMB, Constantes.ALTURA_IMAGEM_PROMOCAO_THUMB);
 		
 		getCrudModel().getImagensPromocoes().add(imagemPromocao);
+		
+	}
+	
+	public void enviarThumb(FileUploadEvent event) {
+		
+		getCrudModel().setImagemThumb(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_PROMOCAO_THUMB + getCrudModel().getImagemThumb(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_PROMOCAO_THUMB, Constantes.ALTURA_PROMOCAO_THUMB);
 		
 	}
 	

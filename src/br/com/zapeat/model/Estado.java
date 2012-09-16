@@ -7,26 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.ZapeatUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "estados")
 public class Estado extends TSActiveRecordAb<Estado> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7693009400955345338L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	private String sigla;
-
-	@OneToMany(mappedBy = "estado")
-	private List<Cidade> cidades;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -89,11 +89,4 @@ public class Estado extends TSActiveRecordAb<Estado> {
 		return super.find(query.toString(), params.toArray());
 	}
 
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
 }

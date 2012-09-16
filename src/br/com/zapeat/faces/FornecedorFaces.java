@@ -14,10 +14,12 @@ import org.primefaces.model.DualListModel;
 
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.model.CarroChefe;
 import br.com.zapeat.model.Categoria;
 import br.com.zapeat.model.Cidade;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.FornecedorCategoria;
+import br.com.zapeat.model.ImagemCarroChefe;
 import br.com.zapeat.model.ImagemFornecedor;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.ZapeatUtil;
@@ -30,6 +32,9 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	private List<Categoria> categoriasSources;
 	private DualListModel<Categoria> categorias;
 	private DualListModel<Categoria> targetCategorias;
+	
+	private ImagemFornecedor imagemFornecedorSelecionada;
+	private ImagemCarroChefe imagemCarroChefeSelecionada;
 
 	@PostConstruct
 	protected void init() {
@@ -49,6 +54,8 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setFlagAlterar(Boolean.FALSE);
 		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
 		this.getCrudModel().setImagensFornecedores(new ArrayList<ImagemFornecedor>());
+		this.getCrudModel().setCarroChefe(new CarroChefe());
+		this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
 
 		this.categoriasSources = new Categoria().findAll("descricao");
 
@@ -70,6 +77,27 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setGrid(new ArrayList<Fornecedor>());
 		return null;
 	}
+	
+	private boolean validaCamposCarroChefe(){
+		
+		boolean validado = true;
+		
+		if(getCrudModel().getCarroChefe().getFlagAtivo()){
+			
+			if(TSUtil.isEmpty(getCrudModel().getCarroChefe().getTitulo())){
+				validado = false;
+				ZapeatUtil.addErrorMessage("Título do Carro-Chefe: Campo obrigatório");
+			}
+			
+			if(TSUtil.isEmpty(getCrudModel().getCarroChefe().getDescricao())){
+				validado = false;
+				ZapeatUtil.addErrorMessage("Descrição do Carro-Chefe: Campo obrigatório");
+			}
+			
+		}
+		
+		return validado;
+	}
 
 	@Override
 	protected boolean validaCampos() {
@@ -78,12 +106,16 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLatitude().toString())) {
 			validado = false;
-			ZapeatUtil.addErrorMessage("Latitude: Formato inválido.");
+			ZapeatUtil.addErrorMessage("Latitude: Formato inválido");
 		}
 
 		if (!Pattern.matches(Constantes.REGEX_LATITUDE_LONGITUDE, this.getCrudModel().getLongitude().toString())) {
 			validado = false;
-			ZapeatUtil.addErrorMessage("Longitude: Formato inválido.");
+			ZapeatUtil.addErrorMessage("Longitude: Formato inválido");
+		}
+		
+		if(validado){
+			validado = this.validaCamposCarroChefe();
 		}
 
 		return validado;
@@ -110,6 +142,8 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			
 		}
 		
+		getCrudModel().getCarroChefe().setFornecedor(getCrudModel());
+		
 	}
 
 	@Override
@@ -126,6 +160,11 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.categoriasSources.removeAll(categoriaTarget);
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
+		
+		if(TSUtil.isEmpty(getCrudModel().getCarroChefe())){
+			this.getCrudModel().setCarroChefe(new CarroChefe());
+			this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
+		}
 
 	}
 
@@ -143,8 +182,31 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		
 		getCrudModel().getImagensFornecedores().add(imagemFornecedor);
 		
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_FULL + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_FORNECEDOR_FULL, Constantes.ALTURA_FORNECEDOR_FULL);
-		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_FORNECEDOR_THUMB, Constantes.ALTURA_FORNECEDOR_THUMB);
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_FULL + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_FORNECEDOR_FULL, Constantes.ALTURA_IMAGEM_FORNECEDOR_FULL);
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_FORNECEDOR_THUMB, Constantes.ALTURA_IMAGEM_FORNECEDOR_THUMB);
+	}
+	
+	public void enviarImagensCarrosChefes(FileUploadEvent event) {
+		
+		ImagemCarroChefe imagemCarroChefe = new ImagemCarroChefe();
+		
+		imagemCarroChefe.setCarroChefe(getCrudModel().getCarroChefe());
+		imagemCarroChefe.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
+		
+		getCrudModel().getCarroChefe().getImagensCarrosChefes().add(imagemCarroChefe);
+		
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_FULL + imagemCarroChefe.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_CARRO_CHEFE_FULL, Constantes.ALTURA_IMAGEM_CARRO_CHEFE_FULL);
+		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_THUMB + imagemCarroChefe.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_CARRO_CHEFE_THUMB, Constantes.ALTURA_IMAGEM_CARRO_CHEFE_THUMB);
+	}
+	
+	public String removerImagemCarroChefe(){
+		getCrudModel().getCarroChefe().getImagensCarrosChefes().remove(this.imagemCarroChefeSelecionada);
+		return null;
+	}
+	
+	public String removerImagemFornecedor(){
+		getCrudModel().getImagensFornecedores().remove(this.imagemFornecedorSelecionada);
+		return null;
 	}
 
 	public List<SelectItem> getCidades() {
@@ -177,6 +239,24 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	public void setCategoriasSources(List<Categoria> categoriasSources) {
 		this.categoriasSources = categoriasSources;
+	}
+
+	public ImagemFornecedor getImagemFornecedorSelecionada() {
+		return imagemFornecedorSelecionada;
+	}
+
+	public void setImagemFornecedorSelecionada(
+			ImagemFornecedor imagemFornecedorSelecionada) {
+		this.imagemFornecedorSelecionada = imagemFornecedorSelecionada;
+	}
+
+	public ImagemCarroChefe getImagemCarroChefeSelecionada() {
+		return imagemCarroChefeSelecionada;
+	}
+
+	public void setImagemCarroChefeSelecionada(
+			ImagemCarroChefe imagemCarroChefeSelecionada) {
+		this.imagemCarroChefeSelecionada = imagemCarroChefeSelecionada;
 	}
 
 }
