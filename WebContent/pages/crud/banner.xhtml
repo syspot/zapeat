@@ -26,7 +26,7 @@
 			  	<p:selectOneMenu id="tipoBanner" required="true" requiredMessage="Tipo de Banner: Campo obrigatório" value="#{mbeanModel.tipoBanner.id}" style="width:100%">
 					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 					<f:selectItems value="#{mbean.tiposBanners}" />
-					<p:ajax event="change" process="@this" global="false" listener="#{mbean.limparImagem}" />
+					<p:ajax event="change" process="@this" global="false" listener="#{mbean.limparImagem}" update="opVisualizacaoImagem" />
 				</p:selectOneMenu>
 				
 				<p:outputLabel for="imagem" value="Imagem" />

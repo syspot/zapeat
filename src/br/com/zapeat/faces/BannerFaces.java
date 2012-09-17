@@ -79,13 +79,17 @@ public class BannerFaces extends CrudFaces<Banner> {
 		
 		getCrudModel().setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 
-		if(Constantes.TIPO_BANNER_FULL.equals(getCrudModel().getTipoBanner().getId())){
+		if(Constantes.TIPO_BANNER_SUPERIOR_GRANDE.equals(getCrudModel().getTipoBanner().getId())){
 			
-			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_FULL + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_FULL, Constantes.ALTURA_BANNER_FULL);
+			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_SUPERIOR_GRANDE + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_SUPERIOR_GRANDE, Constantes.ALTURA_BANNER_SUPERIOR_GRANDE);
 			
-		} else if(Constantes.TIPO_BANNER_THUMB.equals(getCrudModel().getTipoBanner().getId())){
+		} else if(Constantes.TIPO_BANNER_SUPERIOR_PEQUENO.equals(getCrudModel().getTipoBanner().getId())){
 			
-			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_THUMB + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_THUMB, Constantes.ALTURA_BANNER_THUMB);
+			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_SUPERIOR_PEQUENO + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_SUPERIOR_PEQUENO, Constantes.ALTURA_BANNER_SUPERIOR_PEQUENO);
+			
+		} else if(Constantes.TIPO_BANNER_SUPERIOR_LATERAL.equals(getCrudModel().getTipoBanner().getId())){
+			
+			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_LATERAL + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_LATERAL, Constantes.ALTURA_BANNER_LATERAL);
 			
 		}
 		

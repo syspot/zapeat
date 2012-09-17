@@ -19,17 +19,20 @@ public class Constantes {
 	public static final Integer LARGURA_IMAGEM_PROMOCAO_FULL = 590;
 	public static final Integer ALTURA_IMAGEM_PROMOCAO_FULL = 260;
 	
-	public static final Integer LARGURA_BANNER_FULL = 728;
-	public static final Integer ALTURA_BANNER_FULL = 90;
+	public static final Integer LARGURA_BANNER_SUPERIOR_GRANDE = 728;
+	public static final Integer ALTURA_BANNER_SUPERIOR_GRANDE = 90;
+	
+	public static final Integer LARGURA_BANNER_SUPERIOR_PEQUENO = 210;
+	public static final Integer ALTURA_BANNER_SUPERIOR_PEQUENO = 110;
+	
+	public static final Integer LARGURA_BANNER_LATERAL = 170;
+	public static final Integer ALTURA_BANNER_LATERAL = 260;
 	
 	public static final Integer LARGURA_IMAGEM_PROMOCAO_THUMB = 180;
 	public static final Integer ALTURA_IMAGEM_PROMOCAO_THUMB = 79;
 	
 	public static final Integer LARGURA_PROMOCAO_THUMB = 80;
 	public static final Integer ALTURA_PROMOCAO_THUMB = 80;
-	
-	public static final Integer LARGURA_BANNER_THUMB = 260;
-	public static final Integer ALTURA_BANNER_THUMB = 170;
 	
 	public static final Integer LARGURA_IMAGEM_FORNECEDOR_FULL = 590;
 	public static final Integer ALTURA_IMAGEM_FORNECEDOR_FULL = 260;
@@ -63,13 +66,15 @@ public class Constantes {
 	public static final String PREFIXO_IMAGEM_CARRO_CHEFE_FULL = "590x260_";
 	public static final String PREFIXO_IMAGEM_CARRO_CHEFE_THUMB = "180x79_";
 	public static final String PREFIXO_IMAGEM_FORNECEDOR_LOGOMARCA = "80x80_";
-	public static final String PREFIXO_IMAGEM_BANNER_FULL = "728x90_";
-	public static final String PREFIXO_IMAGEM_BANNER_THUMB = "260x170_";
+	public static final String PREFIXO_IMAGEM_BANNER_LATERAL= "170x260_";
+	public static final String PREFIXO_IMAGEM_BANNER_SUPERIOR_GRANDE= "728x90_";
+	public static final String PREFIXO_IMAGEM_BANNER_SUPERIOR_PEQUENO = "210x110_";
 	
 	public static final String REGEX_LATITUDE_LONGITUDE = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
 	
-	public static final Long TIPO_BANNER_FULL = 1L;
-	public static final Long TIPO_BANNER_THUMB = 2L;
+	public static final Long TIPO_BANNER_SUPERIOR_GRANDE = 1L;
+	public static final Long TIPO_BANNER_SUPERIOR_PEQUENO = 2L;
+	public static final Long TIPO_BANNER_SUPERIOR_LATERAL = 3L;
 	
 	public static Long TIPO_PROMOCAO_HORA = 1L;
 	public static Long TIPO_PROMOCAO_DIA = 2L;
