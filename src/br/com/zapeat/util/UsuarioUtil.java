@@ -7,6 +7,7 @@ import br.com.topsys.util.TSCryptoUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
 import br.com.zapeat.model.Usuario;
+import br.com.zapeat.model.UsuarioAdm;
 
 public class UsuarioUtil {		    
     
@@ -58,7 +59,7 @@ public class UsuarioUtil {
     	return TSCryptoUtil.gerarHash(senha, "MD5");
     }
 
-    public static Usuario usuarioAutenticado(Usuario model) {
+    public static UsuarioAdm usuarioAutenticado(UsuarioAdm model) {
     	
     	model.setSenha(getSenhaCriptografada(model.getSenha()));    	
 		

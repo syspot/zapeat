@@ -14,14 +14,10 @@ import javax.persistence.Table;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "usuarios_adm")
 public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7584052979369318920L;
 
 	@Id
 	@SequenceGenerator(name = "USUARIOS_ADM_ID_SEQ", sequenceName = "usuarios_adm_id_seq", allocationSize = 1)
@@ -31,6 +27,8 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 	private String login;
 
 	private String senha;
+	
+	private String nome;
 
 	@ManyToOne
 	private Fornecedor fornecedor;
@@ -41,6 +39,10 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 		StringBuilder query = new StringBuilder();
 
 		query.append(" from UsuarioAdm u where 1 = 1 ");
+		
+		if (!TSUtil.isEmpty(nome)) {
+			query.append("and u.nome like ?");
+		}
 
 		if (!TSUtil.isEmpty(login)) {
 			query.append("and u.login like ?");
@@ -51,6 +53,10 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 		}
 
 		List<Object> params = new ArrayList<Object>();
+		
+		if (!TSUtil.isEmpty(nome)) {
+			params.add("%" + nome + "%");
+		}
 
 		if (!TSUtil.isEmpty(login)) {
 			params.add("%" + login + "%");
@@ -93,6 +99,14 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }

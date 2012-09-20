@@ -24,7 +24,7 @@ public class UsuarioAdmFaces extends CrudFaces<UsuarioAdm> {
 	protected void init() {
 		this.clearFields();
 		this.initCombo();
-		this.setFieldOrdem("login");
+		this.setFieldOrdem("nome");
 	}
 
 	private void initCombo() {

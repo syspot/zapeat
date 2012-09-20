@@ -23,6 +23,7 @@
 		<navigation-case>
 			<from-outcome>sair</from-outcome>
 			<to-view-id>/pages/login.xhtml</to-view-id>
+			<redirect></redirect>
 		</navigation-case>
 	</navigation-rule>
 

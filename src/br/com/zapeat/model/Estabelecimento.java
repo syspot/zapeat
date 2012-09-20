@@ -15,9 +15,6 @@ import br.com.topsys.util.TSUtil;
 @Table(name = "estabelecimentos")
 public class Estabelecimento extends TSActiveRecordAb<Estabelecimento> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2199957366992734382L;
 
 	@Id

@@ -13,6 +13,10 @@
   			
   			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
+  			<p:outputLabel for="nome" value="Nome" />
+  			<p:inputText style="width: 80%;" id="nome" value="#{mbeanModel.nome}" required="true" requiredMessage="Nome: Campo obrigatório" maxlength="30"/>
+  			<br/>
+  			
   			<p:outputLabel for="login" value="Login" />
   			<p:inputText style="width: 80%;" id="login" value="#{mbeanModel.login}" required="true" requiredMessage="Login: Campo obrigatório" maxlength="30"/>
   			<br/>
@@ -33,6 +37,10 @@
   	
   			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
+  			<p:outputLabel for="nomePesquisa" value="nomePesquisa" />
+  			<p:inputText style="width: 80%;" id="loginPesquisa" value="#{mbeanPesquisaModel.nome}" maxlength="30"/>
+  			<br/>
+  			
   			<p:outputLabel for="loginPesquisa" value="Login" />
   			<p:inputText style="width: 80%;" id="loginPesquisa" value="#{mbeanPesquisaModel.login}" maxlength="30"/>
   			<br/>
@@ -49,6 +57,10 @@
   	</ui:define>
   	
   	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Nome">
+  			<h:outputText value="#{linha.nome}" />
+  		</p:column>
   	
   		<p:column headerText="Login">
   			<h:outputText value="#{linha.login}" />
