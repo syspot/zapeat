@@ -83,10 +83,6 @@ public class BannerFaces extends CrudFaces<Banner> {
 			
 			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_SUPERIOR_GRANDE + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_SUPERIOR_GRANDE, Constantes.ALTURA_BANNER_SUPERIOR_GRANDE);
 			
-		} else if(Constantes.TIPO_BANNER_SUPERIOR_PEQUENO.equals(getCrudModel().getTipoBanner().getId())){
-			
-			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_SUPERIOR_PEQUENO + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_SUPERIOR_PEQUENO, Constantes.ALTURA_BANNER_SUPERIOR_PEQUENO);
-			
 		} else if(Constantes.TIPO_BANNER_SUPERIOR_LATERAL.equals(getCrudModel().getTipoBanner().getId())){
 			
 			ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_BANNER_LATERAL + getCrudModel().getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_BANNER_LATERAL, Constantes.ALTURA_BANNER_LATERAL);

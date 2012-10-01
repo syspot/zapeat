@@ -56,8 +56,7 @@ public class TipoBanner extends TSActiveRecordAb<TipoBanner> {
 	}
 	
 	public String getPrefixoImagem(){
-		return Constantes.TIPO_BANNER_SUPERIOR_GRANDE.equals(getId()) ? Constantes.PREFIXO_IMAGEM_BANNER_SUPERIOR_GRANDE : 
-			Constantes.TIPO_BANNER_SUPERIOR_PEQUENO.equals(getId()) ? Constantes.PREFIXO_IMAGEM_BANNER_SUPERIOR_PEQUENO : Constantes.PREFIXO_IMAGEM_BANNER_LATERAL; 
+		return Constantes.TIPO_BANNER_SUPERIOR_GRANDE.equals(getId()) ? Constantes.PREFIXO_IMAGEM_BANNER_SUPERIOR_GRANDE : Constantes.PREFIXO_IMAGEM_BANNER_LATERAL; 
 	}
 
 	@Override

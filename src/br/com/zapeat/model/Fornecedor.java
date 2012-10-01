@@ -77,9 +77,6 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	private CarroChefe carroChefe;
 	
 	@ManyToOne
-	private Estabelecimento estabelecimento;
-
-	@ManyToOne
 	private Cidade cidade;
 
 	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -248,14 +245,6 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		this.fornecedorCategorias = fornecedorCategorias;
 	}
 
-	public Estabelecimento getEstabelecimento() {
-		return estabelecimento;
-	}
-
-	public void setEstabelecimento(Estabelecimento estabelecimento) {
-		this.estabelecimento = estabelecimento;
-	}
-	
 	public List<ImagemFornecedor> getImagensFornecedores() {
 		return imagensFornecedores;
 	}

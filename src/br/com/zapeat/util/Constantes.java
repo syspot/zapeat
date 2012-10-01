@@ -73,8 +73,7 @@ public class Constantes {
 	public static final String REGEX_LATITUDE_LONGITUDE = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
 
 	public static final Long TIPO_BANNER_SUPERIOR_GRANDE = 1L;
-	public static final Long TIPO_BANNER_SUPERIOR_PEQUENO = 2L;
-	public static final Long TIPO_BANNER_SUPERIOR_LATERAL = 3L;
+	public static final Long TIPO_BANNER_SUPERIOR_LATERAL = 2L;
 
 	public static Long TIPO_PROMOCAO_HORA = 1L;
 	public static Long TIPO_PROMOCAO_DIA = 2L;
