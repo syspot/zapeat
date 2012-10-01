@@ -79,5 +79,8 @@ public class Constantes {
 	public static Long TIPO_PROMOCAO_HORA = 1L;
 	public static Long TIPO_PROMOCAO_DIA = 2L;
 	public static Long TIPO_PROMOCAO_SEMANA = 3L;
+	
+	public static Long MENU_PROMOCAO = 5L;
+	public static Long MENU_CADASTRO_BASE = 1L;
 
 }

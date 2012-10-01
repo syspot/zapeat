@@ -15,8 +15,8 @@ public class UsuarioUtil {
     	
     }
     
-    public static Usuario obterUsuarioConectado() {
-        return (Usuario) TSFacesUtil.getObjectInSession(Constantes.USUARIO_CONECTADO);
+    public static UsuarioAdm obterUsuarioConectado() {
+        return (UsuarioAdm) TSFacesUtil.getObjectInSession(Constantes.USUARIO_CONECTADO);
     }
 
     @SuppressWarnings("unchecked")

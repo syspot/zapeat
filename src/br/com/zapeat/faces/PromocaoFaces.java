@@ -31,6 +31,8 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	private ImagemPromocao imagemPromocaoSelecionada;
 	private Integer mover;
 	
+	private boolean usuarioFornecedor;
+	
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
@@ -39,7 +41,15 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		
 		UsuarioAdm usuario = UsuarioUtil.obterUsuarioConectado();
 		
-		if(TSUtil.isEmpty(usuario.getFornecedor())){
+		if(!TSUtil.isEmpty(usuario.getFornecedor())){
+			
+			getCrudModel().setFornecedor(usuario.getFornecedor());
+			getCrudPesquisaModel().setFornecedor(usuario.getFornecedor());
+			this.usuarioFornecedor = true;
+			
+		} else{
+			
+			this.usuarioFornecedor = false;
 			
 		}
 		
@@ -135,6 +145,14 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 	public void setMover(Integer mover) {
 		this.mover = mover;
+	}
+
+	public boolean isUsuarioFornecedor() {
+		return usuarioFornecedor;
+	}
+
+	public void setUsuarioFornecedor(boolean usuarioFornecedor) {
+		this.usuarioFornecedor = usuarioFornecedor;
 	}
 
 }

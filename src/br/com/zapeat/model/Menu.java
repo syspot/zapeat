@@ -48,6 +48,10 @@ public final class Menu extends TSActiveRecordAb<Menu> {
 
 	public Menu() {
 	}
+	
+	public Menu(Long id) {
+		this.id = id;
+	}
 
 	public Menu(Boolean flagAtivo) {
 		this.flagAtivo = flagAtivo;

@@ -1,5 +1,6 @@
 package br.com.zapeat.faces;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,7 +62,22 @@ public class AutenticacaoFaces extends TSMainFaces {
 
 	private void carregarMenu() {
 
-		menus = new Menu().findAll("ordem");
+		if(TSUtil.isEmpty(usuario.getFornecedor())){
+			
+			menus = new Menu().findAll("ordem");
+			
+		} else{
+			
+			this.menus = new ArrayList<Menu>();
+			
+			Menu menu = new Menu(Constantes.MENU_CADASTRO_BASE).getById();
+			
+			menu.setMenus(new ArrayList<Menu>());
+			menu.getMenus().add(new Menu(Constantes.MENU_PROMOCAO).getById());
+			
+			this.menus.add(menu);
+			
+		}
 
 	}
 
@@ -75,8 +91,8 @@ public class AutenticacaoFaces extends TSMainFaces {
 			return null;
 		}
 
-		TSFacesUtil.addObjectInSession(Constantes.USUARIO_CONECTADO, usuario);
 		carregarMenu();
+		TSFacesUtil.addObjectInSession(Constantes.USUARIO_CONECTADO, usuario);
 
 		return SUCESSO;
 	}

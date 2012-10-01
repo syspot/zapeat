@@ -29,7 +29,7 @@
   				<h:panelGrid style="width:75%">
   				
   					<p:outputLabel for="fornecedor" value="Fornecedor" />
-				  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" style="width:80%">
+				  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" disabled="#{mbean.usuarioFornecedor}" style="width:80%">
 						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 						<f:selectItems value="#{mbean.fornecedores}" />
 					</p:selectOneMenu>
@@ -151,7 +151,7 @@
 				<h:panelGrid style="width:75%">
 				
 					<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
-				  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:80%">
+				  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}"  disabled="#{mbean.usuarioFornecedor}" style="width:80%">
 						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 						<f:selectItems value="#{mbean.fornecedores}" />
 					</p:selectOneMenu>
