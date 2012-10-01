@@ -16,7 +16,9 @@ import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.ImagemPromocao;
 import br.com.zapeat.model.Promocao;
 import br.com.zapeat.model.TipoPromocao;
+import br.com.zapeat.model.UsuarioAdm;
 import br.com.zapeat.util.Constantes;
+import br.com.zapeat.util.UsuarioUtil;
 import br.com.zapeat.util.ZapeatUtil;
 
 @ViewScoped
@@ -34,6 +36,13 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		this.clearFields();
 		this.initCombos();
 		setFieldOrdem("descricao");
+		
+		UsuarioAdm usuario = UsuarioUtil.obterUsuarioConectado();
+		
+		if(TSUtil.isEmpty(usuario.getFornecedor())){
+			
+		}
+		
 	}
 	
 	private void initCombos(){
