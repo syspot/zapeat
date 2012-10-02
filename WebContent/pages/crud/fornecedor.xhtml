@@ -89,13 +89,15 @@
 					
 		  		</h:panelGrid>
 		  		
-		  		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:30%">
+		  		<h:panelGrid columns="3" columnClasses="coluna40, coluna40, coluna20" style="width:50%">
 
 		  			<p:outputLabel for="latitude" value="Latitude" />
 			  		<p:outputLabel for="longitude" value="Longitude" />
+			  		<h:outputText value="" />
 			  		
-					<p:inputText id="latitude" required="true" requiredMessage="Latitude: Campo obrigatório" onblur="return Mascara(this,Integer)" onkeypress="return Mascara(this,Integer)" value="#{mbeanModel.latitude}" styleClass="coluna90"/>
-			  		<p:inputText id="longitude" required="true" requiredMessage="Longitude: Campo obrigatório"  onblur="return Mascara(this,Integer)" onkeypress="return Mascara(this,Integer)" value="#{mbeanModel.longitude}" styleClass="coluna90"/>
+					<p:inputText id="latitude" required="true" requiredMessage="Latitude: Campo obrigatório" value="#{mbeanModel.latitude}" styleClass="coluna90"/>
+			  		<p:inputText id="longitude" required="true" requiredMessage="Longitude: Campo obrigatório"  value="#{mbeanModel.longitude}" styleClass="coluna90"/>
+			  		<h:outputText value="Ex.: -38.504042" style="font-weight:bold;" />
 		  		
 		  		</h:panelGrid>
 		  		  				
