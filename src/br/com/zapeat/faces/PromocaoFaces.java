@@ -13,6 +13,7 @@ import org.primefaces.event.FileUploadEvent;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Fornecedor;
+import br.com.zapeat.model.FornecedorCategoria;
 import br.com.zapeat.model.ImagemPromocao;
 import br.com.zapeat.model.Promocao;
 import br.com.zapeat.model.TipoPromocao;
@@ -27,6 +28,7 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 	private List<SelectItem> tiposPromocoes;
 	private List<SelectItem> fornecedores;
+	private List<SelectItem> fornecedoresCategorias;
 	
 	private ImagemPromocao imagemPromocaoSelecionada;
 	private Integer mover;
@@ -45,6 +47,7 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 			
 			getCrudModel().setFornecedor(usuario.getFornecedor());
 			getCrudPesquisaModel().setFornecedor(usuario.getFornecedor());
+			this.atualizarComboFornecedorCategoria();
 			this.usuarioFornecedor = true;
 			
 		} else{
@@ -60,10 +63,15 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "nomeFantasia");
 	}
 	
+	public void atualizarComboFornecedorCategoria(){
+		this.fornecedoresCategorias = super.initCombo(new FornecedorCategoria(getCrudModel().getFornecedor()).findByModel(), "id", "categoria.descricao");
+	}
+	
 	@Override
 	public String limpar() {
 		setCrudModel(new Promocao());
 		getCrudModel().setFornecedor(new Fornecedor());
+		getCrudModel().setFornecedorCategoria(new FornecedorCategoria());
 		getCrudModel().setTipoPromocao(new TipoPromocao());
 		getCrudModel().setImagensPromocoes(new ArrayList<ImagemPromocao>());
 		setFlagAlterar(Boolean.FALSE);
@@ -77,6 +85,11 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		getCrudPesquisaModel().setTipoPromocao(new TipoPromocao());
 		setGrid(new ArrayList<Promocao>());
 		return null;
+	}
+	
+	@Override
+	protected void posDetail() {
+		this.atualizarComboFornecedorCategoria();
 	}
 	
 	@Override
@@ -153,6 +166,14 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 	public void setUsuarioFornecedor(boolean usuarioFornecedor) {
 		this.usuarioFornecedor = usuarioFornecedor;
+	}
+
+	public List<SelectItem> getFornecedoresCategorias() {
+		return fornecedoresCategorias;
+	}
+
+	public void setFornecedoresCategorias(List<SelectItem> fornecedoresCategorias) {
+		this.fornecedoresCategorias = fornecedoresCategorias;
 	}
 
 }

@@ -32,6 +32,13 @@
 				  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" disabled="#{mbean.usuarioFornecedor}" style="width:80%">
 						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 						<f:selectItems value="#{mbean.fornecedores}" />
+						<p:ajax event="change" process="@this" listener="#{mbean.atualizarComboFornecedorCategoria}" update="fornecedorCategoria" />
+					</p:selectOneMenu>
+					
+  					<p:outputLabel for="fornecedorCategoria" value="Categoria" />
+				  	<p:selectOneMenu id="fornecedorCategoria" required="true" requiredMessage="Categoria: Campo obrigatório" value="#{mbeanModel.fornecedorCategoria.id}" style="width:80%">
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.fornecedoresCategorias}" />
 					</p:selectOneMenu>
 					
 				  	<p:outputLabel for="tipoPromocao" value="Tipo de Promoção" />

@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
@@ -39,8 +40,12 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	@JoinColumn(name = "tipo_promocao_id")
 	private TipoPromocao tipoPromocao;
 	
-	@ManyToOne
+	@Transient
 	private Fornecedor fornecedor;
+	
+	@ManyToOne
+	@JoinColumn(name = "fornecedor_categoria_id")
+	private FornecedorCategoria fornecedorCategoria;
 	
 	private String titulo;
 	
@@ -151,6 +156,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		this.imagemThumb = imagemThumb;
 	}
 	
+	public FornecedorCategoria getFornecedorCategoria() {
+		return fornecedorCategoria;
+	}
+
+	public void setFornecedorCategoria(FornecedorCategoria fornecedorCategoria) {
+		this.fornecedorCategoria = fornecedorCategoria;
+	}
+
 	public String getImagemThumbView(){
 		return TSUtil.isEmpty(this.imagemThumb) ? this.imagemThumb : Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_PROMOCAO_THUMB + imagemThumb;
 	}

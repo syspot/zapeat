@@ -11,9 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
-import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 
 @Entity
@@ -39,6 +39,16 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 	private Categoria categoria;
 
 	private Integer prioridade;
+	
+	@Transient
+	private String descricao;
+	
+	public FornecedorCategoria() {
+	}
+	
+	public FornecedorCategoria(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
 
 	public Long getId() {
 		return id;
@@ -70,6 +80,14 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 
 	public void setPrioridade(Integer prioridade) {
 		this.prioridade = prioridade;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override
@@ -105,23 +123,18 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 		query.append(" from FornecedorCategoria fc where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
-			query.append("and fc.fornecedor_id = ?").append(" ");
+			query.append("and fc.fornecedor.id = ? ");
 		}
 
 		List<Object> params = new ArrayList<Object>();
 
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
-			params.add(fornecedor);
+			params.add(fornecedor.getId());
 		}
 
 		return super.find(query.toString(), params.toArray());
 
 	}
 	
-	public int delete(String hql, Object... objects) throws TSApplicationException {
-		
-		return super.delete(hql, objects);
-	}
-
 }
 
