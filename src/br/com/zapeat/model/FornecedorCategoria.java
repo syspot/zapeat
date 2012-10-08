@@ -132,7 +132,7 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 			params.add(fornecedor.getId());
 		}
 
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "fc.descricao", params.toArray());
 
 	}
 	

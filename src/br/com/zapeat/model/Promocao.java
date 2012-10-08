@@ -278,7 +278,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 			params.add(getPrecoPromocional());
 		}
 
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "p.titulo", params.toArray());
 
 	}
 

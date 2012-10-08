@@ -66,7 +66,7 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 			params.add(fornecedor);
 		}
 
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "u.nome", params.toArray());
 	}
 
 	public Long getId() {

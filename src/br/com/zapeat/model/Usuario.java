@@ -125,7 +125,7 @@ public class Usuario extends TSActiveRecordAb<Usuario> {
 		params.add(ZapeatUtil.tratarString(nome));
 		params.add(ZapeatUtil.tratarString(login));
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "u.nome", params.toArray());
 	}
 
 	@Override

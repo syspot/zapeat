@@ -212,7 +212,7 @@ public class Banner extends TSActiveRecordAb<Banner> {
 			params.add(flagAtivo);
 		}
 		
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "b.taxaPrioridade", params.toArray());
 		
 	}
 

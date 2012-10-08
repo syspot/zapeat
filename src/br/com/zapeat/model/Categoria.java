@@ -1,5 +1,7 @@
 package br.com.zapeat.model;
 
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -77,6 +79,10 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public BigInteger obterTotalSuspenso(){
+		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from processos p where p.situacao_processo_id = 2")).getQtd();
 	}
 
 }

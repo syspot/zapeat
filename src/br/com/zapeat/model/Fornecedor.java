@@ -371,7 +371,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 			params.add(flagAtivo);
 		}
 
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "f.nomeFantasia", params.toArray());
 
 	}
 

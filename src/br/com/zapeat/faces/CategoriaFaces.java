@@ -35,4 +35,5 @@ public class CategoriaFaces extends CrudFaces<Categoria> {
 		return null;
 	}
 	
+	
 }

@@ -106,7 +106,7 @@ public class Cidade extends TSActiveRecordAb<Cidade> {
 			params.add(estado.getId());
 		}
 
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "c.nome", params.toArray());
 	}
 
 	public List<Cidade> findCombo() {
@@ -119,7 +119,7 @@ public class Cidade extends TSActiveRecordAb<Cidade> {
 
 		params.add(estado.getId());
 
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "c.nome", params.toArray());
 	}
 
 }

@@ -86,7 +86,7 @@ public class Estado extends TSActiveRecordAb<Estado> {
 			params.add(ZapeatUtil.tratarString(sigla));
 		}
 
-		return super.find(query.toString(), params.toArray());
+		return super.find(query.toString(), "e.sigla", params.toArray());
 	}
 
 }

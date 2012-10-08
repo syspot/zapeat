@@ -142,7 +142,7 @@ public final class Menu extends TSActiveRecordAb<Menu> {
 
 		query.append(" from Menu m where menuPai is not null and flagAtivo = true");
 
-		return super.find(query.toString());
+		return super.find(query.toString(), "m.ordem");
 	}
 
 	@Override
