@@ -59,13 +59,10 @@
 				  	
 				  	</h:panelGrid>
 				  	
-				  	<h:panelGrid id="pgPromocaoSemana" columns="2" style="width:60%" rendered="#{mbeanModel.promocaoDaSemana || mbeanModel.promocaoDaHora}">
+				  	<h:panelGrid id="pgPromocaoSemana" rendered="#{mbeanModel.promocaoDaSemana || mbeanModel.promocaoDaHora}" style="width:60%" >
 				  	
-				  		<p:outputLabel for="dataInicial" value="Data Inicial" />
-						<p:outputLabel for="dataFinal" value="Data Final" />
-						
+				  		<p:outputLabel for="dataInicial" value="Data" />
 						<p:calendar id="dataInicial" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data Inicial: Campo obrigatório" value="#{mbeanModel.inicio}" style="width:90%" />
-						<p:calendar id="dataFinal" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data Final: Campo obrigatório" value="#{mbeanModel.fim}" mindate="#{mbeanModel.inicio}" style="width:90%" />
 					
 				  	</h:panelGrid>
 				  	
