@@ -43,6 +43,9 @@
 		  			
 		  					<h:outputLabel value="Ativo " for="ativo"/>
 							<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
+		  			
+		  					<h:outputLabel value="Permissão Promoção" for="permissaoPromocao"/>
+							<p:selectBooleanCheckbox id="permissaoPromocao" value="#{mbeanModel.flagPermissaoPromocao}"/>
 			
 			  			</h:panelGrid>
  						
@@ -110,6 +113,13 @@
 		  			<p:inputText id="site" value="#{mbeanModel.site}" maxlength="50" styleClass="coluna90"/>
 		  			
 		  		</h:panelGrid>
+		  		
+		  		<h:panelGrid style="width:100%">
+ 						
+					<p:outputLabel for="pickListFormaPagamento" value="Formas de Pagamento" style="margin-left: 3px;"/>
+		  			<p:pickList id="pickListFormaPagamento" value="#{fornecedorFaces.formasPagamentos}" converter="formaPagamentoConverter" var="formaPagamento" itemLabel="#{formaPagamento.descricao}" itemValue="#{formaPagamento.id}" />
+ 					
+				</h:panelGrid>
 		  		
 			</p:fieldset>
 	  		

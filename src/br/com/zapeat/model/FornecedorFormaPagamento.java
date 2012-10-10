@@ -11,42 +11,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
 @Entity
-@Table(name = "fornecedores_categorias")
-public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
+@Table(name = "fornecedores_formas_pagamentos")
+public class FornecedorFormaPagamento extends TSActiveRecordAb<FornecedorFormaPagamento> {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5699174442602125251L;
+	private static final long serialVersionUID = -384645811936920747L;
 
 	@Id
-	@SequenceGenerator(name = "FORNECEDORES_CATEGORIAS_ID_SEQ", sequenceName = "fornecedores_categorias_id_seq", allocationSize = 1)
-	@GeneratedValue(generator = "FORNECEDORES_CATEGORIAS_ID_SEQ", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "fornecedores_formas_pagamentos_id_seq", sequenceName = "fornecedores_formas_pagamentos_id_seq")
+	@GeneratedValue(generator = "fornecedores_formas_pagamentos_id_seq", strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
 
-	@ManyToOne()
-	@JoinColumn(name = "categoria_id")
-	private Categoria categoria;
+	@ManyToOne
+	@JoinColumn(name = "forma_pagamento_id")
+	private FormaPagamento formaPagamento;
 
-	private Integer prioridade;
-	
-	@Transient
-	private String descricao;
-	
-	public FornecedorCategoria() {
+	public FornecedorFormaPagamento() {
 	}
 	
-	public FornecedorCategoria(Fornecedor fornecedor) {
+	public FornecedorFormaPagamento(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 
@@ -66,36 +60,19 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 		this.fornecedor = fornecedor;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
-	public Integer getPrioridade() {
-		return prioridade;
-	}
-
-	public void setPrioridade(Integer prioridade) {
-		this.prioridade = prioridade;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result	+ ((categoria == null) ? 0 : categoria.hashCode());
-		result = prime * result	+ ((fornecedor == null) ? 0 : fornecedor.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -107,22 +84,17 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FornecedorCategoria other = (FornecedorCategoria) obj;
-		if (categoria == null) {
-			if (other.categoria != null)
+		FornecedorFormaPagamento other = (FornecedorFormaPagamento) obj;
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!categoria.equals(other.categoria))
-			return false;
-		if (fornecedor == null) {
-			if (other.fornecedor != null)
-				return false;
-		} else if (!fornecedor.equals(other.fornecedor))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 
 	@Override
-	public List<FornecedorCategoria> findByModel(String... fieldsOrderBy) {
+	public List<FornecedorFormaPagamento> findByModel(String... fieldsOrderBy) {
 
 		StringBuilder query = new StringBuilder();
 

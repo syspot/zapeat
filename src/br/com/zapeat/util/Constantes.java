@@ -16,6 +16,12 @@ public class Constantes {
 	public static final Integer LARGURA_THUMB = 80;
 	public static final Integer ALTURA_THUMB = 80;
 
+	public static final Integer LARGURA_IMAGEM_CATEGORIA = 20;
+	public static final Integer ALTURA_IMAGEM_CATEGORIA = 20;
+	
+	public static final Integer LARGURA_IMAGEM_FORMA_PAGAMENTO = 25;
+	public static final Integer ALTURA_IMAGEM_FORMA_PAGAMENTO = 18;
+	
 	public static final Integer LARGURA_IMAGEM_PROMOCAO_FULL = 590;
 	public static final Integer ALTURA_IMAGEM_PROMOCAO_FULL = 260;
 
@@ -58,6 +64,8 @@ public class Constantes {
 	public static final String FOTO_80x80 = "80x80_";
 	public static final String FOTO_180x79 = "180x79_";
 
+	public static final String PREFIXO_IMAGEM_CATEGORIA = "20x20_";
+	public static final String PREFIXO_IMAGEM_FORMA_PAGAMENTO = "25x18_";
 	public static final String PREFIXO_IMAGEM_PROMOCAO_FULL = "590x260_";
 	public static final String PREFIXO_IMAGEM_PROMOCAO_THUMB = "180x79_";
 	public static final String PREFIXO_PROMOCAO_THUMB = "80x80_";
@@ -81,5 +89,7 @@ public class Constantes {
 	
 	public static Long MENU_PROMOCAO = 5L;
 	public static Long MENU_CADASTRO_BASE = 1L;
+	
+	public static final Integer QTD_MINIMA_CATEGORIAS_DESTAQUE = 6;
 
 }

@@ -88,8 +88,27 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	}
 	
 	@Override
+	protected boolean validaCampos() {
+		
+		boolean valida = true;
+		
+		List<Promocao> promocoes = getCrudModel().pesquisarPromocoesAtivas();
+		
+		if(!TSUtil.isEmpty(promocoes)){
+			valida = false;
+			ZapeatUtil.addErrorMessage("Já existe uma promoção ativa para o período cadastrado");
+		}
+		
+		return valida;
+	}
+	
+	@Override
 	protected void posDetail() {
+		
+		getCrudModel().setFornecedor(getCrudModel().getFornecedorCategoria().getFornecedor());
+		
 		this.atualizarComboFornecedorCategoria();
+		
 	}
 	
 	@Override
@@ -97,6 +116,14 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		
 		if(getCrudModel().isPromocaoDoDia()){
 			getCrudModel().setFim(ZapeatUtil.getProximoDia(getCrudModel().getInicio()));
+		}
+		
+		if(getCrudModel().isPromocaoDaSemana()){
+			getCrudModel().setFim(ZapeatUtil.getProximaSemana(getCrudModel().getInicio()));
+		}
+		
+		if(getCrudModel().isPromocaoDaHora()){
+			getCrudModel().setFim(ZapeatUtil.getProximaHora(getCrudModel().getInicio()));
 		}
 		
 	}

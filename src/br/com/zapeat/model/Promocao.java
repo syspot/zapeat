@@ -281,5 +281,9 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		return super.find(query.toString(), "p.titulo", params.toArray());
 
 	}
+	
+	public List<Promocao> pesquisarPromocoesAtivas(){
+		return super.find(" from Promocao p where (? between p.inicio and p.fim or ? between p.inicio and p.fim) and p.tipoPromocao.id = ? and p.fornecedorCategoria.id = ?", null, this.inicio, this.fim, this.tipoPromocao.getId(), this.fornecedorCategoria.getId());
+	}
 
 }

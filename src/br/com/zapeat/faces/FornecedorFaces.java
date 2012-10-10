@@ -17,8 +17,10 @@ import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.CarroChefe;
 import br.com.zapeat.model.Categoria;
 import br.com.zapeat.model.Cidade;
+import br.com.zapeat.model.FormaPagamento;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.FornecedorCategoria;
+import br.com.zapeat.model.FornecedorFormaPagamento;
 import br.com.zapeat.model.ImagemCarroChefe;
 import br.com.zapeat.model.ImagemFornecedor;
 import br.com.zapeat.util.Constantes;
@@ -32,6 +34,9 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	private List<Categoria> categoriasSources;
 	private DualListModel<Categoria> categorias;
 	private DualListModel<Categoria> targetCategorias;
+	private List<FormaPagamento> formasPagamentosSources;
+	private DualListModel<FormaPagamento> formasPagamentos;
+	private DualListModel<FormaPagamento> targetFormasPagamentos;
 	
 	private ImagemFornecedor imagemFornecedorSelecionada;
 	private ImagemCarroChefe imagemCarroChefeSelecionada;
@@ -53,17 +58,22 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
 		this.setFlagAlterar(Boolean.FALSE);
 		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
+		this.getCrudModel().setFornecedorFormasPagamentos(new ArrayList<FornecedorFormaPagamento>());
 		this.getCrudModel().setImagensFornecedores(new ArrayList<ImagemFornecedor>());
 		this.getCrudModel().setCarroChefe(new CarroChefe());
 		this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
 
 		this.categoriasSources = new Categoria().findAll("descricao");
+		this.formasPagamentosSources = new FormaPagamento().findAll("descricao");
 
 		this.targetCategorias = new DualListModel<Categoria>();
+		this.targetFormasPagamentos = new DualListModel<FormaPagamento>();
 
 		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
+		List<FormaPagamento> formasPagamentosTarget = new ArrayList<FormaPagamento>();
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
+		this.formasPagamentos = new DualListModel<FormaPagamento>(this.formasPagamentosSources, formasPagamentosTarget);
 
 		return null;
 	}
@@ -126,8 +136,6 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		
 		FornecedorCategoria fornecedorCategoria;
 		
-		getCrudModel().getFornecedorCategorias().clear();
-		
 		int cont = 1;
 		
 		for(Categoria categoria : categorias.getTarget()){
@@ -138,7 +146,28 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			fornecedorCategoria.setFornecedor(getCrudModel());
 			fornecedorCategoria.setPrioridade(cont++);
 			
-			getCrudModel().getFornecedorCategorias().add(fornecedorCategoria);
+			if(!getCrudModel().getFornecedorCategorias().contains(fornecedorCategoria)){
+				
+				getCrudModel().getFornecedorCategorias().add(fornecedorCategoria);
+			
+			}
+			
+		}
+		
+		FornecedorFormaPagamento fornecedorFormaPagamento;
+		
+		for(FormaPagamento formaPagamento : formasPagamentos.getTarget()){
+			
+			fornecedorFormaPagamento = new FornecedorFormaPagamento();
+			
+			fornecedorFormaPagamento.setFormaPagamento(formaPagamento);
+			fornecedorFormaPagamento.setFornecedor(getCrudModel());
+			
+			if(!getCrudModel().getFornecedorFormasPagamentos().contains(fornecedorFormaPagamento)){
+				
+				getCrudModel().getFornecedorFormasPagamentos().add(fornecedorFormaPagamento);
+				
+			}
 			
 		}
 		
@@ -160,6 +189,18 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.categoriasSources.removeAll(categoriaTarget);
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
+		
+		List<FormaPagamento> formaPagamentoTarget = new ArrayList<FormaPagamento>();
+		
+		for (FornecedorFormaPagamento item : getCrudModel().getFornecedorFormasPagamentos()) {
+			
+			formaPagamentoTarget.add(item.getFormaPagamento());
+			
+		}
+		
+		this.formasPagamentosSources.removeAll(formaPagamentoTarget);
+		
+		this.formasPagamentos = new DualListModel<FormaPagamento>(this.formasPagamentosSources, formaPagamentoTarget);
 		
 		if(TSUtil.isEmpty(getCrudModel().getCarroChefe())){
 			this.getCrudModel().setCarroChefe(new CarroChefe());
@@ -254,9 +295,34 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		return imagemCarroChefeSelecionada;
 	}
 
-	public void setImagemCarroChefeSelecionada(
-			ImagemCarroChefe imagemCarroChefeSelecionada) {
+	public void setImagemCarroChefeSelecionada(ImagemCarroChefe imagemCarroChefeSelecionada) {
 		this.imagemCarroChefeSelecionada = imagemCarroChefeSelecionada;
+	}
+
+	public List<FormaPagamento> getFormasPagamentosSources() {
+		return formasPagamentosSources;
+	}
+
+	public void setFormasPagamentosSources(
+			List<FormaPagamento> formasPagamentosSources) {
+		this.formasPagamentosSources = formasPagamentosSources;
+	}
+
+	public DualListModel<FormaPagamento> getFormasPagamentos() {
+		return formasPagamentos;
+	}
+
+	public void setFormasPagamentos(DualListModel<FormaPagamento> formasPagamentos) {
+		this.formasPagamentos = formasPagamentos;
+	}
+
+	public DualListModel<FormaPagamento> getTargetFormasPagamentos() {
+		return targetFormasPagamentos;
+	}
+
+	public void setTargetFormasPagamentos(
+			DualListModel<FormaPagamento> targetFormasPagamentos) {
+		this.targetFormasPagamentos = targetFormasPagamentos;
 	}
 
 }

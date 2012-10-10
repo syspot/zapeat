@@ -67,6 +67,10 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 		return true;
 	}
 
+	protected boolean validaExclusao() {
+		return true;
+	}
+	
 	protected void prePersist() {
 	}
 
@@ -139,13 +143,23 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 	@Override
 	protected String delete() throws TSApplicationException {
 
-		this.crudModel.delete();
+		this.setClearFields(Boolean.FALSE);
 
-		this.limpar();
+		this.setDefaultMessage(Boolean.FALSE);
+		
+		if(validaExclusao()){
+			
+			this.crudModel.delete();
+			
+			this.limpar();
+			
+			this.grid = this.crudPesquisaModel.findByModel(getFieldOrdem());
+			
+			this.tabIndex = 1;
+			
+			this.setDefaultMessage(Boolean.TRUE);
 
-		this.grid = this.crudPesquisaModel.findByModel(getFieldOrdem());
-
-		this.tabIndex = 1;
+		}
 
 		return null;
 

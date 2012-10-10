@@ -15,8 +15,8 @@ import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
 
 @Entity
-@Table(name = "categorias")
-public class Categoria extends TSActiveRecordAb<Categoria> {
+@Table(name = "formas_pagamentos")
+public class FormaPagamento extends TSActiveRecordAb<FormaPagamento> {
 
 	/**
 	 * 
@@ -24,8 +24,8 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 	private static final long serialVersionUID = 842205665885941846L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="categorias_id")
-	@SequenceGenerator(name="categorias_id", sequenceName="categoria_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="formas_pagamentos_id")
+	@SequenceGenerator(name="formas_pagamentos_id", sequenceName="formas_pagamentos_id_seq")
 	private Long id;
 
 	private String descricao;
@@ -34,9 +34,6 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 	private Boolean flagAtivo;
 	
 	private String imagem;
-	
-	@Column(name = "flag_destaque")
-	private Boolean flagDestaque;
 	
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -70,16 +67,8 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 		this.imagem = imagem;
 	}
 
-	public Boolean getFlagDestaque() {
-		return flagDestaque;
-	}
-
-	public void setFlagDestaque(Boolean flagDestaque) {
-		this.flagDestaque = flagDestaque;
-	}
-	
 	public String getImagemView(){
-		return TSUtil.isEmpty(this.imagem) ? this.imagem : Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_CATEGORIA + imagem;
+		return TSUtil.isEmpty(this.imagem) ? this.imagem : Constantes.PASTA_DOWNLOAD + Constantes.PREFIXO_IMAGEM_FORMA_PAGAMENTO + imagem;
 	}
 
 	@Override
@@ -98,7 +87,7 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		FormaPagamento other = (FormaPagamento) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

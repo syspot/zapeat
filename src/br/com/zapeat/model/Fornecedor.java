@@ -63,6 +63,9 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
+	
+	@Column(name = "flag_permissao_promocao")
+	private Boolean flagPermissaoPromocao;
 
 	private String descricao;
 
@@ -81,6 +84,9 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FornecedorCategoria> fornecedorCategorias;
+	
+	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<FornecedorFormaPagamento> fornecedorFormasPagamentos;
 	
 	@OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ImagemFornecedor> imagensFornecedores;
@@ -259,6 +265,23 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 
 	public void setCarroChefe(CarroChefe carroChefe) {
 		this.carroChefe = carroChefe;
+	}
+
+	public Boolean getFlagPermissaoPromocao() {
+		return flagPermissaoPromocao;
+	}
+
+	public void setFlagPermissaoPromocao(Boolean flagPermissaoPromocao) {
+		this.flagPermissaoPromocao = flagPermissaoPromocao;
+	}
+
+	public List<FornecedorFormaPagamento> getFornecedorFormasPagamentos() {
+		return fornecedorFormasPagamentos;
+	}
+
+	public void setFornecedorFormasPagamentos(
+			List<FornecedorFormaPagamento> fornecedorFormasPagamentos) {
+		this.fornecedorFormasPagamentos = fornecedorFormasPagamentos;
 	}
 
 	public String getLogoMarcaView() {

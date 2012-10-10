@@ -5,9 +5,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 	
-	<ui:param name="mbean" value="${categoriaFaces}" />
-	<ui:param name="mbeanModel" value="${categoriaFaces.crudModel}" />
-	<ui:param name="mbeanPesquisaModel" value="${categoriaFaces.crudPesquisaModel}" />
+	<ui:param name="mbean" value="${formaPagamentoFaces}" />
+	<ui:param name="mbeanModel" value="${formaPagamentoFaces.crudModel}" />
+	<ui:param name="mbeanPesquisaModel" value="${formaPagamentoFaces.crudPesquisaModel}" />
   	
   	<ui:define name="cadastro">
   	
@@ -46,9 +46,6 @@
 		  	<p:outputLabel for="cbFlagAtivo" value="Ativo" />
 			<p:selectBooleanCheckbox id="cbFlagAtivo" value="#{mbeanModel.flagAtivo}" />
 		  	
-		  	<p:outputLabel for="cbFlagDestaque" value="Categoria Destaque" />
-			<p:selectBooleanCheckbox id="cbFlagDestaque" value="#{mbeanModel.flagDestaque}" />
-	  	
 	  	</h:panelGrid>
 	  	
   	</ui:define>

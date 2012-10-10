@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13491264203610" configfile="/zapeat/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13491264203610" configfile="/zapeat/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="178" id="pf13498951186530" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13498951186531 pf13498951186532 pf13498951186533" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/dashboard.xhtml" x="338" y="178" id="pf13498951186534" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf13498951186531 pf13498951186532" path="/pages/dashboard.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" x="338" y="562" id="pf13498951186535" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf13498951186533" path="/pages/login.xhtml"/>
+  <links id="pf13498951186531" target="pf13498951186534" source="pf13498951186530" outcome="sucesso"/>
+  <links id="pf13498951186532" target="pf13498951186534" source="pf13498951186530" outcome="entrar"/>
+  <links id="pf13498951186533" target="pf13498951186535" source="pf13498951186530" outcome="sair" redirect="true"/>
+</pageflow:Pageflow>

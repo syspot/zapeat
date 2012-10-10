@@ -10,6 +10,11 @@
 		<converter-class>br.com.zapeat.util.CategoriaConverter</converter-class>
 	</converter>
 
+	<converter>
+		<converter-id>formaPagamentoConverter</converter-id>
+		<converter-class>br.com.zapeat.util.FormaPagamentoConverter</converter-class>
+	</converter>
+
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>

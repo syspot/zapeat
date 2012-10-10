@@ -295,5 +295,19 @@ public class ZapeatUtil {
 		c.add(Calendar.DAY_OF_MONTH, 1);
 		return c.getTime();
 	}
+	
+	public static Date getProximaSemana(Date data){
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		c.add(Calendar.DAY_OF_MONTH, 7);
+		return c.getTime();
+	}
+	
+	public static Date getProximaHora(Date data){
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		c.add(Calendar.HOUR_OF_DAY, 1);
+		return c.getTime();
+	}
 
 }
