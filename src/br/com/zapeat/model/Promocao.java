@@ -210,14 +210,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 		StringBuilder query = new StringBuilder();
 
-		query.append(" from Promocao p where 1 = 1 ");
+		query.append(" select p from Promocao p inner join p.fornecedorCategoria fc where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(tipoPromocao) && !TSUtil.isEmpty(tipoPromocao.getId())) {
 			query.append(" and tipoPromocao.id = ? ");
 		}
 		
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
-			query.append(" and fornecedor.id = ? ");
+			query.append(" and fc.fornecedor.id = ? ");
 		}
 
 		if (!TSUtil.isEmpty(descricao)) {
@@ -283,7 +283,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	}
 	
 	public List<Promocao> pesquisarPromocoesAtivas(){
-		return super.find(" from Promocao p where (? between p.inicio and p.fim or ? between p.inicio and p.fim) and p.tipoPromocao.id = ? and p.fornecedorCategoria.id = ?", null, this.inicio, this.fim, this.tipoPromocao.getId(), this.fornecedorCategoria.getId());
+		return super.find(" select p from Promocao p inner join p.fornecedorCategoria fc where (? between p.inicio and p.fim or ? between p.inicio and p.fim) and p.tipoPromocao.id = ? and p.fornecedorCategoria.id = ? and fc.fornecedor.id != ?", null, this.inicio, this.fim, this.tipoPromocao.getId(), this.fornecedorCategoria.getId(), fornecedor.getId());
 	}
 
 }

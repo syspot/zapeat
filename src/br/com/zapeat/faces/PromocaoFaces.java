@@ -92,6 +92,18 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		
 		boolean valida = true;
 		
+		if(getCrudModel().isPromocaoDoDia()){
+			getCrudModel().setFim(ZapeatUtil.getProximoDia(getCrudModel().getInicio()));
+		}
+		
+		if(getCrudModel().isPromocaoDaSemana()){
+			getCrudModel().setFim(ZapeatUtil.getProximaSemana(getCrudModel().getInicio()));
+		}
+		
+		if(getCrudModel().isPromocaoDaHora()){
+			getCrudModel().setFim(ZapeatUtil.getProximaHora(getCrudModel().getInicio()));
+		}
+		
 		List<Promocao> promocoes = getCrudModel().pesquisarPromocoesAtivas();
 		
 		if(!TSUtil.isEmpty(promocoes)){
@@ -108,23 +120,6 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		getCrudModel().setFornecedor(getCrudModel().getFornecedorCategoria().getFornecedor());
 		
 		this.atualizarComboFornecedorCategoria();
-		
-	}
-	
-	@Override
-	protected void prePersist() {
-		
-		if(getCrudModel().isPromocaoDoDia()){
-			getCrudModel().setFim(ZapeatUtil.getProximoDia(getCrudModel().getInicio()));
-		}
-		
-		if(getCrudModel().isPromocaoDaSemana()){
-			getCrudModel().setFim(ZapeatUtil.getProximaSemana(getCrudModel().getInicio()));
-		}
-		
-		if(getCrudModel().isPromocaoDaHora()){
-			getCrudModel().setFim(ZapeatUtil.getProximaHora(getCrudModel().getInicio()));
-		}
 		
 	}
 	

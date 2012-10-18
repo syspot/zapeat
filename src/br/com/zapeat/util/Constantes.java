@@ -9,7 +9,7 @@ public class Constantes {
 
 	public static final String PASTA_UPLOAD = "e:" + File.separator + "img_zapeat" + File.separator;
 
-	public static final String PASTA_DOWNLOAD = "http://localhost:8080/img_zapeat/";
+	public static final String PASTA_DOWNLOAD = "http://localhost/img_zapeat/";
 
 	public static final Integer LARGURA_ALTURA_80 = 80;
 
