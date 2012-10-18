@@ -185,7 +185,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			categoriaTarget.add(item.getCategoria());
 
 		}
-		
+			
 		this.categoriasSources.removeAll(categoriaTarget);
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);

@@ -1,7 +1,5 @@
 package br.com.zapeat.model;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -96,8 +94,5 @@ public class FormaPagamento extends TSActiveRecordAb<FormaPagamento> {
 		return true;
 	}
 	
-	public BigInteger obterTotalDestaque(){
-		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from categorias c where c.flag_destaque")).getQtd();
-	}
 	
 }

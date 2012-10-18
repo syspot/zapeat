@@ -72,7 +72,8 @@ public class FornecedorFormaPagamento extends TSActiveRecordAb<FornecedorFormaPa
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result	+ ((formaPagamento == null) ? 0 : formaPagamento.hashCode());
+		result = prime * result + ((fornecedor == null) ? 0 : fornecedor.hashCode());
 		return result;
 	}
 
@@ -85,10 +86,15 @@ public class FornecedorFormaPagamento extends TSActiveRecordAb<FornecedorFormaPa
 		if (getClass() != obj.getClass())
 			return false;
 		FornecedorFormaPagamento other = (FornecedorFormaPagamento) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (formaPagamento == null) {
+			if (other.formaPagamento != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!formaPagamento.equals(other.formaPagamento))
+			return false;
+		if (fornecedor == null) {
+			if (other.fornecedor != null)
+				return false;
+		} else if (!fornecedor.equals(other.fornecedor))
 			return false;
 		return true;
 	}
