@@ -321,39 +321,39 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		query.append(" from Fornecedor f where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(razaoSocial)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.razaoSocial")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("f.razaoSocial"));
 		}
 
 		if (!TSUtil.isEmpty(cnpj)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.cnpj")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("f.cnpj"));
 		}
 
 		if (!TSUtil.isEmpty(nomeFantasia)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.nomeFantasia")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("f.nomeFantasia"));
 		}
 
 		if (!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())) {
-			query.append("and f.cidade = ?").append(" ");
+			query.append(" and f.cidade.id = ? ");
 		}
 
 		if (!TSUtil.isEmpty(bairro)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.bairro")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("f.bairro"));
 		}
 
 		if (!TSUtil.isEmpty(logradouro)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.logradouro")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("f.logradouro"));
 		}
 
 		if (!TSUtil.isEmpty(numero)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.numero")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("f.numero"));
 		}
 
 		if (!TSUtil.isEmpty(cep)) {
-			query.append("and ").append(ZapeatUtil.semAcento("f.cep")).append(" = ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("f.cep"));
 		}
 
 		if (!TSUtil.isEmpty(flagAtivo)) {
-			query.append("and f.flagAtivo = ?").append(" ");
+			query.append(" and f.flagAtivo = ? ");
 		}
 
 		List<Object> params = new ArrayList<Object>();
@@ -371,7 +371,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		}
 
 		if (!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())) {
-			params.add(cidade);
+			params.add(cidade.getId());
 		}
 
 		if (!TSUtil.isEmpty(bairro)) {

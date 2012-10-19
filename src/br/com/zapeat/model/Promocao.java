@@ -213,7 +213,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		query.append(" select p from Promocao p inner join p.fornecedorCategoria fc where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(tipoPromocao) && !TSUtil.isEmpty(tipoPromocao.getId())) {
-			query.append(" and tipoPromocao.id = ? ");
+			query.append(" and p.tipoPromocao.id = ? ");
 		}
 		
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
@@ -221,11 +221,11 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 		}
 
 		if (!TSUtil.isEmpty(descricao)) {
-			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("descricao"));
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("p.descricao"));
 		}
 		
 		if (!TSUtil.isEmpty(titulo)) {
-			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("titulo"));
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("p.titulo"));
 		}
 
 		if (!TSUtil.isEmpty(inicio)) {
