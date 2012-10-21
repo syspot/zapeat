@@ -9,6 +9,7 @@
 	<ui:param name="mbean" value="${promocaoFaces}" />
 	<ui:param name="mbeanModel" value="${promocaoFaces.crudModel}" />
 	<ui:param name="mbeanPesquisaModel" value="${promocaoFaces.crudPesquisaModel}" />
+	<ui:param name="confirmaCadastro" value="${true}" />
   	
   	<ui:define name="cadastro">
   	
@@ -20,8 +21,8 @@
 			  	<p:inputText id="titulo" value="#{mbeanModel.titulo}" required="true" requiredMessage="Título: Campo obrigatório" maxlength="100" style="width:90%"/>
   			
 		  		<p:outputLabel for="descricao" value="Descrição" />
-			  	<p:inputTextarea id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="200" autoResize="false" rows="10" style="width:90%"/>
-			  	
+			  	<p:inputTextarea counter="counter" counterTemplate="{0} caracteres restantes." id="descricao" value="#{mbeanModel.descricao}" required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="200" autoResize="false" rows="10" style="width:90%"/>
+			  	<h:outputText id="counter" style="font-weight: bold; font-color: red;"/> 
   			</h:panelGrid>
   			
   			<h:panelGrid style="width:100%">

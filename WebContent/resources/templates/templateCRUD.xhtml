@@ -24,6 +24,8 @@
 					</h:panelGrid>
 
 				</p:outputPanel>
+				
+				<ui:include src="dialogCRUDCadastro.xhtml" />
 
 			</h:form>
 
@@ -57,7 +59,7 @@
 
 								<ui:insert name="colunasTabela" />
 
-								<p:column headerText="Editar" styleClass="coluna5">
+								<p:column headerText="Editar" styleClass="coluna5" rendered="#{mbean.exibirBotao}">
 
 									<div align="center">
 
@@ -72,7 +74,7 @@
 
 								</p:column>
 
-								<p:column headerText="Excluir" styleClass="coluna5">
+								<p:column headerText="Excluir" styleClass="coluna5" rendered="#{mbean.exibirBotao}">
 
 									<div align="center">
 

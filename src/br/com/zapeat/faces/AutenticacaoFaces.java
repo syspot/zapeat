@@ -76,6 +76,7 @@ public class AutenticacaoFaces extends TSMainFaces {
 			
 			if(usuario.getFornecedor().getFlagPermissaoPromocao()){
 				menu.getMenus().add(new Menu(Constantes.MENU_PROMOCAO).getById());
+				menu.getMenus().add(new Menu(Constantes.MENU_FORNECEDOR).getById());
 			}
 			
 			this.menus.add(menu);

@@ -190,6 +190,10 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 		return null;
 
 	}
+	
+	public boolean isExibirBotao(){
+		return true;
+	}
 
 	public T getCrudModel() {
 		return crudModel;

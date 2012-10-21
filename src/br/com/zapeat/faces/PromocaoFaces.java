@@ -149,6 +149,11 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		return null;
 	}
 	
+	@Override
+	public boolean isExibirBotao() {
+		return !this.usuarioFornecedor;
+	}
+	
 	public List<SelectItem> getTiposPromocoes() {
 		return tiposPromocoes;
 	}

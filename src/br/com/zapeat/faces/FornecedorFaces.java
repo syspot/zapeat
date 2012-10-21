@@ -23,7 +23,9 @@ import br.com.zapeat.model.FornecedorCategoria;
 import br.com.zapeat.model.FornecedorFormaPagamento;
 import br.com.zapeat.model.ImagemCarroChefe;
 import br.com.zapeat.model.ImagemFornecedor;
+import br.com.zapeat.model.UsuarioAdm;
 import br.com.zapeat.util.Constantes;
+import br.com.zapeat.util.UsuarioUtil;
 import br.com.zapeat.util.ZapeatUtil;
 
 @ViewScoped
@@ -37,7 +39,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	private List<FormaPagamento> formasPagamentosSources;
 	private DualListModel<FormaPagamento> formasPagamentos;
 	private DualListModel<FormaPagamento> targetFormasPagamentos;
-	
+
 	private ImagemFornecedor imagemFornecedorSelecionada;
 	private ImagemCarroChefe imagemCarroChefeSelecionada;
 
@@ -87,25 +89,25 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setGrid(new ArrayList<Fornecedor>());
 		return null;
 	}
-	
-	private boolean validaCamposCarroChefe(){
-		
+
+	private boolean validaCamposCarroChefe() {
+
 		boolean validado = true;
-		
-		if(getCrudModel().getCarroChefe().getFlagAtivo()){
-			
-			if(TSUtil.isEmpty(getCrudModel().getCarroChefe().getTitulo())){
+
+		if (getCrudModel().getCarroChefe().getFlagAtivo()) {
+
+			if (TSUtil.isEmpty(getCrudModel().getCarroChefe().getTitulo())) {
 				validado = false;
 				ZapeatUtil.addErrorMessage("Título do Carro-Chefe: Campo obrigatório");
 			}
-			
-			if(TSUtil.isEmpty(getCrudModel().getCarroChefe().getDescricao())){
+
+			if (TSUtil.isEmpty(getCrudModel().getCarroChefe().getDescricao())) {
 				validado = false;
 				ZapeatUtil.addErrorMessage("Descrição do Carro-Chefe: Campo obrigatório");
 			}
-			
+
 		}
-		
+
 		return validado;
 	}
 
@@ -123,56 +125,56 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			validado = false;
 			ZapeatUtil.addErrorMessage("Longitude: Formato inválido");
 		}
-		
-		if(validado){
+
+		if (validado) {
 			validado = this.validaCamposCarroChefe();
 		}
 
 		return validado;
 	}
-	
+
 	@Override
 	protected void prePersist() {
-		
+
 		FornecedorCategoria fornecedorCategoria;
-		
+
 		int cont = 1;
-		
-		for(Categoria categoria : categorias.getTarget()){
-			
+
+		for (Categoria categoria : categorias.getTarget()) {
+
 			fornecedorCategoria = new FornecedorCategoria();
-			
+
 			fornecedorCategoria.setCategoria(categoria);
 			fornecedorCategoria.setFornecedor(getCrudModel());
 			fornecedorCategoria.setPrioridade(cont++);
-			
-			if(!getCrudModel().getFornecedorCategorias().contains(fornecedorCategoria)){
-				
+
+			if (!getCrudModel().getFornecedorCategorias().contains(fornecedorCategoria)) {
+
 				getCrudModel().getFornecedorCategorias().add(fornecedorCategoria);
-			
+
 			}
-			
+
 		}
-		
+
 		FornecedorFormaPagamento fornecedorFormaPagamento;
-		
-		for(FormaPagamento formaPagamento : formasPagamentos.getTarget()){
-			
+
+		for (FormaPagamento formaPagamento : formasPagamentos.getTarget()) {
+
 			fornecedorFormaPagamento = new FornecedorFormaPagamento();
-			
+
 			fornecedorFormaPagamento.setFormaPagamento(formaPagamento);
 			fornecedorFormaPagamento.setFornecedor(getCrudModel());
-			
-			if(!getCrudModel().getFornecedorFormasPagamentos().contains(fornecedorFormaPagamento)){
-				
+
+			if (!getCrudModel().getFornecedorFormasPagamentos().contains(fornecedorFormaPagamento)) {
+
 				getCrudModel().getFornecedorFormasPagamentos().add(fornecedorFormaPagamento);
-				
+
 			}
-			
+
 		}
-		
+
 		getCrudModel().getCarroChefe().setFornecedor(getCrudModel());
-		
+
 	}
 
 	@Override
@@ -185,24 +187,24 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			categoriaTarget.add(item.getCategoria());
 
 		}
-			
+
 		this.categoriasSources.removeAll(categoriaTarget);
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
-		
+
 		List<FormaPagamento> formaPagamentoTarget = new ArrayList<FormaPagamento>();
-		
+
 		for (FornecedorFormaPagamento item : getCrudModel().getFornecedorFormasPagamentos()) {
-			
+
 			formaPagamentoTarget.add(item.getFormaPagamento());
-			
+
 		}
-		
+
 		this.formasPagamentosSources.removeAll(formaPagamentoTarget);
-		
+
 		this.formasPagamentos = new DualListModel<FormaPagamento>(this.formasPagamentosSources, formaPagamentoTarget);
-		
-		if(TSUtil.isEmpty(getCrudModel().getCarroChefe())){
+
+		if (TSUtil.isEmpty(getCrudModel().getCarroChefe())) {
 			this.getCrudModel().setCarroChefe(new CarroChefe());
 			this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
 		}
@@ -213,39 +215,39 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		getCrudModel().setLogoMarca(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_LOGOMARCA + getCrudModel().getLogoMarca(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_FORNECEDOR_LOGOMARCA, Constantes.ALTURA_FORNECEDOR_LOGOMARCA);
 	}
-	
+
 	public void enviarImagens(FileUploadEvent event) {
-		
+
 		ImagemFornecedor imagemFornecedor = new ImagemFornecedor();
-		
+
 		imagemFornecedor.setFornecedor(getCrudModel());
 		imagemFornecedor.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
-		
+
 		getCrudModel().getImagensFornecedores().add(imagemFornecedor);
-		
+
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_FULL + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_FORNECEDOR_FULL, Constantes.ALTURA_IMAGEM_FORNECEDOR_FULL);
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_FORNECEDOR_THUMB + imagemFornecedor.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_FORNECEDOR_THUMB, Constantes.ALTURA_IMAGEM_FORNECEDOR_THUMB);
 	}
-	
+
 	public void enviarImagensCarrosChefes(FileUploadEvent event) {
-		
+
 		ImagemCarroChefe imagemCarroChefe = new ImagemCarroChefe();
-		
+
 		imagemCarroChefe.setCarroChefe(getCrudModel().getCarroChefe());
 		imagemCarroChefe.setImagem(TSUtil.gerarId() + TSFile.obterExtensaoArquivo(event.getFile().getFileName()));
-		
+
 		getCrudModel().getCarroChefe().getImagensCarrosChefes().add(imagemCarroChefe);
-		
+
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_FULL + imagemCarroChefe.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_CARRO_CHEFE_FULL, Constantes.ALTURA_IMAGEM_CARRO_CHEFE_FULL);
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_THUMB + imagemCarroChefe.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_CARRO_CHEFE_THUMB, Constantes.ALTURA_IMAGEM_CARRO_CHEFE_THUMB);
 	}
-	
-	public String removerImagemCarroChefe(){
+
+	public String removerImagemCarroChefe() {
 		getCrudModel().getCarroChefe().getImagensCarrosChefes().remove(this.imagemCarroChefeSelecionada);
 		return null;
 	}
-	
-	public String removerImagemFornecedor(){
+
+	public String removerImagemFornecedor() {
 		getCrudModel().getImagensFornecedores().remove(this.imagemFornecedorSelecionada);
 		return null;
 	}
@@ -286,8 +288,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		return imagemFornecedorSelecionada;
 	}
 
-	public void setImagemFornecedorSelecionada(
-			ImagemFornecedor imagemFornecedorSelecionada) {
+	public void setImagemFornecedorSelecionada(ImagemFornecedor imagemFornecedorSelecionada) {
 		this.imagemFornecedorSelecionada = imagemFornecedorSelecionada;
 	}
 
@@ -303,8 +304,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		return formasPagamentosSources;
 	}
 
-	public void setFormasPagamentosSources(
-			List<FormaPagamento> formasPagamentosSources) {
+	public void setFormasPagamentosSources(List<FormaPagamento> formasPagamentosSources) {
 		this.formasPagamentosSources = formasPagamentosSources;
 	}
 
@@ -320,9 +320,22 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		return targetFormasPagamentos;
 	}
 
-	public void setTargetFormasPagamentos(
-			DualListModel<FormaPagamento> targetFormasPagamentos) {
+	public void setTargetFormasPagamentos(DualListModel<FormaPagamento> targetFormasPagamentos) {
 		this.targetFormasPagamentos = targetFormasPagamentos;
+	}
+
+	@Override
+	public boolean isExibirBotao() {
+
+		UsuarioAdm usuario = UsuarioUtil.obterUsuarioConectado();
+
+		if (!TSUtil.isEmpty(usuario) && !TSUtil.isEmpty(usuario.getFornecedor())) {
+
+			return false;
+		}
+
+		return true;
+
 	}
 
 }

@@ -43,14 +43,16 @@
 		  			
 		  					<h:outputLabel value="Ativo " for="ativo"/>
 							<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
-		  			
+		  					<p:outputPanel rendered="#{fornecedorFaces.exibirBotao}">
 		  					<h:outputLabel value="Permissão Promoção" for="permissaoPromocao"/>
 							<p:selectBooleanCheckbox id="permissaoPromocao" value="#{mbeanModel.flagPermissaoPromocao}"/>
+							</p:outputPanel>
 			
 			  			</h:panelGrid>
  						
 					</h:panelGrid>
- 						
+ 					
+ 					<p:outputPanel rendered="#{fornecedorFaces.exibirBotao}">	
 					<h:panelGrid style="width:100%">
  						
   						<p:outputLabel for="pickList" value="Categorias" style="margin-left: 3px;"/>
@@ -58,6 +60,7 @@
 			                var="categoria" itemLabel="#{categoria.descricao}" itemValue="#{categoria.id}" />
   					
   					</h:panelGrid>
+  					</p:outputPanel>
  					
 				</h:panelGrid>
  					
