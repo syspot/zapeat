@@ -15,7 +15,8 @@
 	  	<p:inputText id="tituloCarroChefe" value="#{mbeanModel.carroChefe.titulo}" maxlength="100" style="width:90%"/>
 			
   		<p:outputLabel for="descricaoCarroChefe" value="Descrição" />
-	  	<p:inputTextarea id="descricaoCarroChefe" value="#{mbeanModel.carroChefe.descricao}" maxlength="1000" autoResize="false" rows="10" style="width:90%"/>
+	  	<p:inputTextarea id="descricaoCarroChefe" counterTemplate="{0} caracteres restantes." counter="counter2" value="#{mbeanModel.carroChefe.descricao}" maxlength="200" autoResize="false" rows="10" style="width:90%"/>
+	  	<h:outputText id="counter2" />
 	  	
 	  	<p:outputLabel value="Ativo " for="flagAtivoCarroChefe"/>
 		<p:selectBooleanCheckbox id="flagAtivoCarroChefe" value="#{mbeanModel.carroChefe.flagAtivo}"/>

@@ -39,7 +39,8 @@
 					  	<h:panelGrid columns="1" style="width:60%">
 	  			
 				  			<p:outputLabel for="descricao" value="Descrição" />
-					  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="1000" id="descricao" rows="7" cols="90" value="#{mbeanModel.descricao}"/>
+					  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="200" counterTemplate="{0} caracteres restantes." counter="counter" id="descricao" rows="7" cols="90" value="#{mbeanModel.descricao}"/>
+					  		<h:outputText id="counter" />
 		  			
 		  					<h:outputLabel value="Ativo " for="ativo"/>
 							<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
