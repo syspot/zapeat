@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui">
+  
+  <p:confirmDialog message="Confirma a inclusão do registro?" appendToBody="true" header="Aviso" severity="alert" widgetVar="cdIncluir">
+	    
+	    <p:commandButton value="Sim" onclick="cdIncluir.hide()" action="#{mbean.insertEvent}" update=":tabview" process="@form" />
+	    <p:commandButton value="Não" onclick="cdIncluir.hide()" />
+	    
+  </p:confirmDialog>
+
+</ui:component>
