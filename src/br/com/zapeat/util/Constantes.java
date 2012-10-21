@@ -55,8 +55,8 @@ public class Constantes {
 	public static final Integer LARGURA_FORNECEDOR_LOGOMARCA = 80;
 	public static final Integer ALTURA_FORNECEDOR_LOGOMARCA = 80;
 
-	public static final Integer LARGURA_CATEGORIA = 80;
-	public static final Integer ALTURA_CATEGORIA = 80;
+	public static final Integer LARGURA_CATEGORIA = 20;
+	public static final Integer ALTURA_CATEGORIA = 20;
 
 	public static final Integer LARGURA_180 = 180;
 	public static final Integer ALTURA_79 = 79;
