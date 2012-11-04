@@ -41,6 +41,8 @@ public class Banner extends TSActiveRecordAb<Banner> {
 	
 	private String imagem;
 	
+	private String url;
+	
 	private Date inicio;
 	
 	private Date fim;
@@ -84,6 +86,14 @@ public class Banner extends TSActiveRecordAb<Banner> {
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Date getInicio() {
