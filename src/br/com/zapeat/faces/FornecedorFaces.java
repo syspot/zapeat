@@ -65,7 +65,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudModel().setCarroChefe(new CarroChefe());
 		this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
 
-		this.categoriasSources = new Categoria().findAll("descricao");
+		this.categoriasSources = new Categoria().pesquisarCategoriasAtivas();
 		this.formasPagamentosSources = new FormaPagamento().findAll("descricao");
 
 		this.targetCategorias = new DualListModel<Categoria>();

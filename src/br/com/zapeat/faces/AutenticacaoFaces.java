@@ -55,7 +55,7 @@ public class AutenticacaoFaces extends TSMainFaces {
 
 		setTela(this.menuSelecionado.getUrl());
 		setNomeTela("Área de Trabalho > " + menuSelecionado.getMenuPai().getDescricao() + " > " + menuSelecionado.getDescricao());
-		setTabAtiva(Integer.valueOf(this.menus.indexOf(this.menuSelecionado.getMenuPai())));
+		//setTabAtiva(Integer.valueOf(this.menus.indexOf(this.menuSelecionado.getMenuPai())));
 
 		return SUCESSO;
 	}

@@ -1,6 +1,7 @@
 package br.com.zapeat.model;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -109,6 +110,10 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 	
 	public BigInteger obterTotalDestaque(){
 		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from categorias c where c.flag_destaque")).getQtd();
+	}
+	
+	public List<Categoria> pesquisarCategoriasAtivas(){
+		return super.find(" from Categoria where flagAtivo = true", "descricao");
 	}
 	
 }

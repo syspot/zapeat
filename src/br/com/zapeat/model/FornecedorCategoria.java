@@ -30,11 +30,11 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 	@GeneratedValue(generator = "FORNECEDORES_CATEGORIAS_ID_SEQ", strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
 	private Fornecedor fornecedor;
 
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 
