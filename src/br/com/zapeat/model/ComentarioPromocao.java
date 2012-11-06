@@ -16,10 +16,14 @@ import javax.persistence.Table;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "comentarios_promocoes")
 public class ComentarioPromocao extends TSActiveRecordAb<ComentarioPromocao> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@SequenceGenerator(name = "COMENTARIOS_PROMOCOES_ID_SEQ", sequenceName = "comentarios_promocoes_id_seq", allocationSize = 1)
@@ -27,7 +31,7 @@ public class ComentarioPromocao extends TSActiveRecordAb<ComentarioPromocao> {
 	private Long id;
 
 	@ManyToOne
-	private UsuarioAdm usuario;
+	private UsuarioSite usuario;
 
 	@ManyToOne
 	private Promocao promocao;
@@ -134,11 +138,11 @@ public class ComentarioPromocao extends TSActiveRecordAb<ComentarioPromocao> {
 		return super.find(query.toString(), null, params.toArray());
 	}
 
-	public UsuarioAdm getUsuario() {
+	public UsuarioSite getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(UsuarioAdm usuario) {
+	public void setUsuario(UsuarioSite usuario) {
 		this.usuario = usuario;
 	}
 

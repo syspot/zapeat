@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.zapeat.model.ComentarioCarroChefe;
@@ -27,20 +28,13 @@ public class ModeracaoComentarioFaces extends TSMainFaces {
 	private List<ComentarioPromocao> comentariosPromocao;
 
 	public ModeracaoComentarioFaces() {
-
 		this.clearFields();
 	}
 
 	@Override
 	protected void clearFields() {
-
-		this.setComentarioCarroChefe(new ComentarioCarroChefe());
-		this.setComentarioFornecedor(new ComentarioFornecedor());
-		this.setComentarioPromocao(new ComentarioPromocao());
-
 		this.setOpcao(null);
 		this.setComentario(null);
-
 	}
 
 	public String limpar() {
@@ -74,7 +68,25 @@ public class ModeracaoComentarioFaces extends TSMainFaces {
 
 		return null;
 	}
+	
+	public String alterar() throws TSApplicationException {
 
+		if (this.opcao.equals(1)) {
+
+			this.comentarioCarroChefe.update();
+
+		} else if (this.opcao.equals(2)) {
+
+			this.comentarioFornecedor.update();
+
+		} else {
+
+			this.comentarioPromocao.update();
+		}
+
+		return null;
+	}
+	
 	public List<ComentarioFornecedor> getComentariosFornecedor() {
 		return comentariosFornecedor;
 	}

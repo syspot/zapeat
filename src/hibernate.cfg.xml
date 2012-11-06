@@ -10,7 +10,7 @@
 		<property name="current_session_context_class">thread</property>
 
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/zapeat</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://www.saudelivre.com.br:5432/zapeat</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 		<property name="hibernate.connection.username">zapeat</property>
 		<property name="hibernate.connection.password">15rt01</property>
@@ -42,6 +42,7 @@
  		<mapping class="br.com.zapeat.model.TipoBanner" />
  		<mapping class="br.com.zapeat.model.Usuario" />
  		<mapping class="br.com.zapeat.model.UsuarioAdm" />
+ 		<mapping class="br.com.zapeat.model.UsuarioSite" />
 	
 	</session-factory>
 	

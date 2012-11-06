@@ -1,8 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core" >
+
+<ui:param name="mbean" value="${moderacaoComentarioFaces}" />
 
     <div style="font-size: 12px; width: 95%; min-width: 500px;">
         
@@ -22,7 +25,7 @@
                   	<h:panelGrid columns="1" style="width:90%">
 
 	                    <h:outputLabel for="comentario" value="Comentario"/>
-	                    <p:inputTextarea id="comentario" value="#{moderacaoComentarioFaces.comentario}" styleClass="coluna40"/>
+	                    <p:inputTextarea id="comentario" value="CoFaces.comentario}" styleClass="coluna40"/>
 	                    
 	                    <h:outputLabel for="tipoComentario" value="Tipo Comentario"/>
 	                    <h:selectOneMenu required="true" requiredMessage="Tipo Comentario: Campo obrigatorio" id="tipoComentario" styleClass="coluna20" value="#{moderacaoComentarioFaces.opcao}">
@@ -41,6 +44,81 @@
                 		
                 		<p:commandButton id="btnCancelar" value="Limpar" icon="novo" action="#{moderacaoComentarioFaces.limpar}" process="@this" update="@form" style="height:28px; width: 140px;" />
                 		
+                	</h:panelGrid>
+                	
+                	<h:panelGrid style="width:100%">
+                	
+	                	<p:dataTable value="#{moderacaoComentarioFaces.comentariosFornecedor}" var="linha" rendered="#{moderacaoComentarioFaces.opcao == 2}">
+	                		
+	                		<p:column headerText="Usuário">
+	                			<h:outputText value="#{linha.usuario.nome}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Descrição">
+	                			<h:outputText value="#{linha.descricao}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Data">
+	                			<h:outputText value="#{linha.dataCadastro}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Ativo">
+	                			<p:commandLink action="#{mbean.alterar}" global="false">
+									<h:graphicImage value="../resources/images/checkmark.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbean.comentarioFornecedor}" value="#{linha}" />
+								</p:commandLink>
+	                		</p:column>
+	                		
+	                	</p:dataTable>
+	                	
+	                	<p:dataTable value="#{moderacaoComentarioFaces.comentariosCarroChefe}" var="linha" rendered="#{moderacaoComentarioFaces.opcao == 1}">
+	                		
+	                		<p:column headerText="Usuário">
+	                			<h:outputText value="#{linha.usuario.nome}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Descrição">
+	                			<h:outputText value="#{linha.descricao}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Data">
+	                			<h:outputText value="#{linha.dataCadastro}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Ativo">
+	                			<p:commandLink action="#{mbean.alterar}" global="false">
+									<h:graphicImage value="../resources/images/checkmark.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbean.comentarioCarroChefe}" value="#{linha}" />
+								</p:commandLink>
+	                		</p:column>
+	                		
+	                	</p:dataTable>
+	                	
+	                	<p:dataTable value="#{moderacaoComentarioFaces.comentariosPromocao}" var="linha" rendered="#{moderacaoComentarioFaces.opcao == 3}">
+	                		
+	                		<p:column headerText="Usuário">
+	                			<h:outputText value="#{linha.usuario.nome}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Descrição">
+	                			<h:outputText value="#{linha.descricao}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Data">
+	                			<h:outputText value="#{linha.dataCadastro}" />
+	                		</p:column>
+	                		
+	                		<p:column headerText="Ativo">
+	                		
+	                			<p:commandLink action="#{mbean.alterar}" global="false">
+									<h:graphicImage value="../resources/images/checkmark.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbean.comentarioPromocao}" value="#{linha}" />
+								</p:commandLink>
+								
+	                		</p:column>
+	                		
+	                	</p:dataTable>
+                	
                 	</h:panelGrid>
                 	
                 </p:fieldset>

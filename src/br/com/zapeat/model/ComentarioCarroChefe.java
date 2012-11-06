@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -16,10 +17,14 @@ import javax.persistence.Table;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "comentarios_carros_chefes")
 public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4673210545372700603L;
 
 	@Id
 	@SequenceGenerator(name = "COMENTARIOS_CARROS_CHEFES_ID_SEQ", sequenceName = "comentarios_carros_chefes_id_seq", allocationSize = 1)
@@ -27,9 +32,10 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 	private Long id;
 
 	@ManyToOne
-	private UsuarioAdm usuario;
+	private UsuarioSite usuario;
 
 	@ManyToOne
+	@JoinColumn(name = "carro_chefe_id")
 	private CarroChefe carroChefe;
 
 	private String descricao;
@@ -77,7 +83,7 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 
@@ -90,10 +96,10 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 		if (getClass() != obj.getClass())
 			return false;
 		ComentarioCarroChefe other = (ComentarioCarroChefe) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (usuario == null) {
+			if (other.usuario != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
 	}
@@ -114,6 +120,14 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 		this.flagAtivo = flagAtivo;
 	}
 
+	public UsuarioSite getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioSite usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public List<ComentarioCarroChefe> findByModel(String... fieldsOrderBy) {
 
@@ -132,14 +146,6 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 		}
 
 		return super.find(query.toString(), null, params.toArray());
-	}
-
-	public UsuarioAdm getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(UsuarioAdm usuario) {
-		this.usuario = usuario;
 	}
 
 }
