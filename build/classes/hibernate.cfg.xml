@@ -23,6 +23,9 @@
  		<mapping class="br.com.zapeat.model.Categoria" />
  		<mapping class="br.com.zapeat.model.Cidade" />
  		<mapping class="br.com.zapeat.model.Comentario" />
+ 		<mapping class="br.com.zapeat.model.ComentarioCarroChefe" />
+ 		<mapping class="br.com.zapeat.model.ComentarioFornecedor" />
+ 		<mapping class="br.com.zapeat.model.ComentarioPromocao" />
  		<mapping class="br.com.zapeat.model.Estado" />
  		<mapping class="br.com.zapeat.model.FormaPagamento" />
  		<mapping class="br.com.zapeat.model.Fornecedor" />
