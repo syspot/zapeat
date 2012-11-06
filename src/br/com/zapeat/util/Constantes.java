@@ -1,16 +1,17 @@
 package br.com.zapeat.util;
 
-import java.io.File;
+import br.com.topsys.web.util.TSFacesUtil;
 
 public class Constantes {
 
 	public static final String USUARIO_CONECTADO = "usuarioConectado";
 	public static final String USUARIOS_CONECTADOS = "usuariosConectados";
 
-	public static final String PASTA_UPLOAD = "e:" + File.separator + "img_zapeat" + File.separator;
+	public static final String PASTA_UPLOAD = "/arquivos/zapeat/img_zapeat/";
 
-	public static final String PASTA_DOWNLOAD = "http://localhost/img_zapeat/";
-
+	//public static final String PASTA_DOWNLOAD = "http://localhost/img_zapeat/";
+	public static final String PASTA_DOWNLOAD = "http://"+TSFacesUtil.getRequest().getServerName() + ":" + TSFacesUtil.getRequest().getServerPort() + "/img_zapeat/";
+	
 	public static final Integer LARGURA_ALTURA_80 = 80;
 
 	public static final Integer LARGURA_THUMB = 80;
