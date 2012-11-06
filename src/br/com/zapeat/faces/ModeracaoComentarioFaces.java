@@ -73,16 +73,21 @@ public class ModeracaoComentarioFaces extends TSMainFaces {
 
 		if (this.opcao.equals(1)) {
 
+			this.comentarioCarroChefe.setFlagAtivo(!this.comentarioCarroChefe.getFlagAtivo());
 			this.comentarioCarroChefe.update();
 
 		} else if (this.opcao.equals(2)) {
 
+			this.comentarioFornecedor.setFlagAtivo(!this.comentarioFornecedor.getFlagAtivo());
 			this.comentarioFornecedor.update();
 
 		} else {
 
+			this.comentarioPromocao.setFlagAtivo(!this.comentarioPromocao.getFlagAtivo());
 			this.comentarioPromocao.update();
 		}
+		
+		super.addInfoMessage("Operação realizada com sucesso");
 
 		return null;
 	}

@@ -15,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 @Entity
@@ -51,7 +53,6 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 	}
 
 	public ComentarioCarroChefe(String descricao) {
-
 		this.descricao = descricao;
 	}
 
@@ -79,6 +80,46 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 		this.dataCadastro = dataCadastro;
 	}
 
+	public CarroChefe getCarroChefe() {
+		return carroChefe;
+	}
+
+	public void setCarroChefe(CarroChefe carroChefe) {
+		this.carroChefe = carroChefe;
+	}
+
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
+	}
+
+	public UsuarioSite getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioSite usuario) {
+		this.usuario = usuario;
+	}
+	
+	public String getImagemTable(){
+		return getFlagAtivo() ? "checkmark.png" : "delete.png";
+	}
+
+	public String getImagemTitle(){
+		return getFlagAtivo() ? "Inativar" : "Ativar";
+	}
+	
+	public String getDataCadastroFormatada(){
+		return TSParseUtil.dateToString(getDataCadastro(), TSDateUtil.DD_MM_YYYY_HH_MM);
+	}
+	
+	public String getResumoDescricao(){
+		return getDescricao().length() > 100 ? getDescricao().substring(0, 100) : getDescricao();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -104,30 +145,7 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 		return true;
 	}
 
-	public CarroChefe getCarroChefe() {
-		return carroChefe;
-	}
-
-	public void setCarroChefe(CarroChefe carroChefe) {
-		this.carroChefe = carroChefe;
-	}
-
-	public Boolean getFlagAtivo() {
-		return flagAtivo;
-	}
-
-	public void setFlagAtivo(Boolean flagAtivo) {
-		this.flagAtivo = flagAtivo;
-	}
-
-	public UsuarioSite getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(UsuarioSite usuario) {
-		this.usuario = usuario;
-	}
-
+	
 	@Override
 	public List<ComentarioCarroChefe> findByModel(String... fieldsOrderBy) {
 
@@ -145,7 +163,7 @@ public class ComentarioCarroChefe extends TSActiveRecordAb<ComentarioCarroChefe>
 			params.add("%" + descricao + "%");
 		}
 
-		return super.find(query.toString(), null, params.toArray());
+		return super.find(query.toString(), "c.dataCadastro", params.toArray());
 	}
 
 }

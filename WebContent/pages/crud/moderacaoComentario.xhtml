@@ -9,112 +9,104 @@
 
     <div style="font-size: 12px; width: 95%; min-width: 500px;">
         
-        <h:form id="tabsCRUD" enctype="multipart/form-data">
+        <h:form id="tabsCRUD" prependId="false" enctype="multipart/form-data">
         
-          <p:tabView effect="opacity" effectDuration="normal" dynamic="true" cache="true">
+          <p:tabView id="tabView" effect="opacity" effectDuration="normal" dynamic="true" cache="true">
               
             <p:tab title="Moderar" > 
 
-                <p:outputPanel layout="block" style="width: 88%;" >
-                   <p:messages id="msgCadastro" globalOnly="true" showDetail="true" showSummary="false" />
-                </p:outputPanel>
-
-                <br/>
                 <p:fieldset style="width: 97%">
                     
                   	<h:panelGrid columns="1" style="width:90%">
 
 	                    <h:outputLabel for="comentario" value="Comentario"/>
-	                    <p:inputTextarea id="comentario" value="CoFaces.comentario}" styleClass="coluna40"/>
+	                    <p:inputTextarea id="comentario" value="#{mbean.comentario}" styleClass="coluna40"/>
 	                    
 	                    <h:outputLabel for="tipoComentario" value="Tipo Comentario"/>
-	                    <h:selectOneMenu required="true" requiredMessage="Tipo Comentario: Campo obrigatorio" id="tipoComentario" styleClass="coluna20" value="#{moderacaoComentarioFaces.opcao}">
+	                    <p:selectOneMenu required="true" requiredMessage="Tipo Comentário: Campo obrigatório" id="tipoComentario" value="#{mbean.opcao}" style="width: 41%">
 	                        <f:selectItem itemValue="" itemLabel="Selecione"/>
 	                        <f:selectItem itemLabel="Carro Chefe" itemValue="1"/>
 	                        <f:selectItem itemLabel="Fornecedor" itemValue="2"/>
 	                        <f:selectItem itemLabel="Promocao" itemValue="3"/>
-	                        
-	                    </h:selectOneMenu>
+	                    </p:selectOneMenu>
                    
                		</h:panelGrid>
 
-                	<h:panelGrid columns="2" styleClass="coluna30" columnClasses="coluna40,coluna60">
+                	<h:panelGrid columns="2" styleClass="coluna30" columnClasses="coluna40,coluna60" style="margin-top: 20px">
                 	
-                		<p:commandButton value="Pesquisar" icon="pesquisar" action="#{moderacaoComentarioFaces.findEvent}" update="@form" style="height:28px; width: 140px;" />
+                		<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbean.findEvent}" update="@form" style="height:28px; width: 140px;" />
                 		
-                		<p:commandButton id="btnCancelar" value="Limpar" icon="novo" action="#{moderacaoComentarioFaces.limpar}" process="@this" update="@form" style="height:28px; width: 140px;" />
+                		<p:commandButton id="btnCancelar" value="Limpar" icon="novo" action="#{mbean.limpar}" process="@this" update="@form" style="height:28px; width: 140px;" />
                 		
                 	</h:panelGrid>
                 	
-                	<h:panelGrid style="width:100%">
+                	<h:panelGrid id="grids" style="width:100%">
                 	
-	                	<p:dataTable value="#{moderacaoComentarioFaces.comentariosFornecedor}" var="linha" rendered="#{moderacaoComentarioFaces.opcao == 2}">
+	                	<p:dataTable value="#{mbean.comentariosFornecedor}" var="linha" rendered="#{mbean.opcao == 2}">
 	                		
 	                		<p:column headerText="Usuário">
 	                			<h:outputText value="#{linha.usuario.nome}" />
 	                		</p:column>
 	                		
 	                		<p:column headerText="Descrição">
-	                			<h:outputText value="#{linha.descricao}" />
+	                			<h:outputText value="#{linha.resumoDescricao}" title="#{linha.descricao}" />
 	                		</p:column>
 	                		
-	                		<p:column headerText="Data">
-	                			<h:outputText value="#{linha.dataCadastro}" />
+	                		<p:column headerText="Fornecedor">
+	                			<h:outputText value="#{linha.fornecedor.nomeFantasia}" />
 	                		</p:column>
 	                		
 	                		<p:column headerText="Ativo">
-	                			<p:commandLink action="#{mbean.alterar}" global="false">
-									<h:graphicImage value="../resources/images/checkmark.png" style="border: 0px" />
+	                			<p:commandLink action="#{mbean.alterar}" ajax="false" global="false" >
+									<h:graphicImage value="../resources/images/#{linha.imagemTable}" title="#{linha.imagemTitle}" style="border: 0px" />
 									<f:setPropertyActionListener target="#{mbean.comentarioFornecedor}" value="#{linha}" />
 								</p:commandLink>
 	                		</p:column>
 	                		
 	                	</p:dataTable>
 	                	
-	                	<p:dataTable value="#{moderacaoComentarioFaces.comentariosCarroChefe}" var="linha" rendered="#{moderacaoComentarioFaces.opcao == 1}">
+	                	<p:dataTable value="#{mbean.comentariosCarroChefe}" var="linha" rendered="#{mbean.opcao == 1}">
 	                		
 	                		<p:column headerText="Usuário">
 	                			<h:outputText value="#{linha.usuario.nome}" />
 	                		</p:column>
 	                		
 	                		<p:column headerText="Descrição">
-	                			<h:outputText value="#{linha.descricao}" />
+	                			<h:outputText value="#{linha.resumoDescricao}" title="#{linha.descricao}"/>
 	                		</p:column>
 	                		
-	                		<p:column headerText="Data">
-	                			<h:outputText value="#{linha.dataCadastro}" />
+	                		<p:column headerText="Carro Chefe">
+	                			<h:outputText value="#{linha.carroChefe.titulo}" />
 	                		</p:column>
 	                		
 	                		<p:column headerText="Ativo">
-	                			<p:commandLink action="#{mbean.alterar}" global="false">
-									<h:graphicImage value="../resources/images/checkmark.png" style="border: 0px" />
+	                			<p:commandLink action="#{mbean.alterar}" ajax="false" global="false">
+									<h:graphicImage value="../resources/images/#{linha.imagemTable}" title="#{linha.imagemTitle}" style="border: 0px" />
 									<f:setPropertyActionListener target="#{mbean.comentarioCarroChefe}" value="#{linha}" />
 								</p:commandLink>
 	                		</p:column>
 	                		
 	                	</p:dataTable>
 	                	
-	                	<p:dataTable value="#{moderacaoComentarioFaces.comentariosPromocao}" var="linha" rendered="#{moderacaoComentarioFaces.opcao == 3}">
+	                	<p:dataTable value="#{mbean.comentariosPromocao}" var="linha" rendered="#{mbean.opcao == 3}">
 	                		
 	                		<p:column headerText="Usuário">
 	                			<h:outputText value="#{linha.usuario.nome}" />
 	                		</p:column>
 	                		
 	                		<p:column headerText="Descrição">
-	                			<h:outputText value="#{linha.descricao}" />
+	                			<h:outputText value="#{linha.resumoDescricao}" title="#{linha.descricao}"/>
 	                		</p:column>
 	                		
-	                		<p:column headerText="Data">
-	                			<h:outputText value="#{linha.dataCadastro}" />
+	                		<p:column headerText="Promoção">
+	                			<h:outputText value="#{linha.promocao.titulo}" />
 	                		</p:column>
 	                		
 	                		<p:column headerText="Ativo">
-	                		
-	                			<p:commandLink action="#{mbean.alterar}" global="false">
-									<h:graphicImage value="../resources/images/checkmark.png" style="border: 0px" />
+	                			<p:commandLink action="#{mbean.alterar}" ajax="false" global="false" >
+									<h:graphicImage value="../resources/images/#{linha.imagemTable}" title="#{linha.imagemTitle}" style="border: 0px" />
 									<f:setPropertyActionListener target="#{mbean.comentarioPromocao}" value="#{linha}" />
 								</p:commandLink>
-								
 	                		</p:column>
 	                		
 	                	</p:dataTable>

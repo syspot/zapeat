@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
+import br.com.topsys.util.TSDateUtil;
+import br.com.topsys.util.TSParseUtil;
 import br.com.topsys.util.TSUtil;
 
 @Entity
@@ -85,6 +87,39 @@ public class ComentarioFornecedor extends TSActiveRecordAb<ComentarioFornecedor>
 		this.dataCadastro = dataCadastro;
 	}
 
+
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
+	}
+
+	public UsuarioSite getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioSite usuario) {
+		this.usuario = usuario;
+	}
+	
+	public String getImagemTable(){
+		return getFlagAtivo() ? "checkmark.png" : "delete.png";
+	}
+	
+	public String getImagemTitle(){
+		return getFlagAtivo() ? "Inativar" : "Ativar";
+	}
+	
+	public String getDataCadastroFormatada(){
+		return TSParseUtil.dateToString(getDataCadastro(), TSDateUtil.DD_MM_YYYY_HH_MM);
+	}
+	
+	public String getResumoDescricao(){
+		return getDescricao().length() > 100 ? getDescricao().substring(0, 100) : getDescricao();
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -92,7 +127,7 @@ public class ComentarioFornecedor extends TSActiveRecordAb<ComentarioFornecedor>
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -109,15 +144,7 @@ public class ComentarioFornecedor extends TSActiveRecordAb<ComentarioFornecedor>
 			return false;
 		return true;
 	}
-
-	public Boolean getFlagAtivo() {
-		return flagAtivo;
-	}
-
-	public void setFlagAtivo(Boolean flagAtivo) {
-		this.flagAtivo = flagAtivo;
-	}
-
+	
 	@Override
 	public List<ComentarioFornecedor> findByModel(String... fieldsOrderBy) {
 
@@ -135,15 +162,7 @@ public class ComentarioFornecedor extends TSActiveRecordAb<ComentarioFornecedor>
 			params.add("%" + descricao + "%");
 		}
 
-		return super.find(query.toString(), null, params.toArray());
-	}
-
-	public UsuarioSite getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(UsuarioSite usuario) {
-		this.usuario = usuario;
+		return super.find(query.toString(), "c.dataCadastro", params.toArray());
 	}
 
 }
