@@ -7,7 +7,8 @@ public class Constantes {
 	public static final String USUARIO_CONECTADO = "usuarioConectado";
 	public static final String USUARIOS_CONECTADOS = "usuariosConectados";
 
-	public static final String PASTA_UPLOAD = "/arquivos/zapeat/img_zapeat/";
+	//public static final String PASTA_UPLOAD = "/arquivos/zapeat/img_zapeat/";
+	public static final String PASTA_UPLOAD = "E:\\img_zapeat\\";
 
 	//public static final String PASTA_DOWNLOAD = "http://localhost/img_zapeat/";
 	public static final String PASTA_DOWNLOAD = "http://"+TSFacesUtil.getRequest().getServerName() + ":" + TSFacesUtil.getRequest().getServerPort() + "/img_zapeat/";
