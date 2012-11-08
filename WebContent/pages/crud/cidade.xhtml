@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="../../resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${cidadeFaces}" />
+  	<ui:param name="mbeanModel" value="${cidadeFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${cidadeFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  			
+  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+  			
+  			<p:outputLabel for="cidade" value="Cidade" />
+  			<p:inputText style="width: 80%;" id="cidade" value="#{mbeanModel.nome}" required="true" requiredMessage="Cidade: Campo obrigatório" maxlength="50"/>
+  			<br/>
+  			<p:outputLabel for="estado" value="Estado" />
+  			<p:selectOneMenu id="estado" value="#{mbeanModel.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.estados}" />
+			</p:selectOneMenu>
+			<br/>
+  			<p:outputLabel for="ativo" value="Ativo" />
+  			<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}" />
+  			</h:panelGrid>
+		  	
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+  			
+  			<p:outputLabel for="cidadePesquisa" value="Cidade" />
+  			<p:inputText style="width: 80%;" id="cidadePesquisa" value="#{mbeanPesquisaModel.nome}" maxlength="50"/>
+  			<br/>
+  			<p:outputLabel for="estadoPesquisa" value="Estado" />
+  			<p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.estado.id}">
+				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+				<f:selectItems value="#{mbean.estados}" />
+			</p:selectOneMenu>
+			<br/>
+  			<p:outputLabel for="ativoPesquisa" value="Ativo" />
+  			<p:selectBooleanCheckbox id="ativoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
+  			<br/>
+  			</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Cidade">
+  			<h:outputText value="#{linha.nome}" />
+  		</p:column>
+  	
+  		<p:column headerText="Estado">
+  			<h:outputText value="#{linha.estado.nome}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

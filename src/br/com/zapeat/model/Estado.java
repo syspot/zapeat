@@ -7,26 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.ZapeatUtil;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "estados")
 public class Estado extends TSActiveRecordAb<Estado> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7693009400955345338L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="estados_id")
+	@SequenceGenerator(name="estados_id", sequenceName="estados_id_seq")
 	private Long id;
 
 	private String sigla;
+
+	private String nome;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -42,6 +42,14 @@ public class Estado extends TSActiveRecordAb<Estado> {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	@Override
@@ -80,13 +88,21 @@ public class Estado extends TSActiveRecordAb<Estado> {
 			query.append("and ").append(ZapeatUtil.semAcento("e.sigla")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
 		}
 
+		if (!TSUtil.isEmpty(nome)) {
+			query.append("and ").append(ZapeatUtil.semAcento("e.nome")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+		}
+
 		List<Object> params = new ArrayList<Object>();
 
 		if (!TSUtil.isEmpty(sigla)) {
 			params.add(ZapeatUtil.tratarString(sigla));
 		}
 
-		return super.find(query.toString(), "e.sigla", params.toArray());
+		if (!TSUtil.isEmpty(nome)) {
+			params.add(ZapeatUtil.tratarString(nome));
+		}
+
+		return super.find(query.toString(), "e.nome", params.toArray());
 	}
 
 }

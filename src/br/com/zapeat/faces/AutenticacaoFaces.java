@@ -96,6 +96,7 @@ public class AutenticacaoFaces extends TSMainFaces {
 		}
 
 		carregarMenu();
+		
 		TSFacesUtil.addObjectInSession(Constantes.USUARIO_CONECTADO, usuario);
 
 		return SUCESSO;

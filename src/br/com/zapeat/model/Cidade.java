@@ -3,34 +3,36 @@ package br.com.zapeat.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.ZapeatUtil;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "cidades")
 public class Cidade extends TSActiveRecordAb<Cidade> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 484862093492812288L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cidade_id")
+	@SequenceGenerator(name = "cidade_id", sequenceName = "cidade_id_seq")
 	private Long id;
 
 	private String nome;
 
 	@ManyToOne
 	private Estado estado;
+
+	@Column(name = "flag_ativo")
+	private Boolean flagAtivo;
 
 	public Long getId() {
 		return TSUtil.tratarLong(id);
@@ -89,13 +91,15 @@ public class Cidade extends TSActiveRecordAb<Cidade> {
 		query.append(" from Cidade c where 1 = 1 ");
 
 		if (!TSUtil.isEmpty(nome)) {
-			query.append("and ").append(ZapeatUtil.semAcento("c.descricao")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
+			query.append("and ").append(ZapeatUtil.semAcento("c.nome")).append(" like ").append(ZapeatUtil.semAcento("?")).append(" ");
 		}
 
 		if (!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())) {
 			query.append("and c.estado.id = ? ");
 		}
-
+		
+		query.append("and c.flagAtivo = ? ");
+		
 		List<Object> params = new ArrayList<Object>();
 
 		if (!TSUtil.isEmpty(nome)) {
@@ -105,6 +109,8 @@ public class Cidade extends TSActiveRecordAb<Cidade> {
 		if (!TSUtil.isEmpty(estado) && !TSUtil.isEmpty(estado.getId())) {
 			params.add(estado.getId());
 		}
+		
+		params.add(flagAtivo);
 
 		return super.find(query.toString(), "c.nome", params.toArray());
 	}
@@ -120,6 +126,14 @@ public class Cidade extends TSActiveRecordAb<Cidade> {
 		params.add(estado.getId());
 
 		return super.find(query.toString(), "c.nome", params.toArray());
+	}
+
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
 	}
 
 }

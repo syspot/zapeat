@@ -19,6 +19,8 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 	private List<T> grid;
 
 	private String fieldOrdem;
+	
+	private boolean exibirTabPesquisa;
 
 	public String getFieldOrdem() {
 		return fieldOrdem;
@@ -233,6 +235,14 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 
 	public void setFlagAlterar(boolean flagAlterar) {
 		this.flagAlterar = flagAlterar;
+	}
+
+	public boolean isExibirTabPesquisa() {
+		return exibirTabPesquisa;
+	}
+
+	public void setExibirTabPesquisa(boolean exibirTabPesquisa) {
+		this.exibirTabPesquisa = exibirTabPesquisa;
 	}
 
 }

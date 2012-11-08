@@ -14,6 +14,7 @@ import org.primefaces.model.DualListModel;
 
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 import br.com.zapeat.model.CarroChefe;
 import br.com.zapeat.model.Categoria;
 import br.com.zapeat.model.Cidade;
@@ -42,11 +43,12 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private ImagemFornecedor imagemFornecedorSelecionada;
 	private ImagemCarroChefe imagemCarroChefeSelecionada;
-
+	
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
 		this.initCombo();
+		this.isFornecedorLogado();
 	}
 
 	private void initCombo() {
@@ -76,7 +78,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
 		this.formasPagamentos = new DualListModel<FormaPagamento>(this.formasPagamentosSources, formasPagamentosTarget);
-
+		
 		return null;
 	}
 
@@ -87,7 +89,23 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudPesquisaModel().setCidade(new Cidade());
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		this.setGrid(new ArrayList<Fornecedor>());
+		
 		return null;
+	}
+	
+	private void isFornecedorLogado(){
+		
+		UsuarioAdm usuario = (UsuarioAdm) TSFacesUtil.getObjectInSession(Constantes.USUARIO_CONECTADO);
+		
+		if(!TSUtil.isEmpty(usuario) && !TSUtil.isEmpty(usuario.getId()) && !TSUtil.isEmpty(usuario.getFornecedor()) && !TSUtil.isEmpty(usuario.getFornecedor().getId())){
+			
+			this.setCrudModel(usuario.getFornecedor());
+			
+			this.detail();
+			
+			this.setExibirTabPesquisa(true);
+			
+		}
 	}
 
 	private boolean validaCamposCarroChefe() {
