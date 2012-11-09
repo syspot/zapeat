@@ -43,7 +43,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private ImagemFornecedor imagemFornecedorSelecionada;
 	private ImagemCarroChefe imagemCarroChefeSelecionada;
-	
+
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
@@ -78,7 +78,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
 		this.formasPagamentos = new DualListModel<FormaPagamento>(this.formasPagamentosSources, formasPagamentosTarget);
-		
+
 		return null;
 	}
 
@@ -89,22 +89,22 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudPesquisaModel().setCidade(new Cidade());
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		this.setGrid(new ArrayList<Fornecedor>());
-		
+
 		return null;
 	}
-	
-	private void isFornecedorLogado(){
-		
+
+	private void isFornecedorLogado() {
+
 		UsuarioAdm usuario = (UsuarioAdm) TSFacesUtil.getObjectInSession(Constantes.USUARIO_CONECTADO);
-		
-		if(!TSUtil.isEmpty(usuario) && !TSUtil.isEmpty(usuario.getId()) && !TSUtil.isEmpty(usuario.getFornecedor()) && !TSUtil.isEmpty(usuario.getFornecedor().getId())){
-			
+
+		if (!TSUtil.isEmpty(usuario) && !TSUtil.isEmpty(usuario.getId()) && !TSUtil.isEmpty(usuario.getFornecedor()) && !TSUtil.isEmpty(usuario.getFornecedor().getId())) {
+
 			this.setCrudModel(usuario.getFornecedor());
-			
+
 			this.detail();
-			
+
 			this.setExibirTabPesquisa(true);
-			
+
 		}
 	}
 
@@ -345,9 +345,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	@Override
 	public boolean isExibirBotao() {
 
-		UsuarioAdm usuario = UsuarioUtil.obterUsuarioConectado();
-
-		if (!TSUtil.isEmpty(usuario) && !TSUtil.isEmpty(usuario.getFornecedor())) {
+		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
 
 			return false;
 		}

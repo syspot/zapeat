@@ -10,9 +10,11 @@
 				<p:outputPanel id="opCadastro" layout="block" autoUpdate="#{empty autoUpdateCadastro ? false : autoUpdateCadastro}" style="width: 98%;">
 
 					<h:panelGrid columns="1" style="width: 100%">
-
-						<ui:include src="comandoCRUDLimpar.xhtml" />
-
+						
+						<p:outputPanel rendered="#{!mbean.exibirTabPesquisa}">
+							<ui:include src="comandoCRUDLimpar.xhtml" />
+						</p:outputPanel>
+						
 						<p:fieldset style="width: 100%">
 
 							<ui:insert name="cadastro" />

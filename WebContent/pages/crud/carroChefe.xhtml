@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="../../resources/templates/templateCRUD.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+  	<ui:param name="mbean" value="${carroChefeFaces}" />
+  	<ui:param name="mbeanModel" value="${carroChefeFaces.crudModel}" />
+  	<ui:param name="mbeanPesquisaModel" value="${carroChefeFaces.crudPesquisaModel}" />
+  	
+  	<ui:define name="cadastro">
+  	
+		<h:panelGrid columns="1" style="width:100%">
+		
+		<p:outputLabel for="fornecedor" value="Fornecedor" />
+		<p:selectOneMenu disabled="#{!mbean.exibirBotao}" id="fornecedor" value="#{mbeanModel.fornecedor.id}" style="width:50%" required="true" requiredMessage="Fornecedor: Campo obrigatório">
+			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			<f:selectItems value="#{mbean.fornecedores}" />
+		</p:selectOneMenu>
+ 			
+  		<p:outputLabel for="tituloCarroChefe" value="Título" />
+	  	<p:inputText id="tituloCarroChefe" required="true" requiredMessage="Tíulo: Campo obrigatório" value="#{mbeanModel.titulo}" maxlength="100" style="width:50%"/>
+			
+  		<p:outputLabel for="descricaoCarroChefe" value="Descrição" />
+	  	<p:inputTextarea id="descricaoCarroChefe" required="true" requiredMessage="Descrição: Campo obrigatório" counterTemplate="{0} caracteres restantes." counter="counter2" value="#{mbeanModel.descricao}" maxlength="200" autoResize="false" rows="10" style="width:90%"/>
+	  	<h:outputText id="counter2" />
+	  	
+	  	<p:outputLabel value="Ativo " for="flagAtivoCarroChefe"/>
+		<p:selectBooleanCheckbox id="flagAtivoCarroChefe" value="#{mbeanModel.flagAtivo}"/>
+			
+		</h:panelGrid>
+		
+		<h:panelGrid columns="1" style="width: 46%">
+  			
+		<p:outputLabel for="imagemCarroChefe" value="Imagens do Carro-Chefe" />
+		<p:fileUpload id="imagemCarroChefe" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagensCarrosChefes}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="pgImagensCarrosChefes"/>
+	
+		</h:panelGrid>
+		
+		<p:remoteCommand name="removerImagemCarroChefe" action="#{mbean.removerImagemCarroChefe}" update="pgImagensCarrosChefes" global="false"/>
+		
+		<h:panelGrid id="pgImagensCarrosChefes" columns="1" style="width:100%">
+		
+		<p:dataGrid id="dgImagemCarroChefe" var="imagemCarroChefe" value="#{mbeanModel.imagensCarrosChefes}" columns="4"  
+			        rows="4" paginator="true" emptyMessage="Nenhuma imagem cadastrada" rendered="#{not empty mbeanModel.imagensCarrosChefes}">
+	          
+	        <p:column>
+	            
+	            <p:graphicImage value="#{imagemCarroChefe.imagemThumbView}" cache="false" />
+	            <p:commandLink global="false" process="@this" oncomplete="removerImagemCarroChefe();" title="Clique aqui para remover a imagem">
+					<h:panelGrid columns="1" style="width:100%">
+						<p:graphicImage style="border:0px;"	value="/resources/images/del.png" />
+					</h:panelGrid>
+					<f:setPropertyActionListener target="#{mbean.imagemCarroChefeSelecionada}" value="#{imagemCarroChefe}" />
+				</p:commandLink>
+	            
+	        </p:column>  
+	  
+	    </p:dataGrid>
+			    
+	</h:panelGrid>
+			
+  	</ui:define>
+  	
+  	<ui:define name="pesquisaCampos">
+  	
+		<h:panelGrid columns="1" style="width:100%">
+		
+		<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
+		<p:selectOneMenu disabled="#{!mbean.exibirBotao}" id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:50%">
+			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			<f:selectItems value="#{mbean.fornecedores}" />
+		</p:selectOneMenu>
+ 			
+  		<p:outputLabel for="tituloPesquisaCarroChefe" value="Título" />
+	  	<p:inputText id="tituloPesquisaCarroChefe" value="#{mbeanPesquisaModel.titulo}" maxlength="100" style="width:90%"/>
+		
+	  	<p:outputLabel value="Ativo " for="flagAtivoPesquisaCarroChefe"/>
+		<p:selectBooleanCheckbox id="flagAtivoPesquisaCarroChefe" value="#{mbeanPesquisaModel.flagAtivo}"/>
+			
+		</h:panelGrid>
+	  	
+  	</ui:define>
+  	
+  	<ui:define name="colunasTabela">
+  	
+  		<p:column headerText="Titulo">
+  			<h:outputText value="#{linha.titulo}" />
+  		</p:column>
+  	
+  		<p:column headerText="Fornecedor">
+  			<h:outputText value="#{linha.fornecedor.nomeFantasia}" />
+  		</p:column>
+  		
+  	</ui:define>
+  	
+</ui:composition>

@@ -1,6 +1,5 @@
 package br.com.zapeat.util;
 
-import br.com.topsys.web.util.TSFacesUtil;
 
 public class Constantes {
 
@@ -10,8 +9,8 @@ public class Constantes {
 	//public static final String PASTA_UPLOAD = "/arquivos/zapeat/img_zapeat/";
 	public static final String PASTA_UPLOAD = "E:\\img_zapeat\\";
 
-	//public static final String PASTA_DOWNLOAD = "http://localhost/img_zapeat/";
-	public static final String PASTA_DOWNLOAD = "http://"+TSFacesUtil.getRequest().getServerName() + ":" + TSFacesUtil.getRequest().getServerPort() + "/img_zapeat/";
+	public static final String PASTA_DOWNLOAD = "http://localhost/img_zapeat/";
+	//public static final String PASTA_DOWNLOAD = "http://"+TSFacesUtil.getRequest().getServerName() + ":" + TSFacesUtil.getRequest().getServerPort() + "/img_zapeat/";
 	
 	public static final Integer LARGURA_ALTURA_80 = 80;
 
@@ -91,6 +90,7 @@ public class Constantes {
 	
 	public static Long MENU_PROMOCAO = 5L;
 	public static Long MENU_FORNECEDOR = 7L;
+	public static Long MENU_CARRO_CHEFE = 13L;
 	public static Long MENU_CADASTRO_BASE = 1L;
 	
 	public static final Integer QTD_MINIMA_CATEGORIAS_DESTAQUE = 6;

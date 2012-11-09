@@ -1,5 +1,6 @@
 package br.com.zapeat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,31 +16,31 @@ import javax.persistence.Table;
 
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.util.ZapeatUtil;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "carros_chefes")
 public class CarroChefe extends TSActiveRecordAb<CarroChefe> {
 
-	private static final long serialVersionUID = 198171025259068866L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="carros_chefes_id")
-	@SequenceGenerator(name="carros_chefes_id", sequenceName="carros_chefes_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "carros_chefes_id")
+	@SequenceGenerator(name = "carros_chefes_id", sequenceName = "carros_chefes_id_seq")
 	private Long id;
 
 	@ManyToOne
 	private Fornecedor fornecedor;
-	
+
 	private String titulo;
-	
+
 	private String descricao;
-	
+
 	@Column(name = "flag_ativo")
 	private Boolean flagAtivo;
-	
-	@OneToMany(mappedBy = "carroChefe", cascade = CascadeType.ALL, orphanRemoval = true)	
+
+	@OneToMany(mappedBy = "carroChefe", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ImagemCarroChefe> imagensCarrosChefes;
-	
+
 	public Long getId() {
 		return TSUtil.tratarLong(id);
 	}
@@ -113,5 +114,52 @@ public class CarroChefe extends TSActiveRecordAb<CarroChefe> {
 		return true;
 	}
 
-	
+	@Override
+	public List<CarroChefe> findByModel(String... fieldsOrderBy) {
+
+		StringBuilder query = new StringBuilder();
+
+		query.append(" from CarroChefe ch where 1 = 1 ");
+
+		if (!TSUtil.isEmpty(TSUtil.tratarString(titulo))) {
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("ch.titulo"));
+		}
+
+		if (!TSUtil.isEmpty(TSUtil.tratarString(descricao))) {
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("ch.descricao"));
+		}
+
+		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
+			query.append(" and ch.fornecedor.id = ? ");
+		}
+
+		if (!TSUtil.isEmpty(flagAtivo)) {
+			query.append(" and ch.flagAtivo = ? ");
+		}
+
+		List<Object> params = new ArrayList<Object>();
+
+		if (!TSUtil.isEmpty(TSUtil.tratarString(titulo))) {
+
+			params.add(titulo);
+		}
+
+		if (!TSUtil.isEmpty(TSUtil.tratarString(descricao))) {
+
+			params.add(descricao);
+		}
+
+		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
+
+			params.add(fornecedor.getId());
+		}
+
+		if (!TSUtil.isEmpty(flagAtivo)) {
+
+			params.add(flagAtivo);
+		}
+
+		return super.find(query.toString(), "ch.titulo", params.toArray());
+
+	}
 }
