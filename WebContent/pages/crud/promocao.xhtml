@@ -53,17 +53,17 @@
   				
   				<h:panelGrid id="pgDataPromocao" style="width:100%">
   				
-					<h:panelGrid id="pgPromocaoDia" rendered="#{mbeanModel.promocaoDaSemana || mbeanModel.promocaoDoDia}" style="width:60%">
+					<h:panelGrid id="pgPromocaoDiaSemana" rendered="#{mbeanModel.promocaoDaSemana || mbeanModel.promocaoDoDia}" style="width:60%">
 				  		
 				  		<p:outputLabel for="diaPromocao" value="Data" />
-				  		<p:calendar id="diaPromocao" pattern="dd/MM/yyyy" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.inicio}" style="width:90%" />
+				  		<p:calendar id="diaPromocao" pattern="dd/MM/yyyy" mindate="#{mbean.dataAtual}" required="true" requiredMessage="Data: Campo obrigatório" value="#{mbeanModel.inicio}" style="width:90%" />
 				  	
 				  	</h:panelGrid>
 				  	
-				  	<h:panelGrid id="pgPromocaoSemana" rendered="#{mbeanModel.promocaoDaHora}" style="width:60%" >
+				  	<h:panelGrid id="pgPromocaoHora" rendered="#{mbeanModel.promocaoDaHora}" style="width:60%" >
 				  	
 				  		<p:outputLabel for="dataInicial" value="Data" />
-						<p:calendar id="dataInicial" pattern="dd/MM/yyyy HH:mm" required="true" requiredMessage="Data Inicial: Campo obrigatório" value="#{mbeanModel.inicio}" style="width:90%" />
+						<p:calendar id="dataInicial" pattern="dd/MM/yyyy HH:mm" mindate="#{mbean.dataAtual}" minHour="#{mbean.horaAtual}" minMinute="#{mbean.minutoAtual}" required="true" requiredMessage="Data Inicial: Campo obrigatório" value="#{mbeanModel.inicio}" style="width:90%" />
 					
 				  	</h:panelGrid>
 				  	
@@ -74,8 +74,12 @@
 				  	<p:outputLabel for="precoOriginal" value="Preço Original" />
 				  	<p:outputLabel for="precoPromocional" value="Preço Promocional" />
 				  	
-				  	<p:inputText id="precoOriginal" value="#{mbeanModel.precoOriginal}" required="true" requiredMessage="Preço Original: Campo obrigatório" onkeypress="return(MascaraMoeda(this,'','.',event))" maxlength="5" styleClass="coluna90"/>
-				  	<p:inputText id="precoPromocional" value="#{mbeanModel.precoPromocional}" required="true" requiredMessage="Preço Promocional: Campo obrigatório" onkeypress="return(MascaraMoeda(this,'','.',event))" maxlength="5" styleClass="coluna90"/>
+				  	<p:inputText id="precoOriginal" value="#{mbeanModel.precoOriginal}" required="true" requiredMessage="Preço Original: Campo obrigatório" onkeyup="return mascaraMoeda(this);" maxlength="6" styleClass="coluna90">
+				  		<f:convertNumber type="number" minFractionDigits="2" pattern="###,###,##0.00" locale="pt_BR" />
+				  	</p:inputText>
+				  	<p:inputText id="precoPromocional" value="#{mbeanModel.precoPromocional}" required="true" requiredMessage="Preço Promocional: Campo obrigatório" onkeyup="return mascaraMoeda(this);" maxlength="6" styleClass="coluna90">
+				  		<f:convertNumber type="number" minFractionDigits="2" pattern="###,###,##0.00" locale="pt_BR" />
+				  	</p:inputText>
 				  	
 		  		</h:panelGrid>
  				

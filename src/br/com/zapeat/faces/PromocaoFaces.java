@@ -1,6 +1,8 @@
 package br.com.zapeat.faces;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -35,6 +37,10 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	private Integer mover;
 
 	private boolean usuarioFornecedor;
+	
+	private Date dataAtual;
+	private int horaAtual;
+	private int minutoAtual;
 
 	@PostConstruct
 	protected void init() {
@@ -61,6 +67,13 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		TSFacesUtil.removeObjectInSession("exibirAbaPesquisa");
 		
 		TSFacesUtil.addObjectInSession("exibirAbaPesquisa", null);
+		
+		Calendar c = Calendar.getInstance();
+		
+		dataAtual = c.getTime();
+		horaAtual = c.get(Calendar.HOUR_OF_DAY);
+		minutoAtual = c.get(Calendar.MINUTE);
+		
 
 	}
 
@@ -206,6 +219,30 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 	public void setFornecedoresCategorias(List<SelectItem> fornecedoresCategorias) {
 		this.fornecedoresCategorias = fornecedoresCategorias;
+	}
+
+	public Date getDataAtual() {
+		return dataAtual;
+	}
+
+	public void setDataAtual(Date dataAtual) {
+		this.dataAtual = dataAtual;
+	}
+
+	public int getHoraAtual() {
+		return horaAtual;
+	}
+
+	public void setHoraAtual(int horaAtual) {
+		this.horaAtual = horaAtual;
+	}
+
+	public int getMinutoAtual() {
+		return minutoAtual;
+	}
+
+	public void setMinutoAtual(int minutoAtual) {
+		this.minutoAtual = minutoAtual;
 	}
 
 }

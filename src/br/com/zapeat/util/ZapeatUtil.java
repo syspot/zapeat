@@ -309,5 +309,12 @@ public class ZapeatUtil {
 		c.add(Calendar.HOUR_OF_DAY, 1);
 		return c.getTime();
 	}
+	
+	public static Date getTempoLimiteMaximoInicioPromocao(Date data){
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		c.add(Calendar.MINUTE, -5);
+		return c.getTime();
+	}
 
 }
