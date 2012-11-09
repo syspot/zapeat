@@ -103,7 +103,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 			this.detail();
 
-			this.setExibirTabPesquisa(true);
+			this.setOcultarTabPesquisa(true);
 
 		}
 	}

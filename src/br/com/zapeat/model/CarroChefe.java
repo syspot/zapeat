@@ -162,4 +162,9 @@ public class CarroChefe extends TSActiveRecordAb<CarroChefe> {
 		return super.find(query.toString(), "ch.titulo", params.toArray());
 
 	}
+
+	public List<CarroChefe> pesquisarPorFornecedor(Fornecedor fornecedor) {
+
+		return super.find(" select ch from CarroChefe ch where ch.fornecedor.id = ? ", null, fornecedor.getId());
+	}
 }
