@@ -14,7 +14,6 @@ import org.primefaces.event.FileUploadEvent;
 
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
-import br.com.topsys.web.util.TSFacesUtil;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.FornecedorCategoria;
 import br.com.zapeat.model.ImagemPromocao;
@@ -64,10 +63,6 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 		}
 
-		TSFacesUtil.removeObjectInSession("exibirAbaPesquisa");
-		
-		TSFacesUtil.addObjectInSession("exibirAbaPesquisa", null);
-		
 		Calendar c = Calendar.getInstance();
 		
 		dataAtual = c.getTime();
