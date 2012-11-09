@@ -19,14 +19,14 @@
  					
 					<h:panelGrid style="width:100%">
  						
-						<h:panelGrid columns="1" style="width:90%">
+						<h:panelGrid columns="1" style="width:90%" rendered="#{mbean.exibirBotao}">
  			
 				  			<p:outputLabel for="razaSocial" value="Razão Social" />
 				  			<p:inputText id="razaSocial" value="#{mbeanModel.razaoSocial}" required="true" requiredMessage="Razão Social: Campo obrigatório" maxlength="100" styleClass="coluna90"/>
 		  			
 			  			</h:panelGrid>
 			  			
-					  	<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:90%">
+					  	<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:90%" rendered="#{mbean.exibirBotao}">
 					  	
 						  	<p:outputLabel for="cnpj" value="CNPJ" />
 						  	<p:outputLabel for="nomeFantasia" value="Nome Fantasia" />
@@ -67,7 +67,7 @@
  					
 			</p:fieldset>
  			
-			<p:fieldset legend="Endereço e Informações complementares" style="margin-top:20px">
+			<p:fieldset legend="Endereço e Informações complementares" style="margin-top:20px" rendered="#{mbean.exibirBotao}">
  				
 				<h:panelGrid columns="3" columnClasses="coluna20, coluna50, coluna30" style="width:60%">
 	  		
