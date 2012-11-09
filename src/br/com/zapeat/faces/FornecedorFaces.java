@@ -36,9 +36,6 @@ import br.com.zapeat.util.ZapeatUtil;
 public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private List<SelectItem> cidades;
-	private List<Categoria> categoriasSources;
-	private DualListModel<Categoria> categorias;
-	private DualListModel<Categoria> targetCategorias;
 	private List<FormaPagamento> formasPagamentosSources;
 	private DualListModel<FormaPagamento> formasPagamentos;
 	private DualListModel<FormaPagamento> targetFormasPagamentos;
@@ -72,16 +69,12 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudModel().setCarroChefe(new CarroChefe());
 		this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
 
-		this.categoriasSources = new Categoria().pesquisarCategoriasAtivas();
 		this.formasPagamentosSources = new FormaPagamento().findAll("descricao");
 
-		this.targetCategorias = new DualListModel<Categoria>();
 		this.targetFormasPagamentos = new DualListModel<FormaPagamento>();
 
-		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
 		List<FormaPagamento> formasPagamentosTarget = new ArrayList<FormaPagamento>();
 
-		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
 		this.formasPagamentos = new DualListModel<FormaPagamento>(this.formasPagamentosSources, formasPagamentosTarget);
 
 		return null;
@@ -159,27 +152,9 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	@Override
 	protected void prePersist() {
 
-		FornecedorCategoria fornecedorCategoria;
-
-		int cont = 1;
-
-		for (Categoria categoria : categorias.getTarget()) {
-
-			fornecedorCategoria = new FornecedorCategoria();
-
-			fornecedorCategoria.setCategoria(categoria);
-			fornecedorCategoria.setFornecedor(getCrudModel());
-			fornecedorCategoria.setPrioridade(cont++);
-
-			if (!getCrudModel().getFornecedorCategorias().contains(fornecedorCategoria)) {
-
-				getCrudModel().getFornecedorCategorias().add(fornecedorCategoria);
-
-			}
-
-		}
-
 		FornecedorFormaPagamento fornecedorFormaPagamento;
+		
+		getCrudModel().getFornecedorFormasPagamentos().clear();
 
 		for (FormaPagamento formaPagamento : formasPagamentos.getTarget()) {
 
@@ -188,15 +163,9 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			fornecedorFormaPagamento.setFormaPagamento(formaPagamento);
 			fornecedorFormaPagamento.setFornecedor(getCrudModel());
 
-			if (!getCrudModel().getFornecedorFormasPagamentos().contains(fornecedorFormaPagamento)) {
-
-				getCrudModel().getFornecedorFormasPagamentos().add(fornecedorFormaPagamento);
-
-			}
+			getCrudModel().getFornecedorFormasPagamentos().add(fornecedorFormaPagamento);
 
 		}
-
-		getCrudModel().getCarroChefe().setFornecedor(getCrudModel());
 
 	}
 
@@ -210,10 +179,6 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			categoriaTarget.add(item.getCategoria());
 
 		}
-
-		this.categoriasSources.removeAll(categoriaTarget);
-
-		this.categorias = new DualListModel<Categoria>(this.categoriasSources, categoriaTarget);
 
 		List<FormaPagamento> formaPagamentoTarget = new ArrayList<FormaPagamento>();
 
@@ -324,30 +289,6 @@ public String addCategoria(){
 
 	public void setCidades(List<SelectItem> cidades) {
 		this.cidades = cidades;
-	}
-
-	public DualListModel<Categoria> getTargetCategorias() {
-		return targetCategorias;
-	}
-
-	public void setTargetCategorias(DualListModel<Categoria> targetCategorias) {
-		this.targetCategorias = targetCategorias;
-	}
-
-	public DualListModel<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(DualListModel<Categoria> categorias) {
-		this.categorias = categorias;
-	}
-
-	public List<Categoria> getCategoriasSources() {
-		return categoriasSources;
-	}
-
-	public void setCategoriasSources(List<Categoria> categoriasSources) {
-		this.categoriasSources = categoriasSources;
 	}
 
 	public ImagemFornecedor getImagemFornecedorSelecionada() {
