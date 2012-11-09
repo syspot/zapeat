@@ -17,6 +17,8 @@
 
 		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" onerror="statusDialog.hide();" oncomplete="statusDialog.hide();" />
 
+		<ui:include src="/pages/crud/dialog_categoria.xhtml" />
+		
 		<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." draggable="false" closable="false" resizable="false">
 			<p:graphicImage value="../resources/images/ajaxloadingbar.gif" />
 		</p:dialog>

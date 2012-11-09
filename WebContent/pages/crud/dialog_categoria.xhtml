@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	
+	<ui:param name="mbeanPesquisa" value="${categoriaPesquisaFaces}" />
+	<ui:param name="mbeanPesquisaModel" value="${categoriaPesquisaFaces.model}" />
+	<ui:param name="mbeanAcao" value="${fornecedorFaces}" />
+	
+	<h:form>
+		
+		<p:dialog id="dialogCategoria" widgetVar="dlgCategoria" header="Pesquisa de Categorias" width="600" height="400" modal="true">
+	  
+	  		<h:panelGrid columns="1" style="width:50%">
+  		
+		  		<p:outputLabel for="descricaoPesquisa" value="Descrição" />
+			  	<p:inputText id="descricaoPesquisa"  value="#{mbeanPesquisaModel.descricao}" maxlength="50" styleClass="coluna90"/>
+			  	
+			  	<p:commandButton value="Pesquisar" icon="pesquisar" action="#{mbeanPesquisa.find}" update="gridPesquisa" style="width: 140px; margin-left: 5px; margin-top: 10px; margin-bottom: 30px" />
+			  	
+		  	</h:panelGrid>
+		  	
+		  	
+		  	<p:dataTable id="gridPesquisa" value="#{mbeanPesquisa.grid}" var="linha" paginator="true" paginatorAlwaysVisible="false" rows="6">
+		  	
+		  		<p:column headerText="Descrição" styleClass="coluna80">
+		  			<h:outputText value="#{linha.descricao}" />
+		  		</p:column>
+		  	
+		  		<p:column headerText="Adicionar" styleClass="coluna20">
+		  		
+		  			<p:commandLink action="#{mbeanAcao.addCategoria}" process="@this" style="text-align: center">
+						<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
+						<f:setPropertyActionListener target="#{mbeanAcao.categoriaSelecionada}" value="#{linha}" />
+					</p:commandLink>
+					
+		  		</p:column>
+		  		
+		  	</p:dataTable>
+	  		
+		</p:dialog>
+	
+	</h:form>
+  	
+</ui:composition>
