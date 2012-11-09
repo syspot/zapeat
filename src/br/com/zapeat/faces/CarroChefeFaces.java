@@ -31,10 +31,46 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 
 		this.clearFields();
 		this.initCombo();
+		this.isFornecedorLogado();
 	}
 
 	private void initCombo() {
 		this.fornecedores = super.initCombo(new Fornecedor().findAll("nomeFantasia"), "id", "nomeFantasia");
+	}
+
+	@Override
+	protected boolean validaCampos() {
+
+		boolean validado = true;
+
+		if (!TSUtil.isEmpty(new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor()))) {
+
+			super.addErrorMessage("Já existe Carro-Chefe cadastrado para esse fornecedor.");
+
+			return false;
+		}
+
+		return validado;
+	}
+
+	private void isFornecedorLogado() {
+
+		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
+
+			this.getCrudModel().setFornecedor(UsuarioUtil.obterUsuarioConectado().getFornecedor());
+
+			List<CarroChefe> list = new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor());
+
+			if (!TSUtil.isEmpty(list)) {
+
+				this.setCrudModel(list.get(0));
+
+				this.detail();
+			}
+
+			this.setOcultarTabPesquisa(true);
+
+		}
 	}
 
 	@Override
@@ -97,18 +133,6 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 		this.getCrudModel().getImagensCarrosChefes().remove(this.imagemCarroChefeSelecionada);
 
 		return null;
-	}
-
-	@Override
-	public boolean isExibirBotao() {
-
-		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
-
-			return false;
-		}
-
-		return true;
-
 	}
 
 	public List<SelectItem> getFornecedores() {

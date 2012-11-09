@@ -11,7 +11,7 @@
 
 					<h:panelGrid columns="1" style="width: 100%">
 						
-						<p:outputPanel rendered="#{!mbean.exibirTabPesquisa}">
+						<p:outputPanel rendered="#{!mbean.ocultarTabPesquisa}">
 							<ui:include src="comandoCRUDLimpar.xhtml" />
 						</p:outputPanel>
 						
@@ -35,7 +35,7 @@
 		
 		<ui:insert name="tabsMeio" />
 
-		<p:tab id="tabPesquisa" title="Pesquisa" rendered="#{!mbean.exibirTabPesquisa}">
+		<p:tab id="tabPesquisa" title="Pesquisa" rendered="#{!mbean.ocultarTabPesquisa}">
 
 			<h:form id="formPesquisa" prependId="false">
 

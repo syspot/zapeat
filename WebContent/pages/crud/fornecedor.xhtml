@@ -41,10 +41,10 @@
 				  			<p:outputLabel for="descricao" value="Descrição" />
 					  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="200" counterTemplate="{0} caracteres restantes." counter="counter" id="descricao" rows="7" cols="90" value="#{mbeanModel.descricao}"/>
 					  		<h:outputText id="counter" />
-		  			
+		  					
+		  					<p:outputPanel rendered="#{empty sessionScope.usuarioConectado.fornecedor}">
 		  					<h:outputLabel value="Ativo " for="ativo"/>
 							<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
-		  					<p:outputPanel rendered="#{fornecedorFaces.exibirBotao}">
 		  					<h:outputLabel value="Permissão Promoção" for="permissaoPromocao"/>
 							<p:selectBooleanCheckbox id="permissaoPromocao" value="#{mbeanModel.flagPermissaoPromocao}"/>
 							</p:outputPanel>
@@ -53,15 +53,28 @@
  						
 					</h:panelGrid>
  					
- 					<p:outputPanel rendered="#{fornecedorFaces.exibirBotao}">	
-					<h:panelGrid style="width:100%">
- 						
-  						<p:outputLabel for="pickList" value="Categorias" style="margin-left: 3px;"/>
-			  			<p:pickList required="true" requiredMessage="Categorias: Selecione pelo menos uma" id="pickList" value="#{fornecedorFaces.categorias}" converter="categoriaConverter"
-			                var="categoria" itemLabel="#{categoria.descricao}" itemValue="#{categoria.id}" />
-  					
-  					</h:panelGrid>
-  					</p:outputPanel>
+ 					<p:outputPanel id="opCategorias" autoUpdate="true">
+
+						<p:commandButton type="button" value="Adicionar Categoria" icon="ui-icon-plus" onclick="dlgCategoria.show();" rendered="#{mbean.exibirBotao}" style="margin-bottom:5px" />
+						
+						<p:dataTable value="#{mbeanModel.fornecedorCategorias}" var="fornecedorCategoria" emptyMessage="Nenhuma categoria cadastrada" rowIndexVar="index" style="width:100%">
+		
+							<p:column headerText="Descrição" styleClass="coluna25">
+								<h:outputText value="#{fornecedorCategoria.categoria.descricao}" />
+							</p:column>
+							
+							<p:column headerText="Remover" styleClass="coluna5">
+		
+								<p:commandLink action="#{mbean.removerCategoria}" process="@this" rendered="#{mbean.exibirBotao}">
+									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+									<f:setPropertyActionListener target="#{mbean.fornecedorCategoriaSelecionado}" value="#{fornecedorCategoria}" />
+								</p:commandLink>
+								
+							</p:column>
+		
+						</p:dataTable>
+		
+					</p:outputPanel>
  					
 				</h:panelGrid>
  					

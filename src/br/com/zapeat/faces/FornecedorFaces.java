@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DualListModel;
 
+import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -24,6 +25,7 @@ import br.com.zapeat.model.FornecedorCategoria;
 import br.com.zapeat.model.FornecedorFormaPagamento;
 import br.com.zapeat.model.ImagemCarroChefe;
 import br.com.zapeat.model.ImagemFornecedor;
+import br.com.zapeat.model.Promocao;
 import br.com.zapeat.model.UsuarioAdm;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.UsuarioUtil;
@@ -43,6 +45,9 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private ImagemFornecedor imagemFornecedorSelecionada;
 	private ImagemCarroChefe imagemCarroChefeSelecionada;
+	
+	private Categoria categoriaSelecionada;
+	private FornecedorCategoria fornecedorCategoriaSelecionado;
 
 	@PostConstruct
 	protected void init() {
@@ -103,7 +108,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 			this.detail();
 
-			this.setExibirTabPesquisa(true);
+			this.setOcultarTabPesquisa(true);
 
 		}
 	}
@@ -259,6 +264,49 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_FULL + imagemCarroChefe.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_CARRO_CHEFE_FULL, Constantes.ALTURA_IMAGEM_CARRO_CHEFE_FULL);
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_THUMB + imagemCarroChefe.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_CARRO_CHEFE_THUMB, Constantes.ALTURA_IMAGEM_CARRO_CHEFE_THUMB);
 	}
+	
+public String addCategoria(){
+		
+		FornecedorCategoria fornecedorCategoria = new FornecedorCategoria();
+		
+		fornecedorCategoria.setFornecedor(getCrudModel());
+		fornecedorCategoria.setCategoria(this.categoriaSelecionada);
+		fornecedorCategoria.setPrioridade(getCrudModel().getFornecedorCategorias().size() + 1);
+		
+		if(getCrudModel().getFornecedorCategorias().contains(fornecedorCategoria)){
+			
+			super.addErrorMessage("Essa categoria já foi adicionada");
+			
+		} else{
+			
+			getCrudModel().getFornecedorCategorias().add(fornecedorCategoria);
+			super.addInfoMessage("Categoria adicionada com sucesso");
+			
+		}
+		
+		return null;
+		
+	}
+	
+	public String removerCategoria() throws TSApplicationException{
+		
+		List<Promocao> promocoes = new Promocao().pesquisarPromocoesPorFornecedorCategoria(this.fornecedorCategoriaSelecionado);
+		
+		if(TSUtil.isEmpty(promocoes)){
+			
+			getCrudModel().getFornecedorCategorias().remove(this.fornecedorCategoriaSelecionado);
+			this.fornecedorCategoriaSelecionado.delete();
+			super.addInfoMessage("Categoria removida com sucesso");
+			
+		} else{
+			
+			super.addErrorMessage("Não é possível remover a categoria pois existem promoções associadas");
+			
+		}
+		
+		return null;
+		
+	}
 
 	public String removerImagemCarroChefe() {
 		getCrudModel().getCarroChefe().getImagensCarrosChefes().remove(this.imagemCarroChefeSelecionada);
@@ -352,6 +400,23 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 		return true;
 
+	}
+	
+	public Categoria getCategoriaSelecionada() {
+		return categoriaSelecionada;
+	}
+
+	public void setCategoriaSelecionada(Categoria categoriaSelecionada) {
+		this.categoriaSelecionada = categoriaSelecionada;
+	}
+
+	public FornecedorCategoria getFornecedorCategoriaSelecionado() {
+		return fornecedorCategoriaSelecionado;
+	}
+
+	public void setFornecedorCategoriaSelecionado(
+			FornecedorCategoria fornecedorCategoriaSelecionado) {
+		this.fornecedorCategoriaSelecionado = fornecedorCategoriaSelecionado;
 	}
 
 }
