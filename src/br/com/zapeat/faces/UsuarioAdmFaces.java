@@ -74,6 +74,27 @@ public class UsuarioAdmFaces extends CrudFaces<UsuarioAdm> {
 		this.setSenha(this.getCrudModel().getSenha());
 
 	}
+	
+	@Override
+	protected boolean validaCampos() {
+		
+		UsuarioAdm usuario = getCrudModel().obterPorLogin();
+		
+		boolean valida = true;
+		
+		if(!TSUtil.isEmpty(usuario)){
+			
+			if(!usuario.getId().equals(getCrudModel().getId())){
+
+				valida = false;
+				super.addErrorMessage("Esse login ja existe.");
+				
+			}
+				
+		} 
+		
+		return valida;
+	}
 
 	public List<SelectItem> getFornecedores() {
 		return fornecedores;

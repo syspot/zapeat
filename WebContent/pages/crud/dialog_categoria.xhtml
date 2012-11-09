@@ -24,7 +24,7 @@
 		  	</h:panelGrid>
 		  	
 		  	
-		  	<p:dataTable id="gridPesquisa" value="#{mbeanPesquisa.grid}" var="linha" paginator="true" paginatorAlwaysVisible="false" rows="6">
+		  	<p:dataTable id="gridPesquisa" value="#{mbeanPesquisa.grid}" var="linha" paginator="true" emptyMessage="Nenhuma categoria encontrada" paginatorAlwaysVisible="false" rows="6">
 		  	
 		  		<p:column headerText="Descrição" styleClass="coluna80">
 		  			<h:outputText value="#{linha.descricao}" />
@@ -32,7 +32,7 @@
 		  	
 		  		<p:column headerText="Adicionar" styleClass="coluna20">
 		  		
-		  			<p:commandLink action="#{mbeanAcao.addCategoria}" process="@this" style="text-align: center">
+		  			<p:commandLink action="#{mbeanAcao.addCategoria}" process="@this" oncomplete="dlgCategoria.hide()" style="text-align: center">
 						<h:graphicImage value="../resources/images/plus16.png" style="border: 0px" />
 						<f:setPropertyActionListener target="#{mbeanAcao.categoriaSelecionada}" value="#{linha}" />
 					</p:commandLink>

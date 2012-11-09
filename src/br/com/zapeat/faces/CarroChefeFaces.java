@@ -43,7 +43,7 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 
 		boolean validado = true;
 
-		if (!TSUtil.isEmpty(new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor()))) {
+		if (!isFlagAlterar() && !TSUtil.isEmpty(new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor()))) {
 
 			super.addErrorMessage("Já existe Carro-Chefe cadastrado para esse fornecedor.");
 

@@ -283,7 +283,7 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	}
 	
 	public List<Promocao> pesquisarPromocoesAtivas(){
-		return super.find(" select p from Promocao p inner join p.fornecedorCategoria fc where (? between p.inicio and p.fim or ? between p.inicio and p.fim) and p.tipoPromocao.id = ? and p.fornecedorCategoria.id = ? and fc.fornecedor.id != ?", null, this.inicio, this.fim, this.tipoPromocao.getId(), this.fornecedorCategoria.getId(), fornecedor.getId());
+		return super.find(" select p from Promocao p inner join p.fornecedorCategoria fc where (? between p.inicio and p.fim or ? between p.inicio and p.fim) and p.tipoPromocao.id = ? and p.fornecedorCategoria.id = ? ", null, this.inicio, this.fim, this.tipoPromocao.getId(), this.fornecedorCategoria.getId());
 	}
 	
 	public List<Promocao> pesquisarPromocoesPorFornecedorCategoria(FornecedorCategoria fornecedorCategoria){

@@ -59,6 +59,10 @@
 						
 						<p:dataTable value="#{mbeanModel.fornecedorCategorias}" var="fornecedorCategoria" emptyMessage="Nenhuma categoria cadastrada" rowIndexVar="index" style="width:100%">
 		
+							<f:facet name="header">
+								<h:outputText value="Categorias" />
+							</f:facet>
+							
 							<p:column headerText="Descrição" styleClass="coluna25">
 								<h:outputText value="#{fornecedorCategoria.categoria.descricao}" />
 							</p:column>
@@ -80,9 +84,9 @@
  					
 			</p:fieldset>
  			
-			<p:fieldset legend="Endereço e Informações complementares" style="margin-top:20px" rendered="#{mbean.exibirBotao}">
+			<p:fieldset legend="Endereço e Informações complementares" style="margin-top:20px">
  				
-				<h:panelGrid columns="3" columnClasses="coluna20, coluna50, coluna30" style="width:60%">
+				<h:panelGrid columns="3" columnClasses="coluna20, coluna50, coluna30" style="width:60%" rendered="#{mbean.exibirBotao}">
 	  		
 	  				<p:outputLabel for="cep" value="Cep" />
 					<p:outputLabel for="logradouro" value="Logradouro" />
@@ -94,7 +98,7 @@
 		  			
 	  			</h:panelGrid>
 	  			
-	  			<h:panelGrid columns="3" columnClasses="coluna20, coluna40, coluna40" style="width:40%">
+	  			<h:panelGrid columns="3" columnClasses="coluna20, coluna40, coluna40" style="width:40%" rendered="#{mbean.exibirBotao}">
 	  			
 		  			<p:outputLabel for="cidade" value="Cidade" />
 					<p:outputLabel for="numero" value="Número" />
@@ -109,7 +113,7 @@
 					
 		  		</h:panelGrid>
 		  		
-		  		<h:panelGrid columns="3" columnClasses="coluna40, coluna40, coluna20" style="width:50%">
+		  		<h:panelGrid columns="3" columnClasses="coluna40, coluna40, coluna20" style="width:50%" rendered="#{mbean.exibirBotao}">
 
 		  			<p:outputLabel for="latitude" value="Latitude" />
 			  		<p:outputLabel for="longitude" value="Longitude" />
@@ -123,8 +127,8 @@
 		  		  				
 		  		<h:panelGrid columns="1" style="width:40%">
 		  			
-			  		<p:outputLabel for="horarioFuncionamento" value="Horário de Funcionamento" />
-			  		<p:inputText id="horarioFuncionamento" value="#{mbeanModel.horariosFuncionamento}" maxlength="500" styleClass="coluna90"/>
+			  		<p:outputLabel for="horarioFuncionamento" value="Horário de Funcionamento" rendered="#{mbean.exibirBotao}"/>
+			  		<p:inputText id="horarioFuncionamento" value="#{mbeanModel.horariosFuncionamento}" maxlength="500" rendered="#{mbean.exibirBotao}" styleClass="coluna90"/>
 		  			
 		  			<p:outputLabel for="site" value="Site" />
 		  			<p:inputText id="site" value="#{mbeanModel.site}" maxlength="50" styleClass="coluna90"/>

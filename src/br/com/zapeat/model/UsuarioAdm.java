@@ -108,5 +108,9 @@ public class UsuarioAdm extends TSActiveRecordAb<UsuarioAdm> {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public UsuarioAdm obterPorLogin(){
+		return super.get(" from UsuarioAdm u where upper(u.login) = ?", login.toUpperCase());
+	}
 
 }
