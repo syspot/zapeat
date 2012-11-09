@@ -12,6 +12,7 @@ import org.primefaces.event.FileUploadEvent;
 
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
 import br.com.zapeat.model.CarroChefe;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.ImagemCarroChefe;
@@ -29,13 +30,27 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 
 	@PostConstruct
 	protected void init() {
-		
+
 		this.clearFields();
 		this.initCombo();
+		this.isFornecedorLogado();
 	}
 
 	private void initCombo() {
 		this.fornecedores = super.initCombo(new Fornecedor().findAll("nomeFantasia"), "id", "nomeFantasia");
+	}
+
+	private void isFornecedorLogado() {
+
+		UsuarioAdm usuario = (UsuarioAdm) TSFacesUtil.getObjectInSession(Constantes.USUARIO_CONECTADO);
+
+		if (!TSUtil.isEmpty(usuario) && !TSUtil.isEmpty(usuario.getId()) && !TSUtil.isEmpty(usuario.getFornecedor()) && !TSUtil.isEmpty(usuario.getFornecedor().getId())) {
+
+			this.getCrudModel().setFornecedor(usuario.getFornecedor());
+
+			this.getCrudPesquisaModel().setFornecedor(usuario.getFornecedor());
+
+		}
 	}
 
 	@Override

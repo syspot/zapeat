@@ -90,6 +90,7 @@ public class Constantes {
 	
 	public static Long MENU_PROMOCAO = 5L;
 	public static Long MENU_FORNECEDOR = 7L;
+	public static Long MENU_CARRO_CHEFE = 13L;
 	public static Long MENU_CADASTRO_BASE = 1L;
 	
 	public static final Integer QTD_MINIMA_CATEGORIAS_DESTAQUE = 6;
