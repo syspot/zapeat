@@ -28,7 +28,6 @@ import br.com.zapeat.model.ImagemFornecedor;
 import br.com.zapeat.model.Promocao;
 import br.com.zapeat.model.UsuarioAdm;
 import br.com.zapeat.util.Constantes;
-import br.com.zapeat.util.UsuarioUtil;
 import br.com.zapeat.util.ZapeatUtil;
 
 @ViewScoped
@@ -45,12 +44,14 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	
 	private Categoria categoriaSelecionada;
 	private FornecedorCategoria fornecedorCategoriaSelecionado;
+	
+	private boolean usuarioFornecedor;
 
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
 		this.initCombo();
-		this.isFornecedorLogado();
+		this.verificarUsuarioFornecedor();
 	}
 
 	private void initCombo() {
@@ -91,40 +92,21 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		return null;
 	}
 
-	private void isFornecedorLogado() {
+	private void verificarUsuarioFornecedor() {
 
 		UsuarioAdm usuario = (UsuarioAdm) TSFacesUtil.getObjectInSession(Constantes.USUARIO_CONECTADO);
 
-		if (!TSUtil.isEmpty(usuario) && !TSUtil.isEmpty(usuario.getId()) && !TSUtil.isEmpty(usuario.getFornecedor()) && !TSUtil.isEmpty(usuario.getFornecedor().getId())) {
+		if (!TSUtil.isEmpty(usuario.getFornecedor()) && !TSUtil.isEmpty(usuario.getFornecedor().getId())) {
 
 			this.setCrudModel(usuario.getFornecedor());
-
 			this.detail();
+			this.usuarioFornecedor = true;
 
-			this.setOcultarTabPesquisa(true);
-
+		} else{
+			
+			this.usuarioFornecedor = false;
+			
 		}
-	}
-
-	private boolean validaCamposCarroChefe() {
-
-		boolean validado = true;
-
-		if (getCrudModel().getCarroChefe().getFlagAtivo()) {
-
-			if (TSUtil.isEmpty(getCrudModel().getCarroChefe().getTitulo())) {
-				validado = false;
-				ZapeatUtil.addErrorMessage("Título do Carro-Chefe: Campo obrigatório");
-			}
-
-			if (TSUtil.isEmpty(getCrudModel().getCarroChefe().getDescricao())) {
-				validado = false;
-				ZapeatUtil.addErrorMessage("Descrição do Carro-Chefe: Campo obrigatório");
-			}
-
-		}
-
-		return validado;
 	}
 
 	@Override
@@ -141,9 +123,15 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 			validado = false;
 			ZapeatUtil.addErrorMessage("Longitude: Formato inválido");
 		}
-
-		if (validado) {
-			validado = this.validaCamposCarroChefe();
+		
+		if(TSUtil.isEmpty(getCrudModel().getImagensFornecedores())){
+			validado = false;
+			ZapeatUtil.addErrorMessage("Imagens do ambiente: Campo obrigatório");
+		}
+		
+		if(TSUtil.isEmpty(getCrudModel().getLogoMarca())){
+			validado = false;
+			ZapeatUtil.addErrorMessage("LogoMarca: Campo obrigatório");
 		}
 
 		return validado;
@@ -237,6 +225,7 @@ public String addCategoria(){
 		fornecedorCategoria.setFornecedor(getCrudModel());
 		fornecedorCategoria.setCategoria(this.categoriaSelecionada);
 		fornecedorCategoria.setPrioridade(getCrudModel().getFornecedorCategorias().size() + 1);
+		fornecedorCategoria.setFlagAtivo(Boolean.TRUE);
 		
 		if(getCrudModel().getFornecedorCategorias().contains(fornecedorCategoria)){
 			
@@ -254,6 +243,12 @@ public String addCategoria(){
 	}
 	
 	public String removerCategoria() throws TSApplicationException{
+		
+		if(TSUtil.isEmpty(this.fornecedorCategoriaSelecionado.getId())){
+			getCrudModel().getFornecedorCategorias().remove(this.fornecedorCategoriaSelecionado);
+			super.addInfoMessage("Categoria removida com sucesso");
+			return null;
+		}
 		
 		List<Promocao> promocoes = new Promocao().pesquisarPromocoesPorFornecedorCategoria(this.fornecedorCategoriaSelecionado);
 		
@@ -281,6 +276,10 @@ public String addCategoria(){
 	public String removerImagemFornecedor() {
 		getCrudModel().getImagensFornecedores().remove(this.imagemFornecedorSelecionada);
 		return null;
+	}
+	
+	public List<FornecedorCategoria> getFornecedorCategorias() {
+		return isUsuarioFornecedor() ? new FornecedorCategoria(getCrudModel()).findByModel() : getCrudModel().getFornecedorCategorias(); 
 	}
 
 	public List<SelectItem> getCidades() {
@@ -330,17 +329,15 @@ public String addCategoria(){
 	public void setTargetFormasPagamentos(DualListModel<FormaPagamento> targetFormasPagamentos) {
 		this.targetFormasPagamentos = targetFormasPagamentos;
 	}
-
+	
 	@Override
-	public boolean isExibirBotao() {
-
-		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
-
-			return false;
-		}
-
-		return true;
-
+	public boolean isUsuarioFornecedor() {
+		return usuarioFornecedor;
+	}
+	
+	@Override
+	public boolean isOcultarTabPesquisa() {
+		return usuarioFornecedor;
 	}
 	
 	public Categoria getCategoriaSelecionada() {
@@ -355,8 +352,7 @@ public String addCategoria(){
 		return fornecedorCategoriaSelecionado;
 	}
 
-	public void setFornecedorCategoriaSelecionado(
-			FornecedorCategoria fornecedorCategoriaSelecionado) {
+	public void setFornecedorCategoriaSelecionado(FornecedorCategoria fornecedorCategoriaSelecionado) {
 		this.fornecedorCategoriaSelecionado = fornecedorCategoriaSelecionado;
 	}
 

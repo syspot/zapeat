@@ -20,8 +20,6 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 
 	private String fieldOrdem;
 	
-	private boolean ocultarTabPesquisa;
-
 	public String getFieldOrdem() {
 		return fieldOrdem;
 	}
@@ -193,8 +191,12 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 
 	}
 	
-	public boolean isExibirBotao(){
-		return true;
+	public boolean isUsuarioFornecedor(){
+		return false;
+	}
+	
+	public boolean isOcultarTabPesquisa(){
+		return false;
 	}
 
 	public T getCrudModel() {
@@ -235,14 +237,6 @@ public abstract class CrudFaces<T extends TSActiveRecordIf<T>> extends TSMainFac
 
 	public void setFlagAlterar(boolean flagAlterar) {
 		this.flagAlterar = flagAlterar;
-	}
-
-	public boolean isOcultarTabPesquisa() {
-		return ocultarTabPesquisa;
-	}
-
-	public void setOcultarTabPesquisa(boolean ocultarTabPesquisa) {
-		this.ocultarTabPesquisa = ocultarTabPesquisa;
 	}
 
 }

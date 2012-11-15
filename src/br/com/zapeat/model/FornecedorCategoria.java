@@ -3,6 +3,7 @@ package br.com.zapeat.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,6 +40,9 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 	private Categoria categoria;
 
 	private Integer prioridade;
+	
+	@Column(name = "flag_ativo")
+	private Boolean flagAtivo;
 	
 	@Transient
 	private String descricao;
@@ -80,6 +84,14 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 
 	public void setPrioridade(Integer prioridade) {
 		this.prioridade = prioridade;
+	}
+
+	public Boolean getFlagAtivo() {
+		return flagAtivo;
+	}
+
+	public void setFlagAtivo(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
 	}
 
 	public String getDescricao() {
@@ -126,18 +138,18 @@ public class FornecedorCategoria extends TSActiveRecordAb<FornecedorCategoria> {
 
 		StringBuilder query = new StringBuilder();
 
-		query.append(" from FornecedorCategoria fc where 1 = 1 ");
+		query.append(" from FornecedorCategoria fc where fc.flagAtivo = true ");
 
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
 			query.append("and fc.fornecedor.id = ? ");
 		}
-
+		
 		List<Object> params = new ArrayList<Object>();
 
 		if (!TSUtil.isEmpty(fornecedor) && !TSUtil.isEmpty(fornecedor.getId())) {
 			params.add(fornecedor.getId());
 		}
-
+		
 		return super.find(query.toString(), null, params.toArray());
 
 	}

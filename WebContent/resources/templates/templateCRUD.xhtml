@@ -11,7 +11,7 @@
 
 					<h:panelGrid columns="1" style="width: 100%">
 						
-						<p:outputPanel rendered="#{!mbean.ocultarTabPesquisa}">
+						<p:outputPanel rendered="#{!mbean.usuarioFornecedor}">
 							<ui:include src="comandoCRUDLimpar.xhtml" />
 						</p:outputPanel>
 						
@@ -61,7 +61,7 @@
 
 								<ui:insert name="colunasTabela" />
 
-								<p:column headerText="Editar" styleClass="coluna5" rendered="#{mbean.exibirBotao}">
+								<p:column headerText="Editar" styleClass="coluna5">
 
 									<div align="center">
 
@@ -76,7 +76,7 @@
 
 								</p:column>
 
-								<p:column headerText="Excluir" styleClass="coluna5" rendered="#{mbean.exibirBotao}">
+								<p:column headerText="Excluir" styleClass="coluna5">
 
 									<div align="center">
 

@@ -25,13 +25,15 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 
 	private List<SelectItem> fornecedores;
 	private ImagemCarroChefe imagemCarroChefeSelecionada;
+	
+	private boolean usuarioFornecedor;
 
 	@PostConstruct
 	protected void init() {
 
 		this.clearFields();
 		this.initCombo();
-		this.isFornecedorLogado();
+		this.verificarUsuarioFornecedor();
 	}
 
 	private void initCombo() {
@@ -53,7 +55,7 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 		return validado;
 	}
 
-	private void isFornecedorLogado() {
+	private void verificarUsuarioFornecedor() {
 
 		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
 
@@ -68,7 +70,7 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 				this.detail();
 			}
 
-			this.setOcultarTabPesquisa(true);
+			this.usuarioFornecedor = true;
 
 		}
 	}
@@ -133,6 +135,16 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 		this.getCrudModel().getImagensCarrosChefes().remove(this.imagemCarroChefeSelecionada);
 
 		return null;
+	}
+	
+	@Override
+	public boolean isUsuarioFornecedor() {
+		return usuarioFornecedor;
+	}
+	
+	@Override
+	public boolean isOcultarTabPesquisa() {
+		return usuarioFornecedor;
 	}
 
 	public List<SelectItem> getFornecedores() {

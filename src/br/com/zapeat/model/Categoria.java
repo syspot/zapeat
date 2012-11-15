@@ -1,6 +1,7 @@
 package br.com.zapeat.model;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import br.com.topsys.database.hibernate.TSActiveRecordAb;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.util.Constantes;
+import br.com.zapeat.util.ZapeatUtil;
 
 @Entity
 @Table(name = "categorias")
@@ -112,8 +114,25 @@ public class Categoria extends TSActiveRecordAb<Categoria> {
 		return ((Model) super.getBySQL(Model.class, new String[]{"qtd"}, "select count(*) as qtd from categorias c where c.flag_destaque")).getQtd();
 	}
 	
-	public List<Categoria> pesquisarCategoriasAtivas(){
-		return super.find(" from Categoria where flagAtivo = true", "descricao");
+	@Override
+	public List<Categoria> findByModel(String... fieldsOrderBy) {
+
+		StringBuilder query = new StringBuilder();
+
+		query.append(" from Categoria where flagAtivo = true ");
+
+		if (!TSUtil.isEmpty(descricao)) {
+			query.append(" and ").append(ZapeatUtil.getStringParamSemAcento("descricao"));
+		}
+		
+		List<Object> params = new ArrayList<Object>();
+
+		if (!TSUtil.isEmpty(descricao)) {
+			params.add(ZapeatUtil.tratarString(descricao));
+		}
+		
+		return super.find(query.toString(), "descricao", params.toArray());
+
 	}
 	
 }

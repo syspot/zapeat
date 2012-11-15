@@ -164,8 +164,8 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	}
 
 	@Override
-	public boolean isExibirBotao() {
-		return !this.usuarioFornecedor;
+	public boolean isUsuarioFornecedor(){
+		return usuarioFornecedor;
 	}
 
 	public List<SelectItem> getTiposPromocoes() {
@@ -198,14 +198,6 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 	public void setMover(Integer mover) {
 		this.mover = mover;
-	}
-
-	public boolean isUsuarioFornecedor() {
-		return usuarioFornecedor;
-	}
-
-	public void setUsuarioFornecedor(boolean usuarioFornecedor) {
-		this.usuarioFornecedor = usuarioFornecedor;
 	}
 
 	public List<SelectItem> getFornecedoresCategorias() {

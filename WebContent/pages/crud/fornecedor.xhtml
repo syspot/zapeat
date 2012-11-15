@@ -19,14 +19,14 @@
  					
 					<h:panelGrid style="width:100%">
  						
-						<h:panelGrid columns="1" style="width:90%" rendered="#{mbean.exibirBotao}">
+						<h:panelGrid columns="1" style="width:90%" rendered="#{!mbean.usuarioFornecedor}">
  			
 				  			<p:outputLabel for="razaSocial" value="Razão Social" />
 				  			<p:inputText id="razaSocial" value="#{mbeanModel.razaoSocial}" required="true" requiredMessage="Razão Social: Campo obrigatório" maxlength="100" styleClass="coluna90"/>
 		  			
 			  			</h:panelGrid>
 			  			
-					  	<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:90%" rendered="#{mbean.exibirBotao}">
+					  	<h:panelGrid columns="2" columnClasses="coluna30, coluna70" style="width:90%" rendered="#{!mbean.usuarioFornecedor}">
 					  	
 						  	<p:outputLabel for="cnpj" value="CNPJ" />
 						  	<p:outputLabel for="nomeFantasia" value="Nome Fantasia" />
@@ -42,11 +42,11 @@
 					  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="200" counterTemplate="{0} caracteres restantes." counter="counter" id="descricao" rows="7" cols="90" value="#{mbeanModel.descricao}"/>
 					  		<h:outputText id="counter" />
 		  					
-		  					<p:outputPanel rendered="#{empty sessionScope.usuarioConectado.fornecedor}">
-		  					<h:outputLabel value="Ativo " for="ativo"/>
-							<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
-		  					<h:outputLabel value="Permissão Promoção" for="permissaoPromocao"/>
-							<p:selectBooleanCheckbox id="permissaoPromocao" value="#{mbeanModel.flagPermissaoPromocao}"/>
+		  					<p:outputPanel rendered="#{!mbean.usuarioFornecedor}">
+			  					<h:outputLabel value="Ativo " for="ativo"/>
+								<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}"/>
+			  					<h:outputLabel value="Permissão Promoção" for="permissaoPromocao"/>
+								<p:selectBooleanCheckbox id="permissaoPromocao" value="#{mbeanModel.flagPermissaoPromocao}"/>
 							</p:outputPanel>
 			
 			  			</h:panelGrid>
@@ -55,9 +55,9 @@
  					
  					<p:outputPanel id="opCategorias" autoUpdate="true">
 
-						<p:commandButton type="button" value="Adicionar Categoria" icon="ui-icon-plus" onclick="dlgCategoria.show();" rendered="#{mbean.exibirBotao}" style="margin-bottom:5px" />
+						<p:commandButton type="button" value="Adicionar Categoria" icon="ui-icon-plus" onclick="dlgCategoria.show();" rendered="#{!mbean.usuarioFornecedor}" style="margin-bottom:5px" />
 						
-						<p:dataTable value="#{mbeanModel.fornecedorCategorias}" var="fornecedorCategoria" emptyMessage="Nenhuma categoria cadastrada" rowIndexVar="index" style="width:100%">
+						<p:dataTable value="#{mbean.fornecedorCategorias}" var="fornecedorCategoria" emptyMessage="Nenhuma categoria cadastrada" rowIndexVar="index" style="width:100%">
 		
 							<f:facet name="header">
 								<h:outputText value="Categorias" />
@@ -67,9 +67,15 @@
 								<h:outputText value="#{fornecedorCategoria.categoria.descricao}" />
 							</p:column>
 							
-							<p:column headerText="Remover" styleClass="coluna5">
+							<p:column headerText="Status" styleClass="coluna5" style="text-align: center" rendered="#{!mbean.usuarioFornecedor}">
 		
-								<p:commandLink action="#{mbean.removerCategoria}" process="@this" rendered="#{mbean.exibirBotao}">
+								<p:selectBooleanCheckbox value="#{fornecedorCategoria.flagAtivo}" />
+								
+							</p:column>
+							
+							<p:column headerText="Remover" styleClass="coluna5" style="text-align: center" rendered="#{!mbean.usuarioFornecedor}">
+		
+								<p:commandLink action="#{mbean.removerCategoria}" process="@this">
 									<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
 									<f:setPropertyActionListener target="#{mbean.fornecedorCategoriaSelecionado}" value="#{fornecedorCategoria}" />
 								</p:commandLink>
@@ -86,7 +92,7 @@
  			
 			<p:fieldset legend="Endereço e Informações complementares" style="margin-top:20px">
  				
-				<h:panelGrid columns="3" columnClasses="coluna20, coluna50, coluna30" style="width:60%" rendered="#{mbean.exibirBotao}">
+				<h:panelGrid columns="3" columnClasses="coluna20, coluna50, coluna30" style="width:60%" rendered="#{!mbean.usuarioFornecedor}">
 	  		
 	  				<p:outputLabel for="cep" value="Cep" />
 					<p:outputLabel for="logradouro" value="Logradouro" />
@@ -98,7 +104,7 @@
 		  			
 	  			</h:panelGrid>
 	  			
-	  			<h:panelGrid columns="3" columnClasses="coluna20, coluna40, coluna40" style="width:40%" rendered="#{mbean.exibirBotao}">
+	  			<h:panelGrid columns="3" columnClasses="coluna20, coluna40, coluna40" style="width:40%" rendered="#{!mbean.usuarioFornecedor}">
 	  			
 		  			<p:outputLabel for="cidade" value="Cidade" />
 					<p:outputLabel for="numero" value="Número" />
@@ -113,7 +119,7 @@
 					
 		  		</h:panelGrid>
 		  		
-		  		<h:panelGrid columns="3" columnClasses="coluna40, coluna40, coluna20" style="width:50%" rendered="#{mbean.exibirBotao}">
+		  		<h:panelGrid columns="3" columnClasses="coluna40, coluna40, coluna20" style="width:50%" rendered="#{!mbean.usuarioFornecedor}">
 
 		  			<p:outputLabel for="latitude" value="Latitude" />
 			  		<p:outputLabel for="longitude" value="Longitude" />
@@ -127,8 +133,8 @@
 		  		  				
 		  		<h:panelGrid columns="1" style="width:40%">
 		  			
-			  		<p:outputLabel for="horarioFuncionamento" value="Horário de Funcionamento" rendered="#{mbean.exibirBotao}"/>
-			  		<p:inputText id="horarioFuncionamento" value="#{mbeanModel.horariosFuncionamento}" maxlength="500" rendered="#{mbean.exibirBotao}" styleClass="coluna90"/>
+			  		<p:outputLabel for="horarioFuncionamento" value="Horário de Funcionamento" rendered="#{!mbean.usuarioFornecedor}"/>
+			  		<p:inputText id="horarioFuncionamento" value="#{mbeanModel.horariosFuncionamento}" maxlength="500" rendered="#{!mbean.usuarioFornecedor}" styleClass="coluna90"/>
 		  			
 		  			<p:outputLabel for="site" value="Site" />
 		  			<p:inputText id="site" value="#{mbeanModel.site}" maxlength="50" styleClass="coluna90"/>
