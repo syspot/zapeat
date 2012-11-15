@@ -67,8 +67,6 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
 		this.getCrudModel().setFornecedorFormasPagamentos(new ArrayList<FornecedorFormaPagamento>());
 		this.getCrudModel().setImagensFornecedores(new ArrayList<ImagemFornecedor>());
-		this.getCrudModel().setCarroChefe(new CarroChefe());
-		this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
 
 		this.formasPagamentosSources = new FormaPagamento().findAll("descricao");
 

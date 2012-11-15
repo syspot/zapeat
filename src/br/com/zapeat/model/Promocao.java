@@ -55,6 +55,9 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 	
 	private Date fim;
 	
+	@Column(name = "data_cadastro")
+	private Date dataCadastro;
+	
 	@Column(name = "preco_original")
 	private Double precoOriginal;
 	
@@ -122,6 +125,14 @@ public class Promocao extends TSActiveRecordAb<Promocao> {
 
 	public void setFim(Date fim) {
 		this.fim = fim;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	public Double getPrecoOriginal() {

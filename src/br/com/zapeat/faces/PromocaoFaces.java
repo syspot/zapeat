@@ -120,12 +120,47 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 		List<Promocao> promocoes = getCrudModel().pesquisarPromocoesAtivas();
 
-		if (!TSUtil.isEmpty(promocoes)) {
+		if (TSUtil.isEmpty(getCrudModel().getImagemThumb())) {
 			valida = false;
-			ZapeatUtil.addErrorMessage("Já existe uma promoção ativa para o período cadastrado");
+			ZapeatUtil.addErrorMessage("Imagem Thumb: Campo obrigatório");
+		}
+		
+		if (!TSUtil.isEmpty(promocoes)) {
+			
+			boolean igual = false;
+			
+			for(Promocao promocao : promocoes){
+				
+				if(isFlagAlterar()){
+					
+					if(!promocao.getId().equals(getCrudModel().getId())){
+						
+						igual = true;
+						break;
+						
+					}
+					
+				} else{
+					
+					igual = true;
+					
+				}
+				
+			}
+			
+			if(igual){
+				valida = false;
+				ZapeatUtil.addErrorMessage("Já existe uma promoção ativa para o período cadastrado");
+			}
+			
 		}
 
 		return valida;
+	}
+	
+	@Override
+	protected void preInsert() {
+		getCrudModel().setDataCadastro(new Date());
 	}
 
 	@Override
