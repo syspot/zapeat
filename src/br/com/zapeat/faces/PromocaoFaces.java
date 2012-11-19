@@ -120,10 +120,10 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 		List<Promocao> promocoes = getCrudModel().pesquisarPromocoesAtivas();
 
-		if (TSUtil.isEmpty(getCrudModel().getImagemThumb())) {
-			valida = false;
-			ZapeatUtil.addErrorMessage("Imagem Thumb: Campo obrigatório");
-		}
+//		if (TSUtil.isEmpty(getCrudModel().getImagemThumb())) {
+//			valida = false;
+//			ZapeatUtil.addErrorMessage("Imagem Thumb: Campo obrigatório");
+//		}
 		
 		if (!TSUtil.isEmpty(promocoes)) {
 			
