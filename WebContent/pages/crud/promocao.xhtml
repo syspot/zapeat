@@ -74,10 +74,10 @@
 				  	<p:outputLabel for="precoOriginal" value="Preço Original" />
 				  	<p:outputLabel for="precoPromocional" value="Preço Promocional" />
 				  	
-				  	<p:inputText id="precoOriginal" value="#{mbeanModel.precoOriginal}" required="true" requiredMessage="Preço Original: Campo obrigatório" onkeyup="return mascaraMoeda(this);" maxlength="6" styleClass="coluna90">
+				  	<p:inputText id="precoOriginal" value="#{mbeanModel.precoOriginal}" onkeyup="return mascaraMoeda(this);" maxlength="6" styleClass="coluna90">
 				  		<f:convertNumber type="number" minFractionDigits="2" pattern="###,###,##0.00" locale="pt_BR" />
 				  	</p:inputText>
-				  	<p:inputText id="precoPromocional" value="#{mbeanModel.precoPromocional}" required="true" requiredMessage="Preço Promocional: Campo obrigatório" onkeyup="return mascaraMoeda(this);" maxlength="6" styleClass="coluna90">
+				  	<p:inputText id="precoPromocional" value="#{mbeanModel.precoPromocional}" onkeyup="return mascaraMoeda(this);" maxlength="6" styleClass="coluna90">
 				  		<f:convertNumber type="number" minFractionDigits="2" pattern="###,###,##0.00" locale="pt_BR" />
 				  	</p:inputText>
 				  	
