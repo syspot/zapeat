@@ -19,6 +19,7 @@ import br.com.topsys.web.util.TSFacesUtil;
 import br.com.zapeat.model.CarroChefe;
 import br.com.zapeat.model.Categoria;
 import br.com.zapeat.model.Cidade;
+import br.com.zapeat.model.Estado;
 import br.com.zapeat.model.FormaPagamento;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.FornecedorCategoria;
@@ -35,6 +36,8 @@ import br.com.zapeat.util.ZapeatUtil;
 public class FornecedorFaces extends CrudFaces<Fornecedor> {
 
 	private List<SelectItem> cidades;
+	private List<SelectItem> cidadesPesquisa;
+	private List<SelectItem> estados;
 	private List<FormaPagamento> formasPagamentosSources;
 	private DualListModel<FormaPagamento> formasPagamentos;
 	private DualListModel<FormaPagamento> targetFormasPagamentos;
@@ -53,15 +56,16 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.initCombo();
 		this.verificarUsuarioFornecedor();
 	}
-
+	
 	private void initCombo() {
-		this.cidades = super.initCombo(new Cidade().findAll("nome"), "id", "nome");
+		this.estados = super.initCombo(new Estado().findAll("sigla"), "id", "sigla");
 	}
 
 	@Override
 	public String limpar() {
 		this.setCrudModel(new Fornecedor());
 		this.getCrudModel().setCidade(new Cidade());
+		this.getCrudModel().getCidade().setEstado(new Estado());
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
 		this.setFlagAlterar(Boolean.FALSE);
 		this.getCrudModel().setFornecedorCategorias(new ArrayList<FornecedorCategoria>());
@@ -84,6 +88,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		this.setFieldOrdem("nomeFantasia");
 		this.setCrudPesquisaModel(new Fornecedor());
 		this.getCrudPesquisaModel().setCidade(new Cidade());
+		this.getCrudPesquisaModel().getCidade().setEstado(new Estado());
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
 		this.setGrid(new ArrayList<Fornecedor>());
 
@@ -216,7 +221,7 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 		ZapeatUtil.gravarImagemComRedimensionamento(event.getFile(), Constantes.PREFIXO_IMAGEM_CARRO_CHEFE_THUMB + imagemCarroChefe.getImagem(), Constantes.PASTA_UPLOAD, Constantes.LARGURA_IMAGEM_CARRO_CHEFE_THUMB, Constantes.ALTURA_IMAGEM_CARRO_CHEFE_THUMB);
 	}
 	
-public String addCategoria(){
+	public String addCategoria(){
 		
 		FornecedorCategoria fornecedorCategoria = new FornecedorCategoria();
 		
@@ -273,6 +278,16 @@ public String addCategoria(){
 
 	public String removerImagemFornecedor() {
 		getCrudModel().getImagensFornecedores().remove(this.imagemFornecedorSelecionada);
+		return null;
+	}
+	
+	public String atualizarComboCidade(){
+		this.cidades = super.initCombo(getCrudModel().getCidade().findCombo(), "id", "nome");
+		return null;
+	}
+	
+	public String atualizarComboCidadePesquisa(){
+		this.cidadesPesquisa = super.initCombo(getCrudPesquisaModel().getCidade().findCombo(), "id", "nome");
 		return null;
 	}
 	
@@ -352,6 +367,22 @@ public String addCategoria(){
 
 	public void setFornecedorCategoriaSelecionado(FornecedorCategoria fornecedorCategoriaSelecionado) {
 		this.fornecedorCategoriaSelecionado = fornecedorCategoriaSelecionado;
+	}
+
+	public List<SelectItem> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<SelectItem> estados) {
+		this.estados = estados;
+	}
+
+	public List<SelectItem> getCidadesPesquisa() {
+		return cidadesPesquisa;
+	}
+
+	public void setCidadesPesquisa(List<SelectItem> cidadesPesquisa) {
+		this.cidadesPesquisa = cidadesPesquisa;
 	}
 
 }

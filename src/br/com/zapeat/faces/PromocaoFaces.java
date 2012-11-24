@@ -14,6 +14,8 @@ import org.primefaces.event.FileUploadEvent;
 
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.model.Cidade;
+import br.com.zapeat.model.Estado;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.FornecedorCategoria;
 import br.com.zapeat.model.ImagemPromocao;
@@ -26,15 +28,14 @@ import br.com.zapeat.util.ZapeatUtil;
 
 @ViewScoped
 @ManagedBean(name = "promocaoFaces")
-public class PromocaoFaces extends CrudFaces<Promocao> {
+public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 
 	private List<SelectItem> tiposPromocoes;
-	private List<SelectItem> fornecedores;
 	private List<SelectItem> fornecedoresCategorias;
 
 	private ImagemPromocao imagemPromocaoSelecionada;
 	private Integer mover;
-
+	
 	private boolean usuarioFornecedor;
 	
 	private Date dataAtual;
@@ -54,12 +55,20 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 			getCrudModel().setFornecedor(usuario.getFornecedor());
 			getCrudPesquisaModel().setFornecedor(usuario.getFornecedor());
+			this.atualizarComboCidade();
+			this.atualizarComboCidadePesquisa();
+			this.atualizarComboFornecedor();
+			this.atualizarComboFornecedorPesquisa();
 			this.atualizarComboFornecedorCategoria();
 			this.usuarioFornecedor = true;
 
 		} else {
 
 			this.usuarioFornecedor = false;
+			getCrudModel().getFornecedor().setCidade(new Cidade());
+			getCrudModel().getFornecedor().getCidade().setEstado(new Estado());
+			getCrudPesquisaModel().getFornecedor().setCidade(new Cidade());
+			getCrudPesquisaModel().getFornecedor().getCidade().setEstado(new Estado());
 
 		}
 
@@ -69,14 +78,12 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		horaAtual = c.get(Calendar.HOUR_OF_DAY);
 		minutoAtual = c.get(Calendar.MINUTE);
 		
-
 	}
 
 	private void initCombos() {
 		this.tiposPromocoes = super.initCombo(new TipoPromocao().findAll(), "id", "descricao");
-		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "nomeFantasia");
 	}
-
+	
 	public void atualizarComboFornecedorCategoria() {
 		this.fornecedoresCategorias = super.initCombo(new FornecedorCategoria(getCrudModel().getFornecedor()).findByModel(), "id", "categoria.descricao");
 	}
@@ -167,8 +174,16 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 	protected void posDetail() {
 
 		getCrudModel().setFornecedor(getCrudModel().getFornecedorCategoria().getFornecedor());
+		
+		super.atualizarComboCidade();
+		
+		this.atualizarComboFornecedor();
 
 		this.atualizarComboFornecedorCategoria();
+		
+		if(!new FornecedorCategoria(getCrudModel().getFornecedor()).findByModel().contains(getCrudModel().getFornecedorCategoria())){
+			super.addErrorMessage("A categoria da promoção foi removida  do fornecedor");
+		}
 
 	}
 
@@ -197,6 +212,26 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 		getCrudModel().getImagensPromocoes().remove(this.imagemPromocaoSelecionada);
 		return null;
 	}
+	
+	@Override
+	protected Cidade getCidadeSelecionada() {
+		return getCrudModel().getFornecedor().getCidade();
+	}
+	
+	@Override
+	protected Cidade getCidadeSelecionadaPesquisa() {
+		return getCrudPesquisaModel().getFornecedor().getCidade();
+	}
+	
+	@Override
+	protected Fornecedor getFornecedorSelecionado() {
+		return getCrudModel().getFornecedor();
+	}
+	
+	@Override
+	protected Fornecedor getFornecedorSelecionadoPesquisa() {
+		return getCrudPesquisaModel().getFornecedor();
+	}
 
 	@Override
 	public boolean isUsuarioFornecedor(){
@@ -209,14 +244,6 @@ public class PromocaoFaces extends CrudFaces<Promocao> {
 
 	public void setTiposPromocoes(List<SelectItem> tiposPromocoes) {
 		this.tiposPromocoes = tiposPromocoes;
-	}
-
-	public List<SelectItem> getFornecedores() {
-		return fornecedores;
-	}
-
-	public void setFornecedores(List<SelectItem> fornecedores) {
-		this.fornecedores = fornecedores;
 	}
 
 	public ImagemPromocao getImagemPromocaoSelecionada() {

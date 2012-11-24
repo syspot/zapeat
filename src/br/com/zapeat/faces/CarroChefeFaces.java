@@ -6,13 +6,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.CarroChefe;
+import br.com.zapeat.model.Cidade;
+import br.com.zapeat.model.Estado;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.ImagemCarroChefe;
 import br.com.zapeat.util.Constantes;
@@ -21,23 +22,16 @@ import br.com.zapeat.util.ZapeatUtil;
 
 @ViewScoped
 @ManagedBean(name = "carroChefeFaces")
-public class CarroChefeFaces extends CrudFaces<CarroChefe> {
+public class CarroChefeFaces extends ComboCidadeEstadoFaces<CarroChefe> {
 
-	private List<SelectItem> fornecedores;
 	private ImagemCarroChefe imagemCarroChefeSelecionada;
 	
 	private boolean usuarioFornecedor;
 
 	@PostConstruct
 	protected void init() {
-
 		this.clearFields();
-		this.initCombo();
 		this.verificarUsuarioFornecedor();
-	}
-
-	private void initCombo() {
-		this.fornecedores = super.initCombo(new Fornecedor().findAll("nomeFantasia"), "id", "nomeFantasia");
 	}
 
 	@Override
@@ -60,6 +54,9 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
 
 			this.getCrudModel().setFornecedor(UsuarioUtil.obterUsuarioConectado().getFornecedor());
+			
+			this.atualizarComboCidade();
+			this.atualizarComboFornecedor();
 
 			List<CarroChefe> list = new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor());
 
@@ -86,7 +83,10 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 
 		} else {
 
-			this.getCrudModel().setFornecedor(new Fornecedor());
+			getCrudModel().setFornecedor(new Fornecedor());
+			getCrudModel().getFornecedor().setCidade(new Cidade());
+			getCrudModel().getFornecedor().getCidade().setEstado(new Estado());
+			
 		}
 
 		this.getCrudModel().setFlagAtivo(Boolean.TRUE);
@@ -108,7 +108,10 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 
 		} else {
 
-			this.getCrudPesquisaModel().setFornecedor(new Fornecedor());
+			getCrudPesquisaModel().setFornecedor(new Fornecedor());
+			getCrudPesquisaModel().getFornecedor().setCidade(new Cidade());
+			getCrudPesquisaModel().getFornecedor().getCidade().setEstado(new Estado());
+			
 		}
 
 		this.getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
@@ -147,20 +150,32 @@ public class CarroChefeFaces extends CrudFaces<CarroChefe> {
 		return usuarioFornecedor;
 	}
 
-	public List<SelectItem> getFornecedores() {
-		return fornecedores;
-	}
-
-	public void setFornecedores(List<SelectItem> fornecedores) {
-		this.fornecedores = fornecedores;
-	}
-
 	public ImagemCarroChefe getImagemCarroChefeSelecionada() {
 		return imagemCarroChefeSelecionada;
 	}
 
 	public void setImagemCarroChefeSelecionada(ImagemCarroChefe imagemCarroChefeSelecionada) {
 		this.imagemCarroChefeSelecionada = imagemCarroChefeSelecionada;
+	}
+
+	@Override
+	protected Cidade getCidadeSelecionada() {
+		return getCrudModel().getFornecedor().getCidade();
+	}
+
+	@Override
+	protected Cidade getCidadeSelecionadaPesquisa() {
+		return getCrudPesquisaModel().getFornecedor().getCidade();
+	}
+
+	@Override
+	protected Fornecedor getFornecedorSelecionado() {
+		return getCrudModel().getFornecedor();
+	}
+
+	@Override
+	protected Fornecedor getFornecedorSelecionadoPesquisa() {
+		return getCrudPesquisaModel().getFornecedor();
 	}
 
 }

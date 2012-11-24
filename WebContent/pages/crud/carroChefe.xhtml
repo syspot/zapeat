@@ -11,30 +11,36 @@
   	
   	<ui:define name="cadastro">
   	
-		<h:panelGrid columns="1" style="width:100%">
+  		<h:panelGrid style="width:60%">
+  	
+  			<ui:include src="/pages/crud/include_combo_estado_cidade_cadastro.xhtml" />
+  		
+			<h:panelGrid columns="1" style="width:100%">
+			
+				<p:outputLabel for="fornecedor" value="Fornecedor" />
+				<p:selectOneMenu disabled="#{mbean.usuarioFornecedor || mbeanModel.fornecedor.cidade.id == null}" id="fornecedor" value="#{mbeanModel.fornecedor.id}" style="width:60%" required="true" requiredMessage="Fornecedor: Campo obrigatório">
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbean.fornecedores}" />
+				</p:selectOneMenu>
+		 			
+		  		<p:outputLabel for="tituloCarroChefe" value="Título" />
+			  	<p:inputText id="tituloCarroChefe" required="true" requiredMessage="Tíulo: Campo obrigatório" value="#{mbeanModel.titulo}" maxlength="100" style="width:60%"/>
+					
+		  		<p:outputLabel for="descricaoCarroChefe" value="Descrição" />
+			  	<p:inputTextarea id="descricaoCarroChefe" required="true" requiredMessage="Descrição: Campo obrigatório" counterTemplate="{0} caracteres restantes." counter="counter2" value="#{mbeanModel.descricao}" maxlength="200" autoResize="false" rows="10" style="width:90%"/>
+			  	<h:outputText id="counter2" />
+			  	
+			  	<p:outputLabel value="Ativo " for="flagAtivoCarroChefe"/>
+				<p:selectBooleanCheckbox id="flagAtivoCarroChefe" value="#{mbeanModel.flagAtivo}"/>
+				
+			</h:panelGrid>
 		
-		<p:outputLabel for="fornecedor" value="Fornecedor" />
-		<p:selectOneMenu disabled="#{!empty sessionScope.usuarioConectado.fornecedor}" id="fornecedor" value="#{mbeanModel.fornecedor.id}" style="width:50%" required="true" requiredMessage="Fornecedor: Campo obrigatório">
-			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-			<f:selectItems value="#{mbean.fornecedores}" />
-		</p:selectOneMenu>
- 			
-  		<p:outputLabel for="tituloCarroChefe" value="Título" />
-	  	<p:inputText id="tituloCarroChefe" required="true" requiredMessage="Tíulo: Campo obrigatório" value="#{mbeanModel.titulo}" maxlength="100" style="width:50%"/>
-			
-  		<p:outputLabel for="descricaoCarroChefe" value="Descrição" />
-	  	<p:inputTextarea id="descricaoCarroChefe" required="true" requiredMessage="Descrição: Campo obrigatório" counterTemplate="{0} caracteres restantes." counter="counter2" value="#{mbeanModel.descricao}" maxlength="200" autoResize="false" rows="10" style="width:90%"/>
-	  	<h:outputText id="counter2" />
-	  	
-	  	<p:outputLabel value="Ativo " for="flagAtivoCarroChefe"/>
-		<p:selectBooleanCheckbox id="flagAtivoCarroChefe" value="#{mbeanModel.flagAtivo}"/>
-			
 		</h:panelGrid>
 		
 		<h:panelGrid columns="1" style="width: 46%">
   			
-		<p:outputLabel for="imagemCarroChefe" value="Imagens do Carro-Chefe" />
-		<p:fileUpload id="imagemCarroChefe" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagensCarrosChefes}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="pgImagensCarrosChefes"/>
+			<p:outputLabel for="imagemCarroChefe" value="Imagens do Carro-Chefe" />
+			<p:fileUpload id="imagemCarroChefe" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagensCarrosChefes}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="pgImagensCarrosChefes"/>
 	
 		</h:panelGrid>
 		
@@ -42,44 +48,50 @@
 		
 		<h:panelGrid id="pgImagensCarrosChefes" columns="1" style="width:100%">
 		
-		<p:dataGrid id="dgImagemCarroChefe" var="imagemCarroChefe" value="#{mbeanModel.imagensCarrosChefes}" columns="4"  
-			        rows="4" paginator="true" emptyMessage="Nenhuma imagem cadastrada" rendered="#{not empty mbeanModel.imagensCarrosChefes}">
-	          
-	        <p:column>
-	            
-	            <p:graphicImage value="#{imagemCarroChefe.imagemThumbView}" cache="false" />
-	            <p:commandLink global="false" process="@this" oncomplete="removerImagemCarroChefe();" title="Clique aqui para remover a imagem">
-					<h:panelGrid columns="1" style="width:100%">
-						<p:graphicImage style="border:0px;"	value="/resources/images/del.png" />
-					</h:panelGrid>
-					<f:setPropertyActionListener target="#{mbean.imagemCarroChefeSelecionada}" value="#{imagemCarroChefe}" />
-				</p:commandLink>
-	            
-	        </p:column>  
-	  
-	    </p:dataGrid>
+			<p:dataGrid id="dgImagemCarroChefe" var="imagemCarroChefe" value="#{mbeanModel.imagensCarrosChefes}" columns="4"  
+				        rows="4" paginator="true" emptyMessage="Nenhuma imagem cadastrada" rendered="#{not empty mbeanModel.imagensCarrosChefes}">
+		          
+		        <p:column>
+		            
+		            <p:graphicImage value="#{imagemCarroChefe.imagemThumbView}" cache="false" />
+		            <p:commandLink global="false" process="@this" oncomplete="removerImagemCarroChefe();" title="Clique aqui para remover a imagem">
+						<h:panelGrid columns="1" style="width:100%">
+							<p:graphicImage style="border:0px;"	value="/resources/images/del.png" />
+						</h:panelGrid>
+						<f:setPropertyActionListener target="#{mbean.imagemCarroChefeSelecionada}" value="#{imagemCarroChefe}" />
+					</p:commandLink>
+		            
+		        </p:column>  
+		  
+		    </p:dataGrid>
 			    
-	</h:panelGrid>
+		</h:panelGrid>
 			
   	</ui:define>
   	
   	<ui:define name="pesquisaCampos">
-  	
-		<h:panelGrid columns="1" style="width:100%">
-		
-		<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
-		<p:selectOneMenu disabled="#{!empty sessionScope.usuarioConectado.fornecedor}" id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:50%">
-			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-			<f:selectItems value="#{mbean.fornecedores}" />
-		</p:selectOneMenu>
- 			
-  		<p:outputLabel for="tituloPesquisaCarroChefe" value="Título" />
-	  	<p:inputText id="tituloPesquisaCarroChefe" value="#{mbeanPesquisaModel.titulo}" maxlength="100" style="width:90%"/>
-		
-	  	<p:outputLabel value="Ativo " for="flagAtivoPesquisaCarroChefe"/>
-		<p:selectBooleanCheckbox id="flagAtivoPesquisaCarroChefe" value="#{mbeanPesquisaModel.flagAtivo}"/>
+  		
+  		<h:panelGrid style="width:60%">
+  		
+  			<ui:include src="/pages/crud/include_combo_estado_cidade_pesquisa.xhtml" />
+  		
+			<h:panelGrid columns="1" style="width:100%">
 			
-		</h:panelGrid>
+				<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
+				<p:selectOneMenu disabled="#{mbean.usuarioFornecedor || mbeanPesquisaModel.fornecedor.cidade.id == null}" id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:60%">
+					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+					<f:selectItems value="#{mbean.fornecedoresPesquisa}" />
+				</p:selectOneMenu>
+		 			
+		  		<p:outputLabel for="tituloPesquisaCarroChefe" value="Título" />
+			  	<p:inputText id="tituloPesquisaCarroChefe" value="#{mbeanPesquisaModel.titulo}" maxlength="100" style="width:60%"/>
+				
+			  	<p:outputLabel value="Ativo " for="flagAtivoPesquisaCarroChefe"/>
+				<p:selectBooleanCheckbox id="flagAtivoPesquisaCarroChefe" value="#{mbeanPesquisaModel.flagAtivo}"/>
+				
+			</h:panelGrid>
+	  	
+	  	</h:panelGrid>
 	  	
   	</ui:define>
   	

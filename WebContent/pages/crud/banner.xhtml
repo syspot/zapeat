@@ -14,25 +14,31 @@
   	
   		<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width: 80%">
   		
-  			<h:panelGrid columns="1" style="width: 90%">
+  			<h:panelGrid style="width:100%">
   			
-			  	<p:outputLabel for="fornecedor" value="Fornecedor" />
-			  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" style="width:100%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbean.fornecedores}" />
-				</p:selectOneMenu>
+  				<ui:include src="/pages/crud/include_combo_estado_cidade_cadastro.xhtml" />
+  			
+	  			<h:panelGrid columns="1" style="width: 90%">
+	  			
+				  	<p:outputLabel for="fornecedor" value="Fornecedor" />
+				  	<p:selectOneMenu id="fornecedor" disabled="#{mbeanModel.fornecedor.cidade.id == null}" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" style="width:100%">
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.fornecedores}" />
+					</p:selectOneMenu>
+					
+				  	<p:outputLabel for="tipoBanner" value="Tipo de Banner" />
+				  	<p:selectOneMenu id="tipoBanner" required="true" requiredMessage="Tipo de Banner: Campo obrigatório" value="#{mbeanModel.tipoBanner.id}" style="width:100%">
+						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+						<f:selectItems value="#{mbean.tiposBanners}" />
+						<p:ajax event="change" process="@this" global="false" listener="#{mbean.limparImagem}" update="opVisualizacaoImagem" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="imagem" value="Imagem" />
+				  	<p:fileUpload id="imagem" label="Selecionar Imagem" auto="true" fileUploadListener="#{mbean.enviarImagem}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="opVisualizacaoImagem" />
 				
-			  	<p:outputLabel for="tipoBanner" value="Tipo de Banner" />
-			  	<p:selectOneMenu id="tipoBanner" required="true" requiredMessage="Tipo de Banner: Campo obrigatório" value="#{mbeanModel.tipoBanner.id}" style="width:100%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbean.tiposBanners}" />
-					<p:ajax event="change" process="@this" global="false" listener="#{mbean.limparImagem}" update="opVisualizacaoImagem" />
-				</p:selectOneMenu>
-				
-				<p:outputLabel for="imagem" value="Imagem" />
-			  	<p:fileUpload id="imagem" label="Selecionar Imagem" auto="true" fileUploadListener="#{mbean.enviarImagem}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="opVisualizacaoImagem" />
-			
-			</h:panelGrid>
+				</h:panelGrid>
+  		
+  			</h:panelGrid>
 			
 			<h:panelGrid style="width:80%">
 			
@@ -63,8 +69,10 @@
 		<h:panelGrid columns="1" style="width: 100%; margin-top: 30px">
 		
 			<p:outputLabel for="url" value="URL" />
-			<p:inputText id="url" value="#{mbeanModel.url}" maxlength="200" required="true" requiredMessage="URL: Campo obrigatório" />
-		
+			<p:inputText id="url" value="#{mbeanModel.url}" maxlength="200" required="true" requiredMessage="URL: Campo obrigatório" styleClass="coluna40"/>
+			
+			<br/>
+			
 			<p:outputPanel id="opVisualizacaoImagem">
 				
 				<div class="imagemFoto" align="left">
@@ -83,17 +91,27 @@
 			
 			<h:panelGrid columns="1" style="width:90%">
 			
-				<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
-			  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" style="width:100%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbean.fornecedores}" />
-				</p:selectOneMenu>
+				<h:panelGrid style="width:100%">
 				
-			  	<p:outputLabel for="tipoBannerPesquisa" value="Tipo de Banner" />
-			  	<p:selectOneMenu id="tipoBannerPesquisa" value="#{mbeanPesquisaModel.tipoBanner.id}" style="width:100%">
-					<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-					<f:selectItems value="#{mbean.tiposBanners}" />
-				</p:selectOneMenu>
+					<ui:include src="/pages/crud/include_combo_estado_cidade_pesquisa.xhtml" />
+					
+					<h:panelGrid style="width:100%">
+					
+						<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
+					  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}" disabled="#{mbeanPesquisaModel.fornecedor.cidade.id == null}" style="width:100%">
+							<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+							<f:selectItems value="#{mbean.fornecedoresPesquisa}" />
+						</p:selectOneMenu>
+						
+					  	<p:outputLabel for="tipoBannerPesquisa" value="Tipo de Banner" />
+					  	<p:selectOneMenu id="tipoBannerPesquisa" value="#{mbeanPesquisaModel.tipoBanner.id}" style="width:100%">
+							<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+							<f:selectItems value="#{mbean.tiposBanners}" />
+						</p:selectOneMenu>
+					
+					</h:panelGrid>
+				
+				</h:panelGrid>
 			
 			</h:panelGrid>
 			

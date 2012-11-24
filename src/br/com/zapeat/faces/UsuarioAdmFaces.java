@@ -1,46 +1,43 @@
 package br.com.zapeat.faces;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
 
 import br.com.topsys.constant.TSConstant;
 import br.com.topsys.util.TSCryptoUtil;
 import br.com.topsys.util.TSUtil;
+import br.com.zapeat.model.Cidade;
+import br.com.zapeat.model.Estado;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.UsuarioAdm;
 
-@ManagedBean(name = "usuarioAdmFaces")
 @ViewScoped
-public class UsuarioAdmFaces extends CrudFaces<UsuarioAdm> {
+@ManagedBean(name = "usuarioAdmFaces")
+public class UsuarioAdmFaces extends ComboCidadeEstadoFaces<UsuarioAdm> {
 
-	private List<SelectItem> fornecedores;
 	private String senha;
 
 	@PostConstruct
 	protected void init() {
 		this.clearFields();
-		this.initCombo();
 		this.setFieldOrdem("nome");
-	}
-
-	private void initCombo() {
-		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "nomeFantasia");
 	}
 
 	public String limpar() {
 		super.limpar();
-		this.getCrudModel().setFornecedor(new Fornecedor());
+		getCrudModel().setFornecedor(new Fornecedor());
+		getCrudModel().getFornecedor().setCidade(new Cidade());
+		getCrudModel().getFornecedor().getCidade().setEstado(new Estado());
 		this.senha = null;
 		return null;
 	}
 
 	public String limparPesquisa() {
 		super.limparPesquisa();
-		this.getCrudPesquisaModel().setFornecedor(new Fornecedor());
+		getCrudPesquisaModel().setFornecedor(new Fornecedor());
+		getCrudPesquisaModel().getFornecedor().setCidade(new Cidade());
+		getCrudPesquisaModel().getFornecedor().getCidade().setEstado(new Estado());
 		return null;
 	}
 
@@ -96,20 +93,32 @@ public class UsuarioAdmFaces extends CrudFaces<UsuarioAdm> {
 		return valida;
 	}
 
-	public List<SelectItem> getFornecedores() {
-		return fornecedores;
-	}
-
-	public void setFornecedores(List<SelectItem> fornecedores) {
-		this.fornecedores = fornecedores;
-	}
-
 	public String getSenha() {
 		return senha;
 	}
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	protected Cidade getCidadeSelecionada() {
+		return getCrudModel().getFornecedor().getCidade();
+	}
+
+	@Override
+	protected Cidade getCidadeSelecionadaPesquisa() {
+		return getCrudPesquisaModel().getFornecedor().getCidade();
+	}
+
+	@Override
+	protected Fornecedor getFornecedorSelecionado() {
+		return getCrudModel().getFornecedor();
+	}
+
+	@Override
+	protected Fornecedor getFornecedorSelecionadoPesquisa() {
+		return getCrudModel().getFornecedor();
 	}
 
 }

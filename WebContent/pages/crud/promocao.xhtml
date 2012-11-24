@@ -27,10 +27,12 @@
   			
   			<h:panelGrid style="width:100%">
   			
+  				<ui:include src="/pages/crud/include_combo_estado_cidade_cadastro.xhtml" />
+  			
   				<h:panelGrid style="width:75%">
   				
   					<p:outputLabel for="fornecedor" value="Fornecedor" />
-				  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" disabled="#{mbean.usuarioFornecedor}" style="width:80%">
+				  	<p:selectOneMenu id="fornecedor" required="true" requiredMessage="Fornecedor: Campo obrigatório" value="#{mbeanModel.fornecedor.id}" disabled="#{mbean.usuarioFornecedor || mbeanModel.fornecedor.cidade.id == null}" style="width:80%">
 						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 						<f:selectItems value="#{mbean.fornecedores}" />
 						<p:ajax event="change" process="@this" listener="#{mbean.atualizarComboFornecedorCategoria}" update="fornecedorCategoria" />
@@ -157,12 +159,14 @@
 			
 			<h:panelGrid columns="1" style="width:100%">
 			
+				<ui:include src="/pages/crud/include_combo_estado_cidade_pesquisa.xhtml" />
+  				
 				<h:panelGrid style="width:75%">
 				
 					<p:outputLabel for="fornecedorPesquisa" value="Fornecedor" />
 				  	<p:selectOneMenu id="fornecedorPesquisa" value="#{mbeanPesquisaModel.fornecedor.id}"  disabled="#{mbean.usuarioFornecedor}" style="width:80%">
 						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
-						<f:selectItems value="#{mbean.fornecedores}" />
+						<f:selectItems value="#{mbean.fornecedoresPesquisa}" />
 					</p:selectOneMenu>
 					
 				  	<p:outputLabel for="tipoPromocaoPesquisa" value="Tipo de Promoção" />

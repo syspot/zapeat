@@ -11,40 +11,40 @@
   	
   	<ui:define name="cadastro">
   			
-  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+		<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
   			<p:outputLabel for="cidade" value="Cidade" />
   			<p:inputText style="width: 80%;" id="cidade" value="#{mbeanModel.nome}" required="true" requiredMessage="Cidade: Campo obrigatório" maxlength="50"/>
-  			<br/>
+  			
   			<p:outputLabel for="estado" value="Estado" />
   			<p:selectOneMenu id="estado" value="#{mbeanModel.estado.id}" required="true" requiredMessage="Estado: Campo obrigatório">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbean.estados}" />
 			</p:selectOneMenu>
-			<br/>
+			
   			<p:outputLabel for="ativo" value="Ativo" />
   			<p:selectBooleanCheckbox id="ativo" value="#{mbeanModel.flagAtivo}" />
-  			</h:panelGrid>
+		</h:panelGrid>
 		  	
   	</ui:define>
   	
   	<ui:define name="pesquisaCampos">
   	
-  			<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
+		<h:panelGrid width="40%" columns="1" style="margin-left: -4px">
   			
   			<p:outputLabel for="cidadePesquisa" value="Cidade" />
   			<p:inputText style="width: 80%;" id="cidadePesquisa" value="#{mbeanPesquisaModel.nome}" maxlength="50"/>
-  			<br/>
+  			
   			<p:outputLabel for="estadoPesquisa" value="Estado" />
   			<p:selectOneMenu id="estadoPesquisa" value="#{mbeanPesquisaModel.estado.id}">
 				<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 				<f:selectItems value="#{mbean.estados}" />
 			</p:selectOneMenu>
-			<br/>
+			
   			<p:outputLabel for="ativoPesquisa" value="Ativo" />
   			<p:selectBooleanCheckbox id="ativoPesquisa" value="#{mbeanPesquisaModel.flagAtivo}" />
-  			<br/>
-  			</h:panelGrid>
+  			
+		</h:panelGrid>
 	  	
   	</ui:define>
   	

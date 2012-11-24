@@ -13,6 +13,8 @@ import org.primefaces.event.FileUploadEvent;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.zapeat.model.Banner;
+import br.com.zapeat.model.Cidade;
+import br.com.zapeat.model.Estado;
 import br.com.zapeat.model.Fornecedor;
 import br.com.zapeat.model.TipoBanner;
 import br.com.zapeat.util.Constantes;
@@ -20,10 +22,9 @@ import br.com.zapeat.util.ZapeatUtil;
 
 @ViewScoped
 @ManagedBean(name = "bannerFaces")
-public class BannerFaces extends CrudFaces<Banner> {
+public class BannerFaces extends ComboCidadeEstadoFaces<Banner> {
 
 	private List<SelectItem> tiposBanners;
-	private List<SelectItem> fornecedores;
 
 	@PostConstruct
 	protected void init() {
@@ -34,7 +35,6 @@ public class BannerFaces extends CrudFaces<Banner> {
 	
 	private void initCombos(){
 		this.tiposBanners = super.initCombo(new TipoBanner().findAll(), "id", "descricao");
-		this.fornecedores = super.initCombo(new Fornecedor().findAll(), "id", "nomeFantasia");
 	}
 	
 	@Override
@@ -43,6 +43,8 @@ public class BannerFaces extends CrudFaces<Banner> {
 		getCrudModel().setFornecedor(new Fornecedor());
 		getCrudModel().setTipoBanner(new TipoBanner());
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
+		getCrudModel().getFornecedor().setCidade(new Cidade());
+		getCrudModel().getFornecedor().getCidade().setEstado(new Estado());
 		setFlagAlterar(Boolean.FALSE);
 		return null;
 	}
@@ -53,6 +55,8 @@ public class BannerFaces extends CrudFaces<Banner> {
 		getCrudPesquisaModel().setFornecedor(new Fornecedor());
 		getCrudPesquisaModel().setTipoBanner(new TipoBanner());
 		getCrudPesquisaModel().setFlagAtivo(Boolean.TRUE);
+		getCrudPesquisaModel().getFornecedor().setCidade(new Cidade());
+		getCrudPesquisaModel().getFornecedor().getCidade().setEstado(new Estado());
 		setGrid(new ArrayList<Banner>());
 		return null;
 	}
@@ -95,6 +99,26 @@ public class BannerFaces extends CrudFaces<Banner> {
 		getCrudModel().setImagem(null);
 		return null;
 	}
+	
+	@Override
+	protected Cidade getCidadeSelecionada() {
+		return getCrudModel().getFornecedor().getCidade();
+	}
+
+	@Override
+	protected Cidade getCidadeSelecionadaPesquisa() {
+		return getCrudPesquisaModel().getFornecedor().getCidade();
+	}
+
+	@Override
+	protected Fornecedor getFornecedorSelecionado() {
+		return getCrudModel().getFornecedor();
+	}
+
+	@Override
+	protected Fornecedor getFornecedorSelecionadoPesquisa() {
+		return getCrudPesquisaModel().getFornecedor();
+	}
 
 	public List<SelectItem> getTiposBanners() {
 		return tiposBanners;
@@ -104,12 +128,4 @@ public class BannerFaces extends CrudFaces<Banner> {
 		this.tiposBanners = tiposBanners;
 	}
 
-	public List<SelectItem> getFornecedores() {
-		return fornecedores;
-	}
-
-	public void setFornecedores(List<SelectItem> fornecedores) {
-		this.fornecedores = fornecedores;
-	}
-	
 }

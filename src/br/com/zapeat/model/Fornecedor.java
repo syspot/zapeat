@@ -397,5 +397,9 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 		return super.find(query.toString(), "f.nomeFantasia", params.toArray());
 
 	}
+	
+	public List<Fornecedor> pesquisarPorCidade() {
+		return super.find("from Fornecedor f where f.cidade.id = ?", "f.nomeFantasia", cidade.getId());
+	}
 
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<h:panelGrid columns="2" columnClasses="coluna50, coluna50" style="width:65%">
+  				
+		<p:outputLabel for="estado" value="Estado" />
+		<p:outputLabel for="cidade" value="Cidade" />
+	
+	  	<p:selectOneMenu id="estado" required="true" requiredMessage="Estado: Campo obrigatório" value="#{mbeanModel.fornecedor.cidade.estado.id}" disabled="#{mbean.usuarioFornecedor}" style="width:80%">
+			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			<f:selectItems value="#{mbean.estados}" />
+			<p:ajax event="change" process="@this" listener="#{mbean.atualizarComboCidade}" update="cidade" />
+		</p:selectOneMenu>
+		
+	  	<p:selectOneMenu id="cidade" required="true" requiredMessage="Cidade: Campo obrigatório" value="#{mbeanModel.fornecedor.cidade.id}" disabled="#{mbean.usuarioFornecedor || mbeanModel.fornecedor.cidade.estado.id == null}" style="width:80%">
+			<f:selectItem itemLabel="Não Selecionado" itemValue="" />
+			<f:selectItems value="#{mbean.cidades}" />
+			<p:ajax event="change" process="@this" listener="#{mbean.atualizarComboFornecedor}" update="fornecedor" />
+		</p:selectOneMenu>
+		
+	</h:panelGrid>
+  	
+</ui:composition>
