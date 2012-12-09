@@ -7,6 +7,9 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.com.topsys.constant.TSConstant;
+import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSCryptoUtil;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.faces.TSMainFaces;
 import br.com.topsys.web.util.TSFacesUtil;
@@ -14,7 +17,6 @@ import br.com.zapeat.model.Menu;
 import br.com.zapeat.model.UsuarioAdm;
 import br.com.zapeat.util.Constantes;
 import br.com.zapeat.util.UsuarioUtil;
-import br.com.zapeat.util.ZapeatUtil;
 
 @SessionScoped
 @ManagedBean(name = "autenticacaoFaces")
@@ -26,6 +28,9 @@ public class AutenticacaoFaces extends TSMainFaces {
 	private List<Menu> menus;
 	private Menu menuSelecionado;
 	private Integer tabAtiva;
+	private String novaSenha;
+	private String confirmaNovaSenha;
+	private Long opcao;
 
 	public AutenticacaoFaces() {
 
@@ -44,6 +49,8 @@ public class AutenticacaoFaces extends TSMainFaces {
 		this.menus = Collections.emptyList();
 
 		this.menuSelecionado = new Menu();
+		
+		this.opcao = 1L;
 
 	}
 
@@ -99,7 +106,7 @@ public class AutenticacaoFaces extends TSMainFaces {
 
 		if (TSUtil.isEmpty(usuario)) {
 			clearFields();
-			ZapeatUtil.addWarnMessage("Login/Senha sem credencial para acesso.");
+			super.addErrorMessage("Login/Senha sem credencial para acesso.");
 			return null;
 		}
 
@@ -108,6 +115,32 @@ public class AutenticacaoFaces extends TSMainFaces {
 		TSFacesUtil.addObjectInSession(Constantes.USUARIO_CONECTADO, usuario);
 
 		return SUCESSO;
+	}
+	
+	public String trocarSenha() throws TSApplicationException{
+		
+		usuario = UsuarioUtil.usuarioAutenticado(usuario);
+		
+		if(TSUtil.isEmpty(usuario)){
+			super.addErrorMessage("Usuário ou Senha inválidos");
+			return null;
+		}
+		
+		if(novaSenha.equals(confirmaNovaSenha)){
+			
+			usuario.setSenha(TSCryptoUtil.gerarHash(novaSenha, TSConstant.CRIPTOGRAFIA_MD5));
+			usuario.update();
+			super.addInfoMessage("Senha alterada com sucesso");
+			
+		} else{
+			
+			super.addErrorMessage("Senhas não conferem");
+			
+		}
+		
+		clearFields();
+		return null;
+		
 	}
 
 	public String logout() {
@@ -165,6 +198,30 @@ public class AutenticacaoFaces extends TSMainFaces {
 
 	public void setUsuario(UsuarioAdm usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getNovaSenha() {
+		return novaSenha;
+	}
+
+	public void setNovaSenha(String novaSenha) {
+		this.novaSenha = novaSenha;
+	}
+
+	public String getConfirmaNovaSenha() {
+		return confirmaNovaSenha;
+	}
+
+	public void setConfirmaNovaSenha(String confirmaNovaSenha) {
+		this.confirmaNovaSenha = confirmaNovaSenha;
+	}
+
+	public Long getOpcao() {
+		return opcao;
+	}
+
+	public void setOpcao(Long opcao) {
+		this.opcao = opcao;
 	}
 
 }
