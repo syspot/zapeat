@@ -20,7 +20,7 @@
   			<p:inputText style="width: 80%;" id="login" value="#{mbeanModel.login}" required="true" requiredMessage="Login: Campo obrigatório" maxlength="30"/>
   			
   			<p:outputLabel for="senha" value="Senha" />
-  			<h:inputSecret redisplay="true" style="width: 80%;" id="senha" value="#{mbeanModel.senha}" required="true" requiredMessage="Senha: Campo obrigatório" maxlength="50"/>
+  			<p:password redisplay="true" style="width: 80%;" id="senha" value="#{mbeanModel.senha}" required="true" requiredMessage="Senha: Campo obrigatório" maxlength="50"/>
   			
   			<ui:include src="/pages/crud/include_combo_estado_cidade_cadastro.xhtml" />
   			

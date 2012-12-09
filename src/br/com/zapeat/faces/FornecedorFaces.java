@@ -16,7 +16,6 @@ import br.com.topsys.exception.TSApplicationException;
 import br.com.topsys.file.TSFile;
 import br.com.topsys.util.TSUtil;
 import br.com.topsys.web.util.TSFacesUtil;
-import br.com.zapeat.model.CarroChefe;
 import br.com.zapeat.model.Categoria;
 import br.com.zapeat.model.Cidade;
 import br.com.zapeat.model.Estado;
@@ -163,30 +162,17 @@ public class FornecedorFaces extends CrudFaces<Fornecedor> {
 	@Override
 	protected void posDetail() {
 
-		List<Categoria> categoriaTarget = new ArrayList<Categoria>();
-
-		for (FornecedorCategoria item : getCrudModel().getFornecedorCategorias()) {
-
-			categoriaTarget.add(item.getCategoria());
-
-		}
-
 		List<FormaPagamento> formaPagamentoTarget = new ArrayList<FormaPagamento>();
 
 		for (FornecedorFormaPagamento item : getCrudModel().getFornecedorFormasPagamentos()) {
-
 			formaPagamentoTarget.add(item.getFormaPagamento());
-
 		}
 
 		this.formasPagamentosSources.removeAll(formaPagamentoTarget);
 
 		this.formasPagamentos = new DualListModel<FormaPagamento>(this.formasPagamentosSources, formaPagamentoTarget);
-
-		if (TSUtil.isEmpty(getCrudModel().getCarroChefe())) {
-			this.getCrudModel().setCarroChefe(new CarroChefe());
-			this.getCrudModel().getCarroChefe().setImagensCarrosChefes(new ArrayList<ImagemCarroChefe>());
-		}
+		
+		this.atualizarComboCidade();
 
 	}
 

@@ -33,45 +33,7 @@ public class CarroChefeFaces extends ComboCidadeEstadoFaces<CarroChefe> {
 		this.clearFields();
 		this.verificarUsuarioFornecedor();
 	}
-
-	@Override
-	protected boolean validaCampos() {
-
-		boolean validado = true;
-
-		if (!isFlagAlterar() && !TSUtil.isEmpty(new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor()))) {
-
-			super.addErrorMessage("Já existe Carro-Chefe cadastrado para esse fornecedor.");
-
-			return false;
-		}
-
-		return validado;
-	}
-
-	private void verificarUsuarioFornecedor() {
-
-		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
-
-			this.getCrudModel().setFornecedor(UsuarioUtil.obterUsuarioConectado().getFornecedor());
-			
-			this.atualizarComboCidade();
-			this.atualizarComboFornecedor();
-
-			List<CarroChefe> list = new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor());
-
-			if (!TSUtil.isEmpty(list)) {
-
-				this.setCrudModel(list.get(0));
-
-				this.detail();
-			}
-
-			this.usuarioFornecedor = true;
-
-		}
-	}
-
+	
 	@Override
 	public String limpar() {
 
@@ -118,6 +80,52 @@ public class CarroChefeFaces extends ComboCidadeEstadoFaces<CarroChefe> {
 		this.setGrid(new ArrayList<CarroChefe>());
 
 		return null;
+	}
+
+	@Override
+	protected boolean validaCampos() {
+
+		boolean validado = true;
+
+		if (!isFlagAlterar() && !TSUtil.isEmpty(new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor()))) {
+
+			super.addErrorMessage("Já existe Carro-Chefe cadastrado para esse fornecedor.");
+
+			return false;
+		}
+
+		return validado;
+	}
+
+	@Override
+	protected void posDetail() {
+		
+		super.atualizarComboCidade();
+		
+		super.atualizarComboFornecedor();
+	}
+	
+	private void verificarUsuarioFornecedor() {
+
+		if (!TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado()) && !TSUtil.isEmpty(UsuarioUtil.obterUsuarioConectado().getFornecedor())) {
+
+			this.getCrudModel().setFornecedor(UsuarioUtil.obterUsuarioConectado().getFornecedor());
+			
+			this.atualizarComboCidade();
+			this.atualizarComboFornecedor();
+
+			List<CarroChefe> list = new CarroChefe().pesquisarPorFornecedor(this.getCrudModel().getFornecedor());
+
+			if (!TSUtil.isEmpty(list)) {
+
+				this.setCrudModel(list.get(0));
+
+				this.detail();
+			}
+
+			this.usuarioFornecedor = true;
+
+		}
 	}
 
 	public void enviarImagensCarrosChefes(FileUploadEvent event) {

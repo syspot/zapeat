@@ -74,6 +74,15 @@ public class BannerFaces extends ComboCidadeEstadoFaces<Banner> {
 		return valida;
 	}
 	
+	@Override
+	protected void posDetail() {
+		
+		super.atualizarComboCidade();
+		
+		super.atualizarComboFornecedor();
+		
+	}
+	
 	public void enviarImagem(FileUploadEvent event) {
 
 		if(TSUtil.isEmpty(getCrudModel().getTipoBanner().getId())){

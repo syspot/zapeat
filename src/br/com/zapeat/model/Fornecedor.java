@@ -399,7 +399,7 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	}
 	
 	public List<Fornecedor> pesquisarPorCidade() {
-		return super.find("from Fornecedor f where f.cidade.id = ?", "f.nomeFantasia", cidade.getId());
+		return super.find("from Fornecedor f where f.cidade.id = ? and f.flagAtivo = true", "f.nomeFantasia", cidade.getId());
 	}
 
 }

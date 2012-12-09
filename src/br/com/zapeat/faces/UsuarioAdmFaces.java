@@ -69,6 +69,10 @@ public class UsuarioAdmFaces extends ComboCidadeEstadoFaces<UsuarioAdm> {
 		}
 
 		this.setSenha(this.getCrudModel().getSenha());
+		
+		super.atualizarComboCidade();
+		
+		super.atualizarComboFornecedor();
 
 	}
 	

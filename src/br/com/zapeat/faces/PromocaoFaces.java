@@ -177,7 +177,7 @@ public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 		
 		super.atualizarComboCidade();
 		
-		this.atualizarComboFornecedor();
+		super.atualizarComboFornecedor();
 
 		this.atualizarComboFornecedorCategoria();
 		
