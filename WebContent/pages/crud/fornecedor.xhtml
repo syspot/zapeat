@@ -39,7 +39,7 @@
 					  	<h:panelGrid columns="1" style="width:60%">
 	  			
 				  			<p:outputLabel for="descricao" value="Descrição" />
-					  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="200" counterTemplate="{0} caracteres restantes." counter="counter" id="descricao" rows="7" cols="90" value="#{mbeanModel.descricao}"/>
+					  		<p:inputTextarea required="true" requiredMessage="Descrição: Campo obrigatório" maxlength="500" counterTemplate="{0} caracteres restantes." counter="counter" id="descricao" rows="7" cols="90" value="#{mbeanModel.descricao}"/>
 					  		<h:outputText id="counter" />
 		  					
 		  					<p:outputPanel rendered="#{!mbean.usuarioFornecedor}">

@@ -44,8 +44,8 @@
 						<f:selectItems value="#{mbean.fornecedoresCategorias}" />
 					</p:selectOneMenu>
 					
-				  	<p:outputLabel for="tipoPromocao" value="Tipo de Promoção" />
-				  	<p:selectOneMenu id="tipoPromocao" required="true" requiredMessage="Tipo de Promoção: Campo obrigatório" value="#{mbeanModel.tipoPromocao.id}" style="width:80%">
+				  	<p:outputLabel for="tipoPromocao" value="Tipo de Publicidade" />
+				  	<p:selectOneMenu id="tipoPromocao" required="true" requiredMessage="Tipo de Publicidade: Campo obrigatório" value="#{mbeanModel.tipoPromocao.id}" style="width:80%">
 						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 						<f:selectItems value="#{mbean.tiposPromocoes}" />
 						<p:ajax event="change" update="pgDataPromocao" global="false" />
@@ -92,7 +92,7 @@
   		<h:panelGrid columns="2" columnClasses="coluna70_4, coluna30_4" style="width: 50%; vertical-align: bottom;">
 				
 			<p:outputPanel>
-				<p:outputLabel for="uploadThumb" value="Thumb da Promoção:"/>
+				<p:outputLabel for="uploadThumb" value="Thumb da Publicidade:"/>
 				<p:fileUpload id="uploadThumb" label="Selecionar Thumb" auto="true" fileUploadListener="#{mbean.enviarThumb}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/"/>
 			</p:outputPanel>
 		
@@ -112,7 +112,7 @@
   		
   		<h:panelGrid columns="1" style="width: 46%">
 	  			
-  			<p:outputLabel for="imagem" value="Imagens da Promoção" />
+  			<p:outputLabel for="imagem" value="Imagens da Publicidade" />
   			<p:fileUpload id="imagem" label="Selecionar Imagens" auto="true" multiple="true" fileUploadListener="#{mbean.enviarImagem}" allowTypes="/(\.|\/)(gif|jpe?g|png|bitmap)$/" update="pgImagens"/>
 		
 		</h:panelGrid>
@@ -169,7 +169,7 @@
 						<f:selectItems value="#{mbean.fornecedoresPesquisa}" />
 					</p:selectOneMenu>
 					
-				  	<p:outputLabel for="tipoPromocaoPesquisa" value="Tipo de Promoção" />
+				  	<p:outputLabel for="tipoPromocaoPesquisa" value="Tipo de Publicidade" />
 				  	<p:selectOneMenu id="tipoPromocaoPesquisa" value="#{mbeanPesquisaModel.tipoPromocao.id}" style="width:80%">
 						<f:selectItem itemLabel="Não Selecionado" itemValue="" />
 						<f:selectItems value="#{mbean.tiposPromocoes}" />
@@ -186,7 +186,7 @@
 					<p:calendar id="dataFinalPesquisa" pattern="dd/MM/yyyy" value="#{mbeanPesquisaModel.fim}" style="width:90%" />
 				  	
 				  	<p:outputLabel for="precoOriginalPesquisa" value="Preço Original" />
-				  	<p:outputLabel for="precoPromocionalPesquisa" value="Preço Promocional" />
+				  	<p:outputLabel for="precoPromocionalPesquisa" value="Preço Publicidade" />
 				  	
 				  	<p:inputText id="precoOriginalPesquisa" value="#{mbeanPesquisaModel.precoOriginal}" maxlength="5" styleClass="coluna90"/>
 				  	<p:inputText id="precoPromocionalPesquisa" value="#{mbeanPesquisaModel.precoPromocional}" maxlength="5" styleClass="coluna90"/>
