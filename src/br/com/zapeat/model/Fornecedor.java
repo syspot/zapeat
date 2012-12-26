@@ -399,7 +399,24 @@ public class Fornecedor extends TSActiveRecordAb<Fornecedor> {
 	}
 	
 	public List<Fornecedor> pesquisarPorCidade() {
-		return super.find("from Fornecedor f where f.cidade.id = ? and f.flagAtivo = true", "f.nomeFantasia", cidade.getId());
+		
+		StringBuilder query = new StringBuilder(" from Fornecedor f where f.flagAtivo = true ");
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
+			
+			query.append(" and f.cidade.id = ? ");
+			
+		}
+		
+		List<Object> param = new ArrayList<Object>();
+		
+		if(!TSUtil.isEmpty(cidade) && !TSUtil.isEmpty(cidade.getId())){
+			
+			param.add(cidade.getId());
+			
+		}
+		
+		return super.find(query.toString(), "f.nomeFantasia", param.toArray());
 	}
 
 }
