@@ -43,7 +43,7 @@ public class ZapeatFilter implements Filter {
 			
 		}
 		
-		if ((!TSUtil.isEmpty(r.getSession().getAttribute(Constantes.USUARIO_CONECTADO)) && (uri.equals("/dashboard.xhtml"))) || uri.equals("/login.xhtml")) {
+		if ((!TSUtil.isEmpty(r.getSession().getAttribute(Constantes.USUARIO_CONECTADO)) && (uri.equals("/dashboard.xhtml"))) || uri.contains("/login.xhtml")) {
 			
 			chain.doFilter(request, response);
 			

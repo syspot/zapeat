@@ -65,10 +65,6 @@ public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 		} else {
 
 			this.usuarioFornecedor = false;
-			getCrudModel().getFornecedor().setCidade(new Cidade());
-			getCrudModel().getFornecedor().getCidade().setEstado(new Estado());
-			getCrudPesquisaModel().getFornecedor().setCidade(new Cidade());
-			getCrudPesquisaModel().getFornecedor().getCidade().setEstado(new Estado());
 
 		}
 
@@ -95,6 +91,8 @@ public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 		getCrudModel().setFornecedorCategoria(new FornecedorCategoria());
 		getCrudModel().setTipoPromocao(new TipoPromocao());
 		getCrudModel().setImagensPromocoes(new ArrayList<ImagemPromocao>());
+		getCrudModel().getFornecedor().setCidade(new Cidade());
+		getCrudModel().getFornecedor().getCidade().setEstado(new Estado());
 		setFlagAlterar(Boolean.FALSE);
 		return null;
 	}
@@ -104,6 +102,8 @@ public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 		setCrudPesquisaModel(new Promocao());
 		getCrudPesquisaModel().setFornecedor(new Fornecedor());
 		getCrudPesquisaModel().setTipoPromocao(new TipoPromocao());
+		getCrudPesquisaModel().getFornecedor().setCidade(new Cidade());
+		getCrudPesquisaModel().getFornecedor().getCidade().setEstado(new Estado());
 		setGrid(new ArrayList<Promocao>());
 		return null;
 	}
@@ -113,19 +113,24 @@ public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 
 		boolean valida = true;
 
+		List<Promocao> promocoes = null;
+		
 		if (getCrudModel().isPromocaoDoDia()) {
 			getCrudModel().setFim(ZapeatUtil.getProximoDia(getCrudModel().getInicio()));
+			promocoes = getCrudModel().pesquisarPromocoesDoDiaAtivas();
 		}
 
 		if (getCrudModel().isPromocaoDaSemana()) {
 			getCrudModel().setFim(ZapeatUtil.getProximaSemana(getCrudModel().getInicio()));
+			promocoes = getCrudModel().pesquisarPromocoesAtivas();
 		}
 
 		if (getCrudModel().isPromocaoDaHora()) {
 			getCrudModel().setFim(ZapeatUtil.getProximaHora(getCrudModel().getInicio()));
+			promocoes = getCrudModel().pesquisarPromocoesAtivas();
 		}
 
-		List<Promocao> promocoes = getCrudModel().pesquisarPromocoesAtivas();
+		
 
 //		if (TSUtil.isEmpty(getCrudModel().getImagemThumb())) {
 //			valida = false;
@@ -157,7 +162,7 @@ public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 			
 			if(igual){
 				valida = false;
-				ZapeatUtil.addErrorMessage("Já existe uma promoção ativa para o período cadastrado");
+				ZapeatUtil.addErrorMessage("Já existe uma publicidade ativa para o período cadastrado");
 			}
 			
 		}
@@ -182,7 +187,7 @@ public class PromocaoFaces extends ComboCidadeEstadoFaces<Promocao> {
 		this.atualizarComboFornecedorCategoria();
 		
 		if(!new FornecedorCategoria(getCrudModel().getFornecedor()).findByModel().contains(getCrudModel().getFornecedorCategoria())){
-			super.addErrorMessage("A categoria da promoção foi removida  do fornecedor");
+			super.addErrorMessage("A categoria da publicidade foi removida  do fornecedor");
 		}
 
 	}
