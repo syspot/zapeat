@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:param name="mbean" value="${relatorioUsuarioFaces}" />
+
+    <p:tabView id="tabview">
+
+        <p:tab id="tabCadastro" title="Relatório de Usuários">
+
+            <h:form id="formCadastro" prependId="false">
+            
+                <p:commandButton ajax="false" value="Gerar relatório" action="#{mbean.gerarRelatorio}" />
+                
+            </h:form>
+            
+        </p:tab>
+        
+    </p:tabView>
+
+</ui:composition>

@@ -1,112 +1,112 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
-	<p:tabView id="tabview" dynamic="false" activeIndex="#{mbean.tabIndex}">
+    <p:tabView id="tabview" dynamic="false" activeIndex="#{mbean.tabIndex}">
 
-		<p:tab id="tabCadastro" title="Cadastro">
+        <p:tab id="tabCadastro" title="Cadastro">
 
-			<h:form id="formCadastro" prependId="false" enctype="multipart/form-data">
+            <h:form id="formCadastro" prependId="false" enctype="multipart/form-data">
 
-				<p:outputPanel id="opCadastro" layout="block" autoUpdate="#{empty autoUpdateCadastro ? false : autoUpdateCadastro}" style="width: 98%;">
+                <p:outputPanel id="opCadastro" layout="block" autoUpdate="#{empty autoUpdateCadastro ? false : autoUpdateCadastro}" style="width: 98%;">
 
-					<h:panelGrid columns="1" style="width: 100%">
-						
-						<p:outputPanel rendered="#{!mbean.usuarioFornecedor}">
-							<ui:include src="comandoCRUDLimpar.xhtml" />
-						</p:outputPanel>
-						
-						<p:fieldset style="width: 100%">
+                    <h:panelGrid columns="1" style="width: 100%">
 
-							<ui:insert name="cadastro" />
+                        <p:outputPanel rendered="#{!mbean.usuarioFornecedor}">
+                            <ui:include src="comandoCRUDLimpar.xhtml" />
+                        </p:outputPanel>
 
-						</p:fieldset>
+                        <p:fieldset style="width: 100%">
 
-						<ui:include src="comandoCRUDCadastro.xhtml" />
+                            <ui:insert name="cadastro" />
 
-					</h:panelGrid>
+                        </p:fieldset>
 
-				</p:outputPanel>
-				
-				<ui:include src="dialogCRUDCadastro.xhtml" />
+                        <ui:include src="comandoCRUDCadastro.xhtml" />
 
-			</h:form>
+                    </h:panelGrid>
 
-		</p:tab>
-		
-		<ui:insert name="tabsMeio" />
+                </p:outputPanel>
 
-		<p:tab id="tabPesquisa" title="Pesquisa" rendered="#{!mbean.ocultarTabPesquisa}">
+                <ui:include src="dialogCRUDCadastro.xhtml" />
 
-			<h:form id="formPesquisa" prependId="false">
+            </h:form>
 
-				<p:outputPanel id="opPesquisa" layout="block" autoUpdate="#{empty autoUpdatePesquisa ? false : autoUpdatePesquisa}" style="width: 97.5%;">
+        </p:tab>
 
-					<h:panelGrid columns="1" style="width: 100%">
+        <ui:insert name="tabsMeio" />
 
-						<p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
+        <p:tab id="tabPesquisa" title="Pesquisa" rendered="#{!mbean.ocultarTabPesquisa}">
 
-							<h:panelGrid columns="1" styleClass="coluna100">
+            <h:form id="formPesquisa" prependId="false">
 
-								<ui:insert name="pesquisaCampos" />
+                <p:outputPanel id="opPesquisa" layout="block" autoUpdate="#{empty autoUpdatePesquisa ? false : autoUpdatePesquisa}" style="width: 97.5%;">
 
-								<ui:include src="comandoCRUDPesquisa.xhtml" />
+                    <h:panelGrid columns="1" style="width: 100%">
 
-							</h:panelGrid>
+                        <p:fieldset legend="Filtro" style="width: 100%" toggleable="true">
 
-						</p:fieldset>
+                            <h:panelGrid columns="1" styleClass="coluna100">
 
-						<p:fieldset legend="Resultado" style="width: 100%">
+                                <ui:insert name="pesquisaCampos" />
 
-							<p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
+                                <ui:include src="comandoCRUDPesquisa.xhtml" />
 
-								<ui:insert name="colunasTabela" />
+                            </h:panelGrid>
 
-								<p:column headerText="Editar" styleClass="coluna5">
+                        </p:fieldset>
 
-									<div align="center">
+                        <p:fieldset legend="Resultado" style="width: 100%">
 
-										<p:commandLink action="#{mbean.detailEvent}" ajax="false">
+                            <p:dataTable id="gridPesquisa" emptyMessage="Nenhum registro encontrado" style="width: 100%" paginator="true" paginatorAlwaysVisible="false" rows="10" value="#{mbean.grid}" var="linha">
 
-											<h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
-											<f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
+                                <ui:insert name="colunasTabela" />
 
-										</p:commandLink>
+                                <p:column headerText="Editar" styleClass="coluna5">
 
-									</div>
+                                    <div align="center">
 
-								</p:column>
+                                        <p:commandLink action="#{mbean.detailEvent}" ajax="false">
 
-								<p:column headerText="Excluir" styleClass="coluna5">
+                                            <h:graphicImage value="../resources/images/doc.png" style="border: 0px" />
+                                            <f:setPropertyActionListener target="#{mbeanModel}" value="#{linha}" />
 
-									<div align="center">
+                                        </p:commandLink>
 
-										<p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" global="false">
+                                    </div>
 
-											<h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
-											<f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
+                                </p:column>
 
-										</p:commandLink>
+                                <p:column headerText="Excluir" styleClass="coluna5">
 
-									</div>
+                                    <div align="center">
 
-								</p:column>
+                                        <p:commandLink type="button" icon="delete16" id="clExcluir" onclick="cdExcluir.show()" global="false">
 
-							</p:dataTable>
+                                            <h:graphicImage value="../resources/images/delete16.png" style="border: 0px" />
+                                            <f:setPropertyActionListener target="#{mbeanModel.id}" value="#{linha.id}" />
 
-						</p:fieldset>
+                                        </p:commandLink>
 
-					</h:panelGrid>
+                                    </div>
 
-				</p:outputPanel>
+                                </p:column>
 
-				<ui:include src="dialogCRUD.xhtml" />
+                            </p:dataTable>
 
-			</h:form>
+                        </p:fieldset>
 
-		</p:tab>
+                    </h:panelGrid>
 
-		<ui:insert name="tabsfim" />
+                </p:outputPanel>
 
-	</p:tabView>
+                <ui:include src="dialogCRUD.xhtml" />
+
+            </h:form>
+
+        </p:tab>
+
+        <ui:insert name="tabsfim" />
+
+    </p:tabView>
 
 </ui:composition>

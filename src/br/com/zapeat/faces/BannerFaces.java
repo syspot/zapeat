@@ -45,6 +45,7 @@ public class BannerFaces extends ComboCidadeEstadoFaces<Banner> {
 		getCrudModel().setFlagAtivo(Boolean.TRUE);
 		getCrudModel().getFornecedor().setCidade(new Cidade());
 		getCrudModel().getFornecedor().getCidade().setEstado(new Estado());
+		getCrudModel().setUrl("http://");
 		setFlagAlterar(Boolean.FALSE);
 		return null;
 	}
@@ -69,6 +70,11 @@ public class BannerFaces extends ComboCidadeEstadoFaces<Banner> {
 		if(TSUtil.isEmpty(getCrudModel().getImagem())){
 			valida = false;
 			ZapeatUtil.addErrorMessage("Imagem: Campo obrigatório");
+		}
+		
+		if(!getCrudModel().getUrl().matches("http://.+")){
+			valida = false;
+			super.addErrorMessage("URL inválida");
 		}
 		
 		return valida;
