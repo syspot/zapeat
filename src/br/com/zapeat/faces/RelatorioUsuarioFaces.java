@@ -14,6 +14,8 @@ import br.com.topsys.web.faces.TSMainFaces;
 @ManagedBean(name = "relatorioUsuarioFaces")
 public class RelatorioUsuarioFaces extends TSMainFaces {
 
+	private Integer situacao;
+	
 	public String gerarRelatorio() {
 
         try {
@@ -21,7 +23,8 @@ public class RelatorioUsuarioFaces extends TSMainFaces {
         	Map<String, Object> parametros = new HashMap<String, Object>();
         	
     		parametros.put("REPORT_LOCALE", new Locale("pt","BR"));
-
+			parametros.put("SITUACAO", this.situacao);
+    			
             new JasperUtil().gerarRelatorio("relatUsuarios.jasper", "relatorio_usuarios".toString(), parametros);
 
         } catch (Exception ex) {
@@ -35,4 +38,12 @@ public class RelatorioUsuarioFaces extends TSMainFaces {
         return "sucesso";
 
     }
+
+	public Integer getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Integer situacao) {
+		this.situacao = situacao;
+	}
 }

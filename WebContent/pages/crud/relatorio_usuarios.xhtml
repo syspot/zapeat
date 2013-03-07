@@ -9,7 +9,22 @@
 
             <h:form id="formCadastro" prependId="false">
             
-                <p:commandButton ajax="false" value="Gerar relatório" action="#{mbean.gerarRelatorio}" />
+                <p:fieldset>
+                
+                    <h:panelGrid style="width: 100%">
+                    
+                        <p:outputLabel for="status" value="Situação" />
+                        <p:selectOneMenu id="status" value="#{mbean.situacao}" style="width: 20%">
+                            <f:selectItem itemLabel="Todos" itemValue="1" />
+                            <f:selectItem itemLabel="Ativos" itemValue="2" />
+                            <f:selectItem itemLabel="Pendentes" itemValue="3" />
+                        </p:selectOneMenu>
+                    
+                        <p:commandButton ajax="false" value="Gerar relatório" action="#{mbean.gerarRelatorio}" />
+                    
+                    </h:panelGrid>
+                    
+                </p:fieldset>
                 
             </h:form>
             
