@@ -7,8 +7,8 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import br.com.cenajur.relat.JasperUtil;
 import br.com.topsys.web.faces.TSMainFaces;
+import br.com.zapeat.relat.JasperUtil;
 
 @RequestScoped
 @ManagedBean(name = "relatorioUsuarioFaces")

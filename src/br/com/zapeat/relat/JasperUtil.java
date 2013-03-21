@@ -1,4 +1,4 @@
-package br.com.cenajur.relat;
+package br.com.zapeat.relat;
 
 import java.io.IOException;
 import java.io.InputStream;
