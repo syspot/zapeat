@@ -20,9 +20,25 @@
                             <f:selectItem itemLabel="Pendentes" itemValue="3" />
                         </p:selectOneMenu>
                     
-                        <p:commandButton ajax="false" value="Gerar relatório" action="#{mbean.gerarRelatorio}" />
+                        <p:commandButton value="Gerar relatório" icon="ui-icon-print" action="#{mbean.gerarRelatorio}" update="@form" />
                     
                     </h:panelGrid>
+                    
+                    <p:dataTable id="gridUsuarios" value="#{mbean.grid}" var="linha" paginator="true" rows="30" paginatorPosition="bottom" emptyMessage="Nenhum usuário encontrado" style="width: 100%" rendered="#{not empty mbean.grid}">
+                    
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{linha.nome}" />
+                        </p:column>
+                    
+                        <p:column headerText="Email">
+                            <h:outputText value="#{linha.email}" />
+                        </p:column>
+                    
+                        <p:column headerText="Situação">
+                            <h:outputText value="#{linha.situacao}" />
+                        </p:column>
+                    
+                    </p:dataTable>
                     
                 </p:fieldset>
                 

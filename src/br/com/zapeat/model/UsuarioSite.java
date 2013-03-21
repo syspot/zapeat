@@ -1,5 +1,7 @@
 package br.com.zapeat.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,6 +38,10 @@ public class UsuarioSite extends TSActiveRecordAb<UsuarioSite> {
 
 	public UsuarioSite() {
 
+	}
+	
+	public UsuarioSite(Boolean flagAtivo) {
+		this.flagAtivo = flagAtivo;
 	}
 
 	public Long getId() {
@@ -74,6 +80,16 @@ public class UsuarioSite extends TSActiveRecordAb<UsuarioSite> {
 		this.email = email;
 	}
 	
-	
+	@Override
+	public List<UsuarioSite> findByModel(String... fieldsOrderBy) {
+		
+		StringBuilder query = new StringBuilder();
+		
+		query.append(" from UsuarioSite us where 1 = 1 ");
+		
+		query.append(!TSUtil.isEmpty(flagAtivo) ? flagAtivo ? " and us.flagAtivo = true" : " and (us.flagAtivo = false or us.flagAtivo is null) " : "");
+		
+		return super.find(query.toString(), "us.nome");
+	}
 
 }
